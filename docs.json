@@ -341,5 +341,6 @@
       "github": "https://github.com/xorbitsai/xagent",
       "x": "https://x.com/xorbitsai"
     }
-  }
+  },
+  "logo": "/favicon.svg"
 }
