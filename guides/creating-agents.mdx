@@ -1,0 +1,190 @@
+---
+title: "Creating Agents"
+description: "Design and build powerful AI agents"
+---
+
+# Creating Agents
+
+Learn how to design and build effective agents for any use case.
+
+## Agent Basics
+
+An agent in Xagent is defined by:
+- **Purpose** — What it should accomplish
+- **Capabilities** — Tools and knowledge it can access
+- **Constraints** — Boundaries and guidelines
+
+## Define the Purpose
+
+Start with a clear, specific description:
+
+<Accordion>
+  <AccordionItem title="Too Vague">
+    "A helpful assistant"
+  </AccordionItem>
+  <AccordionItem title="Better">
+    "A research assistant that searches the web, summarizes findings, and cites sources"
+  </AccordionItem>
+  <AccordionItem title="Best">
+    "A research assistant for competitive analysis that:
+    - Searches multiple sources (web, databases, reports)
+    - Synthesizes information into structured reports
+    - Provides citations and source links
+    - Identifies gaps in available information"
+  </AccordionItem>
+</Accordion>
+
+## Agent Configuration
+
+### 1. Basic Settings
+
+```
+Name: Competitive Intelligence Agent
+Description: [Your detailed description]
+Model: GPT-4 (recommended for complex tasks)
+```
+
+### 2. Select Tools
+
+Choose tools based on the agent's purpose:
+
+<Columns cols={2}>
+  <Card
+    title="Research & Analysis"
+    icon="search"
+  >
+    Web Search, Database Query, File Reader
+  </Card>
+  <Card
+    title="Data Processing"
+    icon="table"
+  >
+    Python, SQL, Excel, Data Visualization
+  </Card>
+  <Card
+    title="Communication"
+    icon="message-square"
+  >
+    Email, Slack, Webhooks
+  </Card>
+  <Card
+    title="Productivity"
+    icon="zap"
+  >
+    Calendar, Task Management, Notes
+  </Card>
+</Columns>
+
+### 3. Add Knowledge Base
+
+For domain-specific agents, connect relevant documents:
+
+- Product documentation
+- Company policies
+- Technical manuals
+- Research papers
+
+See [Knowledge Base](/guides/knowledge-base) for details.
+
+### 4. Set Constraints
+
+Define boundaries to keep the agent focused:
+
+```
+The agent should:
+- Only search within specified domains
+- Verify information from multiple sources
+- Flag uncertain information
+- Stay within defined scope
+```
+
+## Agent Patterns
+
+### Research Agent
+
+```
+Purpose: Conduct deep research and synthesize findings
+Tools: Web Search, Database, File Reader
+Constraints: Cite sources, verify claims, comprehensive coverage
+```
+
+### Data Analyst
+
+```
+Purpose: Analyze data and generate insights
+Tools: SQL, Python, Visualization
+Constraints: Use provided data only, explain methodology
+```
+
+### Content Creator
+
+```
+Purpose: Generate written content and presentations
+Tools: Web Search, File Writer, Templates
+Constraints: Follow brand guidelines, factual accuracy
+```
+
+### Automation Agent
+
+```
+Purpose: Execute workflows and integrate systems
+Tools: APIs, Database, Webhooks
+Constraints: Error handling, logging, approval gates
+```
+
+## Testing Your Agent
+
+### Start Simple
+
+Test with basic tasks to ensure the agent understands its role:
+
+```
+"Summarize the main features of Xagent"
+```
+
+### Increase Complexity
+
+Gradually test more complex scenarios:
+
+```
+"Research three competitors in the AI agent space and create a comparison table"
+```
+
+### Validate Output
+
+Check that the agent:
+- Stays within its defined scope
+- Uses available tools appropriately
+- Produces consistent, reliable results
+- Handles errors gracefully
+
+## Iteration Tips
+
+<Accordion>
+  <AccordionItem title="Clarify the Purpose">
+    If the agent is unfocused, refine the description with more specific guidance.
+  </AccordionItem>
+  <AccordionItem title="Add or Remove Tools">
+    Too many tools can confuse the agent. Start with the essentials.
+  </AccordionItem>
+  <AccordionItem title="Adjust Constraints">
+    If the agent goes off-track, add clearer boundaries.
+  </AccordionItem>
+  <AccordionItem title="Test Edge Cases">
+    Try unusual inputs to ensure the agent handles them gracefully.
+  </AccordionItem>
+</Accordion>
+
+## Best Practices
+
+1. **Start Small** — Build a simple agent first, then add complexity
+2. **Be Specific** — Clear descriptions lead to better performance
+3. **Test Thoroughly** — Validate with real use cases
+4. **Iterate** — Refine based on feedback and usage
+5. **Monitor** — Track performance and user satisfaction
+
+## Next Steps
+
+- [Add tools to your agent](/guides/adding-tools)
+- [Connect a knowledge base](/guides/knowledge-base)
+- [Explore examples](/examples/research-agent)

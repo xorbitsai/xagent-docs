@@ -1,0 +1,87 @@
+---
+title: "Installation"
+description: "Detailed installation options for Xagent"
+icon: "download"
+---
+
+# Installation
+
+Xagent supports multiple deployment options depending on your needs.
+
+## Docker Compose (Recommended)
+
+The fastest way to get started.
+
+```bash
+git clone https://github.com/xorbitsai/xagent.git
+cd xagent
+cp example.env .env
+docker compose up -d
+```
+
+**Access:** `http://localhost:80`
+
+## Manual Installation
+
+For more control over your deployment.
+
+### Requirements
+
+- Python 3.10+
+- PostgreSQL 14+
+- Redis 6+
+
+### Backend Setup
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment
+cp example.env .env
+# Edit .env with your settings
+
+# Run database migrations
+alembic upgrade head
+
+# Start backend server
+python -m uvicorn main:app --reload
+```
+
+### Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Configuration
+
+See [Configuration](/deployment/configuration) for detailed setup options.
+
+## Production Deployment
+
+For production deployments, see:
+- [Self-hosted deployment](/deployment/self-hosted)
+- [Environment variables](/deployment/environment)
+
+## System Requirements
+
+### Minimum
+
+- CPU: 4 cores
+- RAM: 8 GB
+- Disk: 20 GB
+
+### Recommended
+
+- CPU: 8+ cores
+- RAM: 16+ GB
+- Disk: 50+ GB SSD
+
+## Next Steps
+
+- [Configure your environment](/deployment/configuration)
+- [Set up LLM providers](/deployment/configuration#models)
+- [Build your first agent](/guides/quick-win)

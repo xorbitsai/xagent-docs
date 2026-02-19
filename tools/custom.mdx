@@ -1,0 +1,287 @@
+---
+title: "Custom Tools via MCP"
+description: "Integrating custom tools using MCP protocol"
+icon: "code"
+---
+
+# Custom Tools via MCP
+
+Extend Xagent's capabilities by integrating custom tools through MCP (Model Context Protocol).
+
+## What is MCP?
+
+MCP (Model Context Protocol) is a protocol for connecting AI assistants to external tools and data sources. It enables:
+
+- **Dynamic tool loading** - Load tools from external servers
+- **Service integration** - Connect to any HTTP service
+- **Custom functionality** - Add specialized capabilities
+- **Multi-tenant support** - User-isolated tool access
+
+## How MCP Tools Work
+
+When an agent needs to use a custom tool:
+
+1. **Request** - Agent generates tool call request
+2. **MCP Routing** - MCP adapter routes to appropriate MCP server
+3. **Execution** - MCP server executes the tool
+4. **Response** - Results returned through MCP adapter
+5. **Output** - Agent uses tool results in response
+
+## MCP Tool Types
+
+### Built-in MCP Support
+
+Xagent includes built-in MCP tools for common scenarios:
+
+**Agent Tools**
+- Use published agents as tools
+- Task delegation and composition
+- Multi-agent workflows
+
+**Server Requirements**
+- HTTP endpoint
+- JSON request/response format
+- Tool discovery endpoint
+
+## Using MCP Tools
+
+### Enabling MCP Tools
+
+To use MCP tools in your agents:
+
+1. Go to **Build** page
+2. Create or edit an agent
+3. In the **Tools** section:
+   - Enable **mcp** tool category
+   - Agent can now access MCP tools
+
+### Configuration
+
+MCP tools are configured at the system level:
+- MCP servers registered in Xagent settings
+- Tools automatically available to agents with MCP enabled
+- User permissions control tool access
+
+### Agent Usage
+
+Once enabled, agents can:
+- Discover available MCP tools
+- Call tools with appropriate parameters
+- Handle tool results
+- Chain MCP tools with other tools
+
+## Building MCP Servers
+
+### MCP Server Requirements
+
+An MCP server must implement:
+
+**Tool Discovery Endpoint**
+```http
+GET /tools
+```
+
+Response:
+```json
+{
+  "tools": [
+    {
+      "name": "my_custom_tool",
+      "description": "Description of what the tool does",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "param1": {
+            "type": "string",
+            "description": "Parameter description"
+          }
+        },
+        "required": ["param1"]
+      }
+    }
+  ]
+}
+```
+
+**Tool Execution Endpoint**
+```http
+POST /tools/{tool_name}
+```
+
+Request:
+```json
+{
+  "param1": "value1"
+}
+```
+
+Response:
+```json
+{
+  "result": "Tool execution result",
+  "status": "success"
+}
+```
+
+### Example MCP Server
+
+Simple Python MCP server example:
+
+```python
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class ToolRequest(BaseModel):
+    query: str
+
+@app.get("/tools")
+async def list_tools():
+    return {
+        "tools": [
+            {
+                "name": "company_database_search",
+                "description": "Search internal company database",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "query": {
+                            "type": "string",
+                            "description": "Search query"
+                        }
+                    },
+                    "required": ["query"]
+                }
+            }
+        ]
+    }
+
+@app.post("/tools/company_database_search")
+async def search_database(request: ToolRequest):
+    # Implement your custom logic here
+    result = query_company_database(request.query)
+    return {
+        "result": result,
+        "status": "success"
+    }
+
+def query_company_database(query: str) -> str:
+    # Your custom implementation
+    return f"Database results for: {query}"
+```
+
+### Deploying MCP Servers
+
+**Options:**
+
+1. **Internal Server** - Host within your network
+   - Fastest performance
+   - Full control
+   - Direct database access
+
+2. **Cloud Service** - Deploy to cloud (AWS, GCP, Azure)
+   - Scalable
+   - Accessible from anywhere
+   - Managed infrastructure
+
+3. **Serverless** - Use AWS Lambda, Google Cloud Functions
+   - Pay-per-use
+   - Auto-scaling
+   - No server management
+
+## Security Considerations
+
+### Authentication
+
+**MCP Server Authentication:**
+- API keys in request headers
+- OAuth2 tokens
+- Mutual TLS
+
+**Example:**
+```http
+POST /tools/my_tool
+Authorization: Bearer YOUR_API_KEY
+```
+
+### Authorization
+
+**User-Level Access Control:**
+- MCP tools respect user permissions
+- Tools filtered by allowed_collections
+- Admin-controlled tool availability
+
+### Best Practices
+
+- **Validate inputs** - Sanitize all parameters
+- **Rate limiting** - Prevent abuse
+- **Logging** - Track tool usage
+- **Error handling** - Return clear error messages
+- **Timeouts** - Set appropriate timeouts
+
+## Troubleshooting
+
+### MCP Tools Not Available
+
+**Check:**
+- MCP server is running and accessible
+- Server registered in Xagent settings
+- Agent has **mcp** tool category enabled
+- User has permission to access tools
+
+### Tool Calls Failing
+
+**Verify:**
+- Tool endpoint is correct
+- Parameters match expected schema
+- Authentication is configured
+- Network connectivity to MCP server
+
+### Slow Tool Execution
+
+**Optimize:**
+- Check MCP server performance
+- Reduce response payload size
+- Use caching for frequently accessed data
+- Consider server location/latency
+
+## Advanced Features
+
+### Tool Composition
+
+Chain MCP tools with other tools:
+```
+1. User request
+2. Agent calls custom MCP tool (e.g., query database)
+3. Uses results with built-in tools (e.g., Python executor)
+4. Generates final response
+```
+
+### Agent-as-Tool
+
+Publish agents as tools for other agents:
+- Create specialized agents
+- Publish them
+- Other agents can use them as tools
+- Enables multi-agent workflows
+
+### Dynamic Tool Discovery
+
+MCP servers can:
+- Add/remove tools dynamically
+- Update tool descriptions
+- Change parameters
+- Xagent discovers changes automatically
+
+## Resources
+
+- [MCP Specification](https://modelcontextprotocol.io) - Official protocol documentation
+- [Built-in Tools](/tools/built-in) - Reference for Xagent's built-in tools
+- [Building Agents](/agents/building) - Configure tools in your agents
+
+## Next Steps
+
+- [Tools Overview](/tools/overview) - Learn about tool categories
+- [Built-in Tools](/tools/built-in) - Reference for all built-in tools
+- [Building Agents](/agents/building) - Create tool-enabled agents

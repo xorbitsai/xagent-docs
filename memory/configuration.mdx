@@ -1,0 +1,374 @@
+---
+title: "Memory Configuration"
+description: "Configuring memory settings for optimal performance"
+icon: "sliders"
+---
+
+# Memory Configuration
+
+Configure memory settings to optimize agent performance and behavior.
+
+## Storage Configuration
+
+### In-Memory Storage
+
+**Best for:** Development, testing, short-term tasks
+
+**Configuration:**
+```yaml
+memory:
+  type: "in_memory"
+```
+
+**Characteristics:**
+- No configuration required
+- Automatically enabled by default
+- Fast performance
+- No persistence (data lost on restart)
+
+**When to use:**
+- Testing and development
+- Temporary tasks
+- Quick prototyping
+- Low-memory requirements
+
+### Vector Database Storage (LanceDB)
+
+**Best for:** Production, long-term learning, semantic search
+
+**Configuration:**
+```yaml
+memory:
+  type: "lancedb"
+  db_dir: "/path/to/memory/database"
+  collection_name: "memories"
+  embedding_model: "text-embedding-v4"  # Optional
+  similarity_threshold: 0.8
+```
+
+**Parameters:**
+
+**db_dir** (required)
+- Directory path for LanceDB storage
+- Automatically created if doesn't exist
+- Persists across restarts
+
+**collection_name** (optional, default: "memories")
+- Name of the LanceDB collection
+- Multiple agents can share or use separate collections
+- Useful for organizing memory by agent or user
+
+**embedding_model** (optional)
+- Embedding model for semantic search
+- Uses configured embedding models if not specified
+- Required for semantic similarity search
+
+**similarity_threshold** (optional, default: 1.0)
+- Minimum similarity score for memory retrieval
+- Range: 0.0 to 1.0
+- Higher = more strict filtering
+- Lower = more memories retrieved
+
+<Info>
+If embedding_model is not configured, LanceDB memory store falls back to text-based search.
+</Info>
+
+## Search Configuration
+
+### Similarity Threshold
+
+Controls how selective memory retrieval is:
+
+**High Threshold (0.8-1.0)**
+- Only very similar memories retrieved
+- Fewer results, higher precision
+- Best for: Specific, focused domains
+
+**Medium Threshold (0.5-0.8)**
+- Balanced similarity and coverage
+- Recommended for most use cases
+- Good mix of precision and recall
+
+**Low Threshold (0.3-0.5)**
+- More memories retrieved
+- Higher recall, lower precision
+- Best for: Exploratory tasks, diverse patterns
+
+### Result Limit (k)
+
+Controls maximum number of memories retrieved:
+
+```yaml
+memory:
+  search:
+    k: 5  # Return top 5 most relevant memories
+```
+
+**Guidelines:**
+- **Small (3-5)**: Focused, fast retrieval
+- **Medium (5-10)**: Balanced performance
+- **Large (10+)**: Comprehensive context, slower
+
+### Search Types
+
+**Semantic Search** (default when embedding model configured)
+- Uses vector similarity
+- Finds conceptually related memories
+- Best for: Pattern matching, analogies
+
+**Text Search** (fallback)
+- Keyword matching
+- Exact phrase matching
+- Best for: Specific terms, precise lookups
+
+## Memory Management
+
+### Automatic Cleanup
+
+Configure automatic memory maintenance:
+
+```yaml
+memory:
+  cleanup:
+    enabled: true
+    retention_days: 90
+    min_access_count: 2
+    deduplicate: true
+```
+
+**Parameters:**
+
+**retention_days**
+- Delete memories older than specified days
+- Default: No automatic deletion
+- Set based on your needs (e.g., 30, 90, 365)
+
+**min_access_count**
+- Keep frequently accessed memories
+- Delete unused memories below threshold
+- Helps maintain quality
+
+**deduplicate**
+- Automatically merge duplicate memories
+- Combines similar content
+- Reduces memory size
+
+### Manual Management
+
+Users and admins can:
+- **View memories** - Browse stored memories
+- **Delete memories** - Remove specific memories
+- **Export memories** - Download memory data
+- **Clear all** - Delete all memories (reset)
+
+## Performance Tuning
+
+### For Speed
+
+**Optimize for fast retrieval:**
+- Use in-memory storage
+- Lower k value (fewer results)
+- Higher similarity threshold
+- Filter by category
+
+**Example:**
+```yaml
+memory:
+  type: "in_memory"
+  search:
+    k: 3
+    similarity_threshold: 0.8
+    filters:
+      category: "execution"
+```
+
+### For Quality
+
+**Optimize for best results:**
+- Use LanceDB with semantic search
+- Medium k value (5-10)
+- Medium similarity threshold
+- No aggressive filtering
+
+**Example:**
+```yaml
+memory:
+  type: "lancedb"
+  db_dir: "/var/lib/xagent/memory"
+  embedding_model: "text-embedding-v4"
+  search:
+    k: 8
+    similarity_threshold: 0.6
+```
+
+### For Storage Efficiency
+
+**Optimize for memory usage:**
+- Enable automatic cleanup
+- Short retention period
+- Aggressive deduplication
+- Periodic export and archive
+
+**Example:**
+```yaml
+memory:
+  type: "lancedb"
+  cleanup:
+    enabled: true
+    retention_days: 30
+    min_access_count: 3
+    deduplicate: true
+```
+
+## Agent Configuration
+
+Memory is automatically available for all agents. The LLM decides:
+- When to store memories
+- What to store in each memory
+- Which memories to retrieve for each task
+- How to use retrieved memories
+
+<Info>
+Users cannot directly configure agent memory behavior. Memory operations are fully automatic and managed by the LLM.
+</Info>
+
+## User Privacy Options
+
+While memory is automatic, users have some privacy controls:
+
+**Memory Status**
+- Check if memory is enabled
+- View stored memories
+- See what Xagent has learned
+
+**Privacy Controls**
+- **Delete memories** - Remove specific or all memories
+- **Export data** - Download your memory data
+- **Disable memory** - Contact admin to disable memory for your account
+
+<Info>
+Memory storage type, search settings, and cleanup policies are system-level configurations managed by administrators.
+</Info>
+
+## Troubleshooting
+
+### Memory Not Working
+
+**Check:**
+- Memory is enabled in configuration
+- Storage backend is accessible
+- Embedding model configured (for LanceDB)
+- Sufficient disk space
+
+### Poor Search Results
+
+**Solutions:**
+- Adjust similarity threshold
+- Increase k value
+- Check memory content quality
+- Verify embeddings are working
+- Try text search fallback
+
+### Slow Performance
+
+**Optimize:**
+- Reduce k value
+- Increase similarity threshold
+- Filter by category
+- Consider in-memory storage
+- Check database performance
+
+### High Memory Usage
+
+**Reduce:**
+- Enable automatic cleanup
+- Shorten retention period
+- Increase min_access_count
+- Deduplicate more aggressively
+- Export and archive old memories
+
+## System Configuration Examples
+
+<Info>These configurations are set by system administrators, not by end users.</Info>
+
+### For Development Environments
+
+System administrators configure:
+
+```yaml
+memory:
+  type: "in_memory"  # Fast, no persistence needed
+```
+
+**Characteristics:**
+- Fast performance for testing
+- No data persistence across restarts
+- Suitable for development and testing
+
+### For Production Environments
+
+System administrators configure:
+
+```yaml
+memory:
+  type: "lancedb"
+  db_dir: "/var/lib/xagent/memory"
+  embedding_model: "text-embedding-v4"
+  search:
+    k: 5
+    similarity_threshold: 0.7
+  cleanup:
+    enabled: true
+    retention_days: 90
+    deduplicate: true
+```
+
+**Characteristics:**
+- Persistent storage
+- Semantic search capabilities
+- Automatic cleanup and maintenance
+- Suitable for production use
+
+### For Privacy-Sensitive Applications
+
+System administrators configure:
+
+```yaml
+memory:
+  type: "lancedb"
+  db_dir: "/secure/memory"
+  encryption: true
+  cleanup:
+    enabled: true
+    retention_days: 30
+```
+
+**Characteristics:**
+- Encrypted storage
+- Shorter retention period
+- Enhanced privacy protections
+
+## Monitoring
+
+### Memory Statistics
+
+Track memory effectiveness:
+- **Total memories stored**
+- **Retrieval frequency**
+- **Average relevance scores**
+- **Category distribution**
+- **Storage size**
+
+### Performance Metrics
+
+Monitor memory performance:
+- **Search latency**
+- **Retrieval accuracy**
+- **Memory hit rate**
+- **Deduplication savings**
+
+## Next Steps
+
+- [Memory Overview](/memory/overview) - Learn about memory concepts
+- [Memory Types](/memory/types) - Understand memory categories
+- [Building Agents](/agents/building) - Create memory-enabled agents

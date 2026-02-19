@@ -1,0 +1,328 @@
+---
+title: "Building Agents"
+description: "Creating and configuring custom agents"
+icon: "wrench"
+---
+
+# Building Agents
+
+Learn how to create, configure, and publish custom agents for your specific needs.
+
+## Getting Started
+
+### Prerequisites
+
+Before building an agent, ensure you have:
+- **At least one LLM configured** - Required for agent to function
+- **Optional**: Knowledge bases, skills, or custom tools
+- **Optional**: Image generation models for visual tasks
+
+## Creating an Agent
+
+### Step 1: Navigate to Build Page
+
+Go to **Build** in the left sidebar to access the agent management interface.
+
+### Step 2: Create New Agent
+
+Click **New Agent** to open the agent configuration editor.
+
+![Build Agent](/images/build-agent.png)
+
+The editor has a two-column layout:
+- **Left panel**: Configuration options
+- **Right panel**: Live preview chat interface
+
+## Agent Configuration
+
+### Basic Information
+
+**Name** (Required)
+- Maximum 200 characters
+- Must be unique within your account
+- Choose a descriptive name for your agent
+
+**Description** (Optional)
+- Brief explanation of what the agent does
+- Helps users understand the agent's purpose
+
+**Logo** (Optional)
+- Upload an image to represent your agent
+- Displayed in agent listings and chat interface
+
+### Execution Mode
+
+Choose how your agent processes tasks:
+
+**React Mode** (Default)
+- ReAct loop: Reasoning → Acting cycle
+- Best for: Most general-purpose tasks
+- Agent thinks, takes action, observes results, repeats
+
+**Graph Mode**
+- DAG planning-execution
+- Best for: Complex, multi-step workflows
+- Agent plans all steps first, then executes
+
+<Info>
+Use React mode for most tasks. Switch to Graph mode for complex workflows that require careful planning.
+</Info>
+
+### AI Models
+
+Configure models for different purposes:
+
+**General Model** (Required)
+- The main LLM for all task execution
+- Handles planning, reasoning, and decision making
+- Example: Claude 4.6 Sonnet, GPT 5.2
+
+**Fast Model** (Optional)
+- Lightweight model for simple operations
+- Reduces cost and improves speed
+- Automatically used for simple steps identified during planning
+
+**Visual Model** (Optional)
+- Multimodal LLM for image understanding
+- Required for image-related tasks
+- Enables tools like `understand_images`, `describe_images`
+
+**Compact Model** (Optional)
+- Specialized model for compressing long conversations
+- Maintains context across extended sessions
+- Triggered when conversation exceeds token threshold
+
+### Capabilities
+
+**Knowledge Bases** (Optional)
+- Add domain-specific knowledge to your agent
+- Agent can search and retrieve relevant information
+- Upload documents or select existing knowledge bases
+
+**Skills** (Optional)
+- Pre-built capabilities for specific tasks
+- Enhance agent with specialized functionality
+- Examples: Web search, database operations
+
+**Tools** (Optional)
+- Select tool categories to enable:
+  - **basic**: Basic tools (web search, calculator, etc.)
+  - **file**: File upload and management
+  - **vision**: Image understanding
+  - **image**: Image generation and editing
+  - **knowledge**: Knowledge base operations
+  - **mcp**: MCP protocol tools
+  - **browser**: Browser automation
+  - **ppt**: PowerPoint processing
+  - **office**: Office document processing
+
+<Info>
+Tools are automatically enabled based on selected categories. Agent will only have access to tools in chosen categories.
+</Info>
+
+### Suggested Prompts
+
+Provide example prompts to help users get started:
+- "Analyze this sales data and create a report"
+- "Generate a marketing plan for our new product"
+- "Review these documents and summarize key points"
+
+These prompts appear as suggestions when users chat with your agent.
+
+## Testing Your Agent
+
+### Live Preview
+
+Use the preview panel on the right to test your agent in real-time:
+
+1. **Type a message** in the chat input
+2. **Send and observe** how your agent responds
+3. **Upload files** to test file handling
+4. **Iterate** on configuration based on results
+
+The preview uses your current configuration without saving:
+- Test different settings before committing
+- See immediate results
+- Verify tool access and knowledge retrieval
+
+<Info>
+Preview mode creates a temporary execution environment. Changes are only saved when you click Save.
+</Info>
+
+### What to Test
+
+- **Response quality**: Does the agent understand the task?
+- **Tool usage**: Are the right tools being used?
+- **Knowledge retrieval**: Does it find relevant information?
+- **Execution mode**: React vs Graph behavior
+- **Model selection**: Are the configured models working?
+
+## Saving Your Agent
+
+### Auto-Save
+
+Your configuration is automatically validated but not saved until you explicitly save.
+
+### Manual Save
+
+Click **Save** to persist your agent configuration:
+- Agent is saved with **draft** status
+- Only you can see and edit draft agents
+- Saved agents appear in your Build page list
+
+### Editing Existing Agents
+
+1. Go to **Build** page
+2. Click **Edit** on the agent card
+3. Make changes to configuration
+4. Click **Save** to update
+
+## Publishing Your Agent
+
+### When to Publish
+
+Publish your agent when:
+- Configuration is complete and tested
+- Ready to share with others
+- Production-ready workflows
+
+### Publishing Process
+
+1. **Save** your agent first
+2. Click **Publish** button
+3. Agent status changes from **draft** to **published**
+4. Publication timestamp is recorded
+5. Agent becomes visible to authorized users
+
+### Unpublishing
+
+To unpublish an agent:
+1. Go to **Build** page
+2. Click **Unpublish** on the published agent
+3. Agent status returns to **draft**
+4. Agent is no longer accessible to users
+
+<Info>
+Unpublishing doesn't delete the agent. You can republish it later.
+</Info>
+
+## Chatting with Your Agent
+
+### Starting a Conversation
+
+Once published, users can chat with your agent:
+
+1. **Find the agent** in the agents list
+2. **Click on the agent** to open its detail page
+3. **Type a message** or use a suggested prompt
+4. **Agent responds** using its configuration
+
+### Agent Execution
+
+When chatting, the agent:
+- Uses its **configured models** for reasoning
+- Follows its **execution mode** (React or Graph)
+- Accesses **enabled tools** based on tool categories
+- Retrieves information from **knowledge bases**
+- Applies its **instructions** and **skills**
+
+### Task Creation
+
+Each conversation creates a task:
+- Task is linked to the agent
+- Execution uses agent's configuration
+- Results are saved in task history
+- Can view full execution trace
+
+## Agent Templates
+
+### Using Templates
+
+Jump-start agent creation with pre-built templates:
+1. Go to **Build** page
+2. Click **New Agent**
+3. Select a template
+4. Template populates configuration
+5. Customize as needed
+
+### Available Templates
+
+Common agent templates include:
+- **Customer Support**: FAQ handling, documentation search
+- **Data Analyst**: Data processing, visualization, reporting
+- **Research Assistant**: Information gathering, synthesis
+- **Content Creator**: Writing, editing, image generation
+
+<Info>
+Templates provide starting points. Always test and customize for your specific use case.
+</Info>
+
+## Best Practices
+
+### Start Simple
+
+- Begin with React mode for most use cases
+- Enable only necessary tool categories
+- Add knowledge bases after testing basic functionality
+- Use preview to iterate quickly
+
+### Define Clear Purpose
+
+- Specific name and description
+- Focused skill set
+- Relevant suggested prompts
+- Appropriate tool access
+
+### Test Thoroughly
+
+- Use preview before publishing
+- Test with various inputs
+- Verify tool access is appropriate
+- Check knowledge retrieval accuracy
+
+### Iterate and Improve
+
+- Monitor agent performance
+- Gather user feedback
+- Update configuration as needed
+- Republish after changes
+
+## Troubleshooting
+
+### Agent Not Responding
+
+**Check:**
+- General model is configured
+- Model has available API quota
+- Network connectivity is working
+
+### Tools Not Available
+
+**Verify:**
+- Tool categories are selected
+- Models for specific tools are configured (e.g., Visual model for vision tools)
+- Tool permissions are properly set
+
+### Knowledge Not Retrieved
+
+**Check:**
+- Knowledge bases are attached
+- Documents are indexed
+- Embedding model is configured
+- Search queries are specific
+
+### Preview Not Working
+
+**Try:**
+- Refreshing the page
+- Re-opening the editor
+- Checking browser console for errors
+- Verifying model configuration
+
+## Next Steps
+
+- [Templates](/templates/overview) - Explore pre-built agent templates
+- [Knowledge Base](/knowledge/overview) - Add domain knowledge to your agent
+- [Tools](/tools/overview) - Understand available tools
+- [Models](/models/overview) - Configure AI models for your agent
+- [Tasks](/tasks/overview) - Learn about task execution

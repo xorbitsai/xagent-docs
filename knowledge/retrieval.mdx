@@ -1,0 +1,263 @@
+---
+title: "Knowledge Retrieval"
+description: "Retrieving and using knowledge from your knowledge base"
+icon: "search"
+---
+
+# Knowledge Retrieval
+
+Retrieve relevant information from your knowledge base during task execution.
+
+## How It Works
+
+Xagent uses RAG (Retrieval-Augmented Generation) to enhance responses with knowledge from your knowledge base:
+
+1. **Understand Request** - Xagent analyzes your question
+2. **Search Knowledge Base** - Finds relevant documents
+3. **Retrieve Context** - Extracts matching content
+4. **Generate Response** - Combines knowledge with reasoning
+
+## Using Knowledge in Tasks
+
+![Search Documents in Task](/images/search-documents.png)
+
+### Natural Language Queries
+
+In regular tasks, simply describe what you want to know in natural language:
+
+**Examples:**
+```
+"Search the product documentation for how to reset the device"
+"What does the employee handbook say about remote work?"
+"Check the knowledge base for troubleshooting steps for error 404"
+"Look up the return policy in our documentation"
+```
+
+Xagent will:
+- Automatically search relevant knowledge bases
+- Find matching documents
+- Extract relevant information
+- Provide answers based on retrieved content
+
+### When Knowledge is Used
+
+Xagent automatically uses knowledge base when:
+- Your question references specific information
+- You ask to search or look up documentation
+- You mention knowledge base, documents, or manuals
+- You ask for company policies, procedures, or guidelines
+
+## Using Knowledge in Agents
+
+### Configuring Agent Knowledge
+
+When building an agent, you can specify which knowledge bases to use:
+
+1. Go to **Build** page
+2. Create or edit an agent
+3. In the **Knowledge Bases** section:
+   - Select one or more knowledge bases
+   - Agent will only search these knowledge bases
+   - Useful for domain-specific agents
+
+**Example:**
+- **Customer Support Agent** - Attach product documentation and FAQ knowledge bases
+- **HR Assistant** - Attach employee handbook and policy knowledge bases
+- **Technical Support Agent** - Attach troubleshooting and API documentation
+
+### Agent Behavior
+
+When an agent has knowledge bases configured:
+- Agent automatically searches when questions match the domain
+- Only searches specified knowledge bases
+- Provides answers based on retrieved knowledge
+- Cites sources when available
+
+## Search Options
+
+### Search Types
+
+**Hybrid Search** (Default)
+- Combines dense (vector) and sparse (keyword) search
+- Best balance of relevance and coverage
+- Recommended for most use cases
+
+**Dense Search**
+- Pure vector similarity search
+- Better for semantic understanding
+- Good for conceptual queries
+
+**Sparse Search**
+- Pure keyword matching
+- Better for exact terms
+- Good for specific phrases or names
+
+### Search Parameters
+
+**Top K** (Default: 5)
+- Maximum number of results per knowledge base
+- Higher values = more results, slower
+- Adjust based on your needs
+
+**Min Score** (Default: 0.3)
+- Minimum relevance threshold (0.0 - 1.0)
+- Filters out low-quality matches
+- Higher = stricter filtering
+
+## Search Results
+
+### What You Get
+
+When Xagent searches the knowledge base, results include:
+
+**Content**
+- Relevant text passages from documents
+- Document source and name
+- Section or page reference
+
+**Metadata**
+- Relevance score
+- Knowledge base name
+- Document information
+
+**Citations**
+- Source document name
+- Page or section reference
+- Link to original document (if available)
+
+### Interpreting Results
+
+**High Score (0.7+)**
+- Very relevant to your query
+- Directly addresses the question
+- Primary source for answer
+
+**Medium Score (0.4-0.7)**
+- Somewhat relevant
+- Contains related information
+- May need additional context
+
+**Low Score (0.3-0.4)**
+- Loosely related
+- General background information
+- Use with caution
+
+## Tips for Better Retrieval
+
+### For Users
+
+**Be Specific**
+```
+Good: "How do I configure API keys in the production environment?"
+Less effective: "How do I configure it?"
+```
+
+**Use Domain Language**
+```
+Good: "What's the SLA for API rate limiting?"
+Less effective: "What are the limits?"
+```
+
+**Mention Knowledge Base**
+```
+Good: "Search the documentation for Docker setup instructions"
+Less effective: "How do I set up Docker?"
+```
+
+### For Agent Builders
+
+**Select Relevant Knowledge Bases**
+- Only attach knowledge bases the agent needs
+- Too many = slower, less accurate
+- Group related documents together
+
+**Organize by Topic**
+- Separate knowledge bases by domain
+- Product docs vs. policies vs. procedures
+- Makes results more relevant
+
+**Keep Knowledge Bases Updated**
+- Remove outdated documents
+- Add new information regularly
+- Re-upload when content changes significantly
+
+### For Knowledge Base Managers
+
+**Quality Content**
+- Well-formatted documents process better
+- Clear structure and headings
+- Remove duplicates and outdated content
+
+**Appropriate Chunking**
+- Smaller chunks = more precise results
+- Larger chunks = more context
+- Adjust overlap for your use case
+
+**Regular Maintenance**
+- Monitor search quality
+- Update content regularly
+- Remove failed or duplicate documents
+
+## Troubleshooting
+
+### No Results Found
+
+**Possible reasons:**
+- Knowledge base doesn't contain relevant information
+- Search terms don't match document content
+- Min score threshold too high
+- Wrong knowledge base selected
+
+**Solutions:**
+- Try different search terms
+- Check knowledge base has relevant documents
+- Lower min score threshold
+- Search broader domain
+
+### Irrelevant Results
+
+**Possible reasons:**
+- Documents too generic
+- Chunk size too large
+- Knowledge base contains unrelated content
+- Search query too vague
+
+**Solutions:**
+- Be more specific in your query
+- Filter knowledge base content
+- Adjust chunk size
+- Use domain-specific terminology
+
+### Slow Search
+
+**Possible reasons:**
+- Too many knowledge bases
+- Large knowledge base size
+- High top_k value
+- Slow embedding model
+
+**Solutions:**
+- Reduce number of knowledge bases
+- Lower top_k value
+- Use faster embedding model
+- Clean up knowledge base
+
+### Agent Not Using Knowledge
+
+**Check:**
+- Knowledge bases are attached to agent
+- Agent has `knowledge` tool category enabled
+- Query matches knowledge base domain
+- Knowledge base contains relevant content
+
+**Verify:**
+- Test agent with knowledge-specific questions
+- Check agent configuration in Build page
+- Confirm knowledge bases are published
+
+## Next Steps
+
+- [Knowledge Base Overview](/knowledge/overview) - Learn about knowledge features
+- [Uploading Knowledge](/knowledge/uploading) - Add documents to your knowledge base
+- [Embedding Models](/models/embedding) - Configure vector embeddings
+- [Building Agents](/agents/building) - Create agents with knowledge

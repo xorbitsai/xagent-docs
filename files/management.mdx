@@ -1,0 +1,296 @@
+---
+title: "File Management"
+description: "Managing files during task execution"
+icon: "folder"
+---
+
+# File Management
+
+Agents can manage files in the task workspace during execution - reading, writing, listing, and editing files as needed.
+
+## How Files Are Managed
+
+### Task Workspace
+
+Each task has an isolated workspace:
+- **Automatic creation** - Created when task starts
+- **Isolated storage** - Only current task can access
+- **Temporary** - Exists only during task execution
+- **Auto-cleanup** - Removed after task completes
+
+### File Lifecycle
+
+```
+1. Upload → File stored in task workspace
+2. Access → Agent reads file when needed
+3. Process → Agent analyzes and processes content
+4. Output → Agent can create new files
+5. Download → You can download files before task ends
+6. Cleanup → Workspace deleted after task
+```
+
+<Info>
+Important: Download any generated files you want to keep before the task ends. Files are automatically cleaned up after task completion.
+</Info>
+
+## Agent File Operations
+
+### Reading Files
+
+Agents use the `read_file` tool to access file contents:
+
+**Text Files** - Direct content reading
+```
+read_file(file_path="data.txt")
+```
+
+**Documents** - Parse and extract content
+```
+read_file(file_path="report.pdf")
+read_file(file_path="document.docx")
+```
+
+**Spreadsheets** - Read structured data
+```
+read_file(file_path="data.csv")
+read_file(file_path="sales.xlsx")
+```
+
+**Images** - Use vision tools to analyze
+```
+understand_images(images=["chart.png"])
+```
+
+### Writing Files
+
+Agents use `write_file` tool to create new files:
+
+**Text Output**
+```
+write_file(
+    file_path="summary.txt",
+    content="Task summary..."
+)
+```
+
+**Reports**
+```
+write_file(
+    file_path="analysis_report.md",
+    content="# Analysis Report\n\n..."
+)
+```
+
+**Code**
+```
+write_file(
+    file_path="script.py",
+    content="# Python code\nprint('hello')"
+)
+```
+
+**Data Export**
+```
+write_file(
+    file_path="results.json",
+    content=json.dumps(data)
+)
+```
+
+### Listing Files
+
+Agents use `list_files` tool to browse workspace:
+
+```
+list_files(directory_path=".")
+list_files(directory_path="./data")
+list_files(pattern="*.csv")
+```
+
+### Editing Files
+
+Agents use `edit_file` tool to modify existing files:
+
+**Replace Content**
+```
+edit_file(
+    file_path="config.txt",
+    operations=[{
+        "operation": "replace",
+        "old_text": "old value",
+        "new_text": "new value"
+    }]
+)
+```
+
+**Insert Content**
+```
+edit_file(
+    file_path="document.md",
+    operations=[{
+        "operation": "insert",
+        "old_text": "Section header",
+        "new_text": "Section header\n\nNew content here"
+    }]
+)
+```
+
+## File Operations in Practice
+
+### Data Processing Example
+
+```
+User: [Uploads sales.csv]
+User: "Analyze data and save summary"
+
+Agent:
+1. list_files() - Sees sales.csv
+2. read_file(file_path="sales.csv") - Loads data
+3. python_executor(code="...") - Analyzes with pandas
+4. write_file(file_path="summary.txt") - Saves summary
+5. write_file(file_path="chart.png") - Saves visualization
+```
+
+### Document Transformation Example
+
+```
+User: [Uploads document.docx]
+User: "Convert to Markdown and add metadata"
+
+Agent:
+1. read_file(file_path="document.docx") - Reads content
+2. Extracts and formats as Markdown
+3. write_file(file_path="document.md") - Saves Markdown
+4. edit_file(file_path="document.md") - Adds metadata
+```
+
+### Code Analysis Example
+
+```
+User: [Uploads app.py]
+User: "Review and fix bugs"
+
+Agent:
+1. read_file(file_path="app.py") - Reads code
+2. Analyzes with LLM
+3. Identifies issues
+4. edit_file(file_path="app.py") - Makes fixes
+```
+
+## Downloading Files
+
+### Before Task Completion
+
+Download files before task ends:
+1. Check execution results
+2. Find generated files in workspace
+3. Download each file you want to keep
+4. Save to your local device
+
+### File Location
+
+Generated files are stored in task workspace:
+- Temporary path specific to task
+- Accessible during task execution
+- Listed in execution results
+- Must be downloaded before task ends
+
+## File Security
+
+### Isolation
+
+- **Per-task workspaces** - Each task has isolated storage
+- **No cross-task access** - Tasks can't access each other's files
+- **Automatic cleanup** - Files removed after task
+
+### Privacy
+
+- **Encrypted storage** - Files encrypted at rest
+- **Secure transfer** - Uploads use encryption
+- **No persistence** - Files don't persist after task
+
+### Access Control
+
+- **User-scoped** - Only your tasks can access your files
+- **Task-scoped** - Only current task can access its workspace
+- **Agent-managed** - Agents operate within security constraints
+
+## Best Practices
+
+### For Users
+
+**Before Tasks:**
+- Organize files before uploading
+- Use descriptive filenames
+- Remove sensitive information
+- Check file sizes
+
+**During Tasks:**
+- Provide clear file context in task description
+- Reference specific files when needed
+- Ask agent to confirm file access
+
+**After Tasks:**
+- Download all important outputs
+- Review generated files
+- Let workspace clean up automatically
+
+### For Agent Builders
+
+When building agents that work with files:
+- Enable **file** tool category in agent configuration
+- Consider enabling **vision** tools for image analysis
+- Enable **basic** tools for data processing
+- Provide instructions for file handling in agent prompts
+
+## Troubleshooting
+
+### Agent Can't Find File
+
+**Check:**
+- File was successfully uploaded
+- Filename is correct
+- File is in task workspace
+- Task is still running
+
+**Solutions:**
+- Verify file appears in attachments
+- Use exact filename in task description
+- Resubmit task if needed
+
+### File Not Generated
+
+**Possible reasons:**
+- Agent didn't complete file operation
+- Error during file creation
+- Wrong file path used
+
+**Solutions:**
+- Check execution logs
+- Look for error messages
+- Ask agent to retry file creation
+
+### Can't Download File
+
+**Check:**
+- Task is still running
+- File was actually created
+- Download permissions
+
+**Solutions:**
+- Wait for task to complete
+- Verify file exists in workspace
+- Contact administrator if issue persists
+
+### Workspace Full
+
+**Prevention:**
+- Delete unnecessary generated files
+- Ask agent to clean up intermediate files
+- Compress outputs when possible
+
+## Next Steps
+
+- [Files Overview](/files/overview) - Learn about files in Xagent
+- [File Upload](/files/upload) - Uploading files to tasks
+- [Tools](/tools/built-in) - File tools available to agents

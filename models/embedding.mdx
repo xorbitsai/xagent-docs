@@ -1,0 +1,238 @@
+---
+title: "Embedding Models"
+description: "Configuring embedding models for knowledge base"
+icon: "database"
+---
+
+# Embedding Models
+
+Embedding models convert text into vector representations, enabling semantic search and knowledge base operations in Xagent.
+
+## What are Embeddings?
+
+Embeddings are numerical representations of text that capture semantic meaning. Similar concepts have similar embeddings, allowing Xagent to:
+
+- Find relevant information in knowledge bases
+- Compare document similarity
+- Power semantic search
+- Enable RAG (Retrieval-Augmented Generation)
+
+## Purpose
+
+**Knowledge Base Operations:**
+- Index uploaded documents
+- Enable semantic search across documents
+- Retrieve relevant context for tasks
+
+**How it works:**
+1. Documents are chunked and converted to embeddings
+2. Stored in a vector database
+3. When a task queries the knowledge base, Xagent searches for similar embeddings
+4. Retrieved content is provided as context to the LLM
+
+## When to Configure
+
+**Required for:**
+- Using knowledge base functionality
+- Uploading and searching documents
+- Building RAG systems
+- Semantic document retrieval
+
+**Use cases:**
+- Customer support (search FAQs, documentation)
+- Research assistant (query paper/database)
+- Legal analysis (search case law, contracts)
+- Technical documentation (search manuals, guides)
+
+## Supported Providers
+
+### OpenAI & OpenAI-compatible
+
+**Models:**
+- text-embedding-3-small
+- text-embedding-3-large
+- text-embedding-ada-002
+
+**Setup:**
+1. Get API key from [OpenAI Platform](https://platform.openai.com)
+2. For compatible services, provide base URL and API key
+3. Select embedding model
+
+**Best for:**
+- General-purpose embeddings
+- Wide availability
+- Strong ecosystem
+
+### DashScope (Alibaba Cloud)
+
+**Models:**
+- text-embedding-v4
+- text-embedding-v3
+- text-embedding-v2
+
+**Setup:**
+1. Get API key from [DashScope Console](https://dashscope.aliyuncs.com)
+2. Configure API key
+3. Select embedding model
+
+**Best for:**
+- Chinese language optimization
+- Cost-effective for Asian languages
+- Alibaba Cloud integration
+
+### Xinference
+
+**Models:**
+- bge-large-en-v1.5
+- bge-base-en
+- All-MiniLM-L6-v2
+- Other HuggingFace embedding models
+
+**Setup:**
+1. Deploy Xinference server
+2. Launch embedding model (e.g., bge-base-en-v1.5)
+3. Configure base URL in Xagent
+4. Select model from Xinference
+
+**Best for:**
+- Data privacy
+- Self-hosted deployment
+- Custom model support
+- Using HuggingFace open-source models
+
+<Info>
+To use HuggingFace models, deploy them via Xinference.
+</Info>
+
+## Configuration
+
+### Step 1: Add Embedding Provider
+
+1. Go to **Models** in the left sidebar
+2. Click **Add Model** or **Add Provider**
+3. Select embedding provider
+
+### Step 2: Configure Model
+
+1. Select the embedding model
+2. Enter API credentials
+3. Configure parameters (dimensions, etc.)
+4. Test the connection
+
+### Step 3: Set as Default
+
+Set as the default embedding model for:
+- Knowledge base indexing
+- Semantic search operations
+- Vector database operations
+
+## Model Parameters
+
+### Dimensions
+
+The size of the embedding vector.
+
+**Considerations:**
+- **Lower dimensions** (384-768): Faster, less storage, good for simple tasks
+- **Medium dimensions** (768-1536): Balanced performance
+- **Higher dimensions** (3072+): Better accuracy, more storage/cost
+
+**Trade-offs:**
+- Higher dimensions = better semantic understanding
+- But increased storage and computation
+- Choose based on your requirements
+
+### Chunk Size
+
+When documents are indexed, they're split into chunks before embedding.
+
+**Typical sizes:**
+- 512-1000 tokens for general documents
+- Larger for technical documentation
+- Smaller for precise retrieval
+
+**Impact:**
+- Smaller chunks: More precise retrieval, more chunks to manage
+- Larger chunks: More context per chunk, less precise
+
+## Best Practices
+
+### Choose the Right Model
+
+**For general use:**
+- OpenAI text-embedding-3-small
+- Balances cost and performance
+
+**For highest quality:**
+- OpenAI text-embedding-3-large
+- BAAI/bge-large-en-v1.5
+
+**For cost-sensitive:**
+- Open-source models (HuggingFace)
+- Self-hosted options
+
+### Optimize Chunking
+
+- Match chunk size to typical query length
+- Consider document structure (paragraphs, sections)
+- Test different chunk sizes for your use case
+- Use overlap to maintain context
+
+### Monitor Performance
+
+- Track retrieval quality
+- Monitor search latency
+- Evaluate storage requirements
+- Adjust based on usage patterns
+
+## Troubleshooting
+
+### Poor Search Results
+
+**Check:**
+- Embedding model quality
+- Chunk size and strategy
+- Query formulation
+- Document content quality
+
+**Try:**
+- Using a higher-quality model
+- Adjusting chunk size
+- Improving document formatting
+- Adding more relevant documents
+
+### High Latency
+
+**Optimize:**
+- Use smaller/faster models
+- Reduce embedding dimensions
+- Implement caching
+- Consider vector database optimization
+
+### Storage Issues
+
+**Solutions:**
+- Use lower-dimensional embeddings
+- Implement efficient chunking
+- Clean up unused embeddings
+- Consider storage compression
+
+## Integration with Knowledge Base
+
+Embedding models work seamlessly with Xagent's knowledge base:
+
+1. **Upload documents** to knowledge base
+2. **Automatic indexing** using embedding model
+3. **Semantic search** powered by embeddings
+4. **Context retrieval** during task execution
+
+<Info>
+Embedding models are required for knowledge base functionality. Configure one before uploading documents.
+</Info>
+
+## Next Steps
+
+- [Knowledge Base Overview](/knowledge/overview) - Learn about knowledge features
+- [LLM Models](/models/llm) - Configure language models
+- [Vision LLMs](/models/llm#vision-optional) - Configure vision models
+- [Model Overview](/models/overview) - Understanding all model types

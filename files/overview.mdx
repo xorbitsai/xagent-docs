@@ -1,0 +1,261 @@
+---
+title: "Files Overview"
+description: "Understanding files in Xagent"
+icon: "file"
+---
+
+# Files Overview
+
+Files enable agents to work with actual documents and data during task execution. Upload reference materials, data files, or any documents that agents need to analyze, process, or reference.
+
+## What Are Files?
+
+Files are documents and data that you can upload for agents to use:
+- **Analyze** - Process documents, extract information
+- **Reference** - Consult during task execution
+- **Transform** - Convert between formats
+- **Generate** - Create new files based on inputs
+
+### Why Use Files?
+
+<Columns cols={2}>
+  <Card
+    title="Document Analysis"
+    icon="file-text"
+  >
+    Upload PDFs, Word docs, presentations for analysis
+  </Card>
+  <Card
+    title="Data Processing"
+    icon="database"
+  >
+    Upload CSV, Excel files for analysis and visualization
+  </Card>
+  <Card
+    title="Code Review"
+    icon="code"
+  >
+    Upload code files for review and improvement
+  </Card>
+  <Card
+    title="Context Input"
+    icon="upload"
+  >
+    Provide reference material for content generation
+  </Card>
+</Columns>
+
+## How Files Work
+
+### Upload and Process
+
+When you upload a file:
+
+1. **Upload** - File is stored in your workspace
+2. **Available** - File is accessible to agents
+3. **Read** - Agent reads file when needed
+4. **Process** - Agent analyzes and processes content
+5. **Generate** - Agent can create new files as output
+
+### Workspace
+
+Each task has an isolated workspace:
+- **Storage** - Files stored in task-specific workspace
+- **Access** - Only current task can access its workspace
+- **Operations** - Agents can read, write, and list files
+- **Output** - Generated files saved to workspace
+
+<Info>
+Files are managed per-task. When you create a task and upload files, they're stored in that task's workspace and accessible only during that task execution.
+</Info>
+
+## Supported File Types
+
+### Documents
+
+- **PDF** - `.pdf`
+- **Word** - `.doc`, `.docx`
+- **Text** - `.txt`
+- **Markdown** - `.md`
+- **HTML** - `.html`, `.htm`
+
+### Spreadsheets & Data
+
+- **Excel** - `.xlsx`, `.xls`
+- **CSV** - `.csv`
+- **JSON** - `.json`
+
+### Presentations
+
+- **PowerPoint** - `.pptx`
+
+### Images
+
+- **PNG** - `.png`
+- **JPG/JPEG** - `.jpg`, `.jpeg`
+- **GIF** - `.gif`
+- **SVG** - `.svg`
+
+### Code
+
+- **Python** - `.py`
+- **JavaScript** - `.js`
+- **TypeScript** - `.ts`
+- **Java** - `.java`
+- **And more** - Most programming languages
+
+### Archives
+
+- **ZIP** - `.zip`
+
+## File Operations
+
+Agents can perform various operations on files:
+
+### Reading Files
+
+- **Text files** - Read content directly
+- **Documents** - Parse and extract text (PDF, DOCX, etc.)
+- **Spreadsheets** - Read structured data (CSV, Excel)
+- **Images** - Use vision tools to analyze
+
+### Writing Files
+
+- **Create new files** - Save output and results
+- **Generate reports** - Create documents from analysis
+- **Export data** - Save processed information
+- **Code generation** - Write code files
+
+### Listing Files
+
+- **Browse workspace** - See available files
+- **Check directories** - Navigate file structure
+- **Find files** - Search by pattern
+
+### Editing Files
+
+- **Replace content** - Update existing files
+- **Insert content** - Add new sections
+- **Delete content** - Remove parts of files
+
+## Use Cases
+
+### Data Analysis
+
+Upload data files for analysis and visualization:
+
+```
+User: [Uploads sales_data.csv]
+User: "Analyze this data and show trends"
+
+Agent:
+1. Reads CSV with file tool
+2. Uses Python executor for analysis
+3. Creates charts and visualizations
+4. Saves report with write_file
+```
+
+### Document Review
+
+Upload documents for summarization and analysis:
+
+```
+User: [Uploads contract.pdf]
+User: "Summarize key terms and risks"
+
+Agent:
+1. Uses document_parser to extract text
+2. Analyzes content with LLM
+3. Identifies key clauses and risks
+4. Provides summary
+```
+
+### Content Generation
+
+Upload reference material for content creation:
+
+```
+User: [Uploads brand_guidelines.pdf]
+User: "Create a presentation following these guidelines"
+
+Agent:
+1. Reads brand guidelines
+2. Extracts design rules and tone
+3. Generates PowerPoint presentation
+4. Saves as PPTX file
+```
+
+### Code Processing
+
+Upload code for review or modification:
+
+```
+User: [Uploads app.py]
+User: "Review this code and suggest improvements"
+
+Agent:
+1. Reads Python file
+2. Analyzes code structure
+3. Identifies issues and improvements
+4. Writes updated version
+```
+
+## File Size Limits
+
+File size limits depend on your configuration:
+- **Default limit** - Typically 10-100MB per file
+- **Plan limits** - Higher tiers may allow larger files
+- **Recommendation** - Compress large files before uploading
+
+<Info>
+For very large files, consider splitting into smaller chunks or using compression.
+</Info>
+
+## File Security
+
+### Storage
+
+- **Isolated** - Files stored in task-specific workspace
+- **Temporary** - Files available only during task execution
+- **Encrypted** - Files encrypted at rest
+
+### Access Control
+
+- **Per-task** - Only current task can access its files
+- **User-scoped** - Your files are private to your tasks
+- **Agent-managed** - Agents operate on files within task permissions
+
+### Privacy
+
+- **No sharing** - Files are not shared across tasks
+- **Auto-cleanup** - Files can be automatically cleaned up after task
+- **Secure** - Transfers and storage are encrypted
+
+## Best Practices
+
+### File Preparation
+
+- **Use descriptive names** - Helps agents understand file contents
+- **Clean formatting** - Well-structured files are easier to process
+- **Remove sensitive data** - Don't upload confidential information
+- **Check file size** - Compress if needed
+
+### Multiple Files
+
+- **Organize related files** - Upload together for context
+- **Use clear names** - Differentiate similar files
+- **Consider order** - Upload in logical sequence if needed
+- **Provide context** - Explain what each file contains
+
+### After Tasks
+
+- **Download outputs** - Save generated files before task closes
+- **Review results** - Check agent-generated files
+- **Archive if needed** - Keep important outputs
+- **Clean workspace** - Delete unnecessary files
+
+## Next Steps
+
+- [File Upload](/files/upload) - Learn how to upload files
+- [File Management](/files/management) - Managing files during tasks
+- [Tools](/tools/built-in) - File tools available to agents

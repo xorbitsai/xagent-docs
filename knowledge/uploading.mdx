@@ -1,0 +1,300 @@
+---
+title: "Uploading Knowledge"
+description: "How to upload and manage knowledge base"
+icon: "upload"
+---
+
+# Uploading Knowledge
+
+Upload documents and data to build your knowledge base for AI-powered retrieval.
+
+## Upload Methods
+
+Xagent supports two ways to add knowledge:
+
+### File Upload
+
+Upload individual files or multiple files at once:
+- **Single file** - Upload one document at a time
+- **Batch upload** - Select multiple files simultaneously
+- **Drag & drop** - Drag files directly to the upload area
+
+### Website Import
+
+Crawl and import entire websites:
+- **Start from URL** - Provide a starting URL
+- **Crawl recursively** - Follow links within the site
+- **Smart filtering** - Control which pages to include
+
+## Supported File Types
+
+### Documents
+- **PDF** - `.pdf`
+- **Word** - `.doc`, `.docx`
+- **PowerPoint** - `.pptx`
+- **Text** - `.txt`, `.md`
+- **HTML** - `.html`, `.htm`
+
+### Data Files
+- **Excel** - `.xlsx`, `.xls`
+- **CSV** - `.csv`
+- **JSON** - `.json`
+
+### Code Files
+- **Python** - `.py`
+- **JavaScript** - `.js`
+- **Other code** - Various source code formats
+
+<Info>
+Maximum file size: 100MB per file. Larger files should be split before uploading.
+</Info>
+
+## Uploading Files
+
+![Upload Knowledge Base](/images/upload-kb.png)
+
+### Step 1: Create or Select Knowledge Base
+
+1. Go to **Knowledge Base** in the sidebar
+2. Create a new knowledge base or select an existing one
+
+### Step 2: Choose Upload Method
+
+**File Upload**:
+1. Click **Upload Files** button
+2. Select files from your computer
+3. Or drag and drop files to the upload area
+
+**Website Import**:
+1. Click **Import Website** button
+2. Enter the website URL
+3. Configure crawl options (see Website Import below)
+
+### Step 3: Configure Processing Options
+
+Choose how to process your documents:
+
+**Parse Method** - How to extract text from files
+- `default` - Standard parsing (recommended for most files)
+- `pypdf` - PDF parsing with PyPDF
+- `pdfplumber` - Advanced PDF parsing with tables
+- `unstructured` - AI-powered document parsing
+- `pymupdf` - Fast PDF parsing
+- `deepdoc` - Deep learning document parsing
+
+**Chunk Strategy** - How to split documents into searchable chunks
+- `recursive` - Hierarchical splitting by structure (default)
+- `fixed_size` - Fixed-size chunks
+- `markdown` - Preserve Markdown structure
+
+**Chunk Size** - Number of characters per chunk (default: 1000)
+
+**Chunk Overlap** - Overlapping characters between chunks (default: 200)
+
+### Step 4: Upload and Process
+
+1. Click **Upload** to start the process
+2. Monitor upload progress
+3. Documents are automatically:
+   - Parsed (text extraction)
+   - Chunked (split into segments)
+   - Embedded (converted to vectors)
+   - Indexed (stored in vector database)
+
+### Step 5: Verify
+
+After upload completes:
+- Check document count in knowledge base
+- Test search functionality
+- Verify retrieval quality
+
+![Knowledge Base Test Search](/images/kb-test-search.png)
+
+## Website Import
+
+### Basic Configuration
+
+**Start URL** (Required)
+- The starting point for web crawling
+- Example: `https://docs.example.com`
+
+**Max Pages** (Default: 100)
+- Maximum number of pages to crawl
+- Prevents excessive crawling
+
+**Crawl Depth** (Default: 3)
+- How many link levels to follow
+- 1 = only the start page
+- 2 = start page + direct links
+- 3 = start page + links + their links
+
+**Concurrent Requests** (Default: 3, Max: 10)
+- Number of simultaneous requests
+- Higher values = faster but more server load
+
+**Request Interval** (Default: 1 second)
+- Delay between requests
+- Be respectful to target servers
+
+**Timeout** (Default: 30 seconds)
+- Request timeout for each page
+
+### Advanced Configuration
+
+Click **Advanced** to expand additional options:
+
+**URL Pattern** (Regex)
+- Only crawl URLs matching this pattern
+- Example: `.*docs.*` to only crawl documentation pages
+
+**Exclude Pattern** (Regex)
+- Exclude URLs matching this pattern
+- Example: `.*blog.*` to skip blog posts
+
+**Same Domain Only**
+- Only crawl pages on the same domain as the start URL
+- Prevents crawling external sites
+
+**Content Selector** (CSS Selector)
+- Extract specific content using CSS selectors
+- Example: `.main-content` to only extract main content area
+
+**Remove Selector** (CSS Selector)
+- Remove elements matching this selector
+- Example: `.ads, .sidebar` to remove ads and sidebars
+
+**Follow Robots.txt**
+- Respect the website's robots.txt file
+- Recommended for ethical crawling
+
+### Import Process
+
+1. **Discovery** - Crawler finds pages
+2. **Fetching** - Downloads page content
+3. **Extraction** - Extracts text using configured selectors
+4. **Filtering** - Applies include/exclude patterns
+5. **Processing** - Chunks and embeds content
+6. **Indexing** - Stores in knowledge base
+
+<Info>
+Website importing may take time depending on the number of pages and crawl settings. Monitor progress in the knowledge base detail view.
+</Info>
+
+## Managing Uploads
+
+### View Upload Status
+
+In the knowledge base detail page:
+- **Pending** - Files waiting to be processed
+- **Processing** - Currently being parsed and indexed
+- **Completed** - Successfully uploaded and indexed
+- **Failed** - Upload or processing errors
+
+### Delete Documents
+
+Remove unwanted documents:
+1. Go to knowledge base detail page
+2. Find the document in the list
+3. Click **Delete** button
+4. Confirm deletion
+
+### Retry Failed Uploads
+
+If an upload fails:
+1. Check the error message
+2. Fix the issue (file format, size, etc.)
+3. Re-upload the file
+
+## Best Practices
+
+### File Preparation
+
+- **Clean formatting** - Well-formatted documents process better
+- **Remove unnecessary content** - Delete headers/footers, page numbers
+- **Use standard formats** - PDF, DOCX, TXT work best
+- **Split large files** - Keep files under 100MB
+- **Organize by topic** - Group related documents
+
+### Chunk Configuration
+
+**For technical documentation:**
+- Larger chunks (1500-2000 chars)
+- More overlap (300-500 chars)
+- Preserve context
+
+**For FAQs:**
+- Smaller chunks (500-800 chars)
+- Less overlap (100-200 chars)
+- Question-answer pairs
+
+**For code:**
+- Markdown strategy to preserve structure
+- Medium chunks (1000-1500 chars)
+- Include context
+
+### Website Import
+
+- **Start small** - Test with a few pages first
+- **Respect servers** - Use appropriate delays and concurrency
+- **Filter carefully** - Use patterns to avoid unwanted content
+- **Monitor progress** - Check crawl results periodically
+- **Check robots.txt** - Ensure compliance with site policies
+
+### Quality Assurance
+
+After uploading:
+1. **Test search** - Verify relevant content is found
+2. **Check chunks** - Review how documents were split
+3. **Adjust settings** - Fine-tune chunk size and overlap
+4. **Re-upload if needed** - Delete and re-upload with better settings
+
+## Troubleshooting
+
+### Upload Fails
+
+**Check:**
+- File size is under 100MB
+- File format is supported
+- Network connection is stable
+- Sufficient storage space
+
+**Solutions:**
+- Split large files
+- Convert unsupported formats
+- Retry the upload
+
+### Processing Takes Too Long
+
+**Optimize:**
+- Reduce chunk size
+- Use faster parse method (default or pymupdf)
+- Process fewer files at once
+- Check embedding model performance
+
+### Poor Search Results
+
+**Improve:**
+- Adjust chunk size and overlap
+- Try different parse method
+- Improve document formatting
+- Check embedding model quality
+
+### Website Import Issues
+
+**Common problems:**
+- Site blocks crawlers
+- JavaScript-rendered content
+- Rate limiting
+- Incorrect content selectors
+
+**Solutions:**
+- Check robots.txt
+- Adjust request interval
+- Use content selectors
+- Filter URLs more carefully
+
+## Next Steps
+
+- [Knowledge Base Overview](/knowledge/overview) - Learn about knowledge features
+- [Knowledge Retrieval](/knowledge/retrieval) - Search and retrieve information
+- [Embedding Models](/models/embedding) - Configure vector embeddings

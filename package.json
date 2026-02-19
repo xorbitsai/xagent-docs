@@ -1,0 +1,16 @@
+{
+  "name": "xagent-docs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "mintlify dev",
+    "build": "mintlify build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "mintlify": "^4.2.348"
+  }
+}

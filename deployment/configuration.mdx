@@ -1,0 +1,304 @@
+---
+title: "Configuration"
+description: "Configure models, tools, and system settings"
+---
+
+# Configuration
+
+Customize Xagent for your environment, use cases, and preferences.
+
+## Quick Start
+
+Create a `.env` file in your project root:
+
+```bash
+# Database (for docker-compose)
+POSTGRES_PASSWORD=xagent_password
+PORT=80
+
+# LLM Models
+OPENAI_API_KEY=sk-...
+DEEPSEEK_API_KEY=sk-...
+
+# Embeddings (for vector memory)
+DASHSCOPE_API_KEY=your-dashscope-api-key
+
+# Database encryption
+ENCRYPTION_KEY=your-encryption-key
+```
+
+Then start with Docker Compose:
+
+```bash
+docker compose up -d
+```
+
+## Complete Environment Variables
+
+### Core Settings
+
+#### Database
+
+```bash
+# PostgreSQL (used by docker-compose)
+# DATABASE_URL is automatically set
+POSTGRES_PASSWORD=xagent_password
+
+# PostgreSQL (manual setup)
+DATABASE_URL=postgresql://user:password@host:port/database
+
+# SQLite (for development)
+DATABASE_URL=sqlite:///home/xagent/.xagent/xagent.db
+```
+
+#### Server
+
+```bash
+# Web service port (default: 80)
+# With docker-compose, both frontend and backend
+# are accessible through this port
+PORT=80
+```
+
+#### Security
+
+```bash
+# Database encryption key
+# Generate with:
+# python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+ENCRYPTION_KEY=your-encryption-key-here
+```
+
+### Model Providers
+
+#### OpenAI
+
+```bash
+OPENAI_API_KEY=sk-...
+OPENAI_BASE_URL=https://api.openai.com/v1  # Optional
+OPENAI_EMBEDDING_API_KEY=sk-...  # For embeddings
+```
+
+#### Inference API
+
+```bash
+# OpenAI-compatible inference APIs
+INFERENCE_API_KEY=your-inference-api-key
+```
+
+#### DeepSeek
+
+```bash
+DEEPSEEK_API_KEY=sk-...
+```
+
+#### Anthropic / Claude
+
+```bash
+ANTHROPIC_API_KEY=sk-ant-...
+CLAUDE_API_KEY=sk-ant-...  # Alternative name
+CLAUDE_BASE_URL=https://api.anthropic.com  # Optional
+```
+
+#### Google / Gemini
+
+```bash
+GOOGLE_API_KEY=your-google-api-key
+GEMINI_API_KEY=your-google-api-key  # Alternative name
+GEMINI_BASE_URL=https://generativelanguage.googleapis.com  # Optional
+GEMINI_VISION_MODEL_NAME=gemini-2.0-flash-exp  # Optional
+```
+
+#### Zhipu AI
+
+```bash
+ZHIPU_API_KEY=your-zhipu-api-key
+BIGMODEL_API_KEY=your-zhipu-api-key  # Alternative name
+ZHIPU_BASE_URL=https://open.bigmodel.cn  # Optional
+```
+
+#### DashScope (Alibaba Cloud)
+
+```bash
+# Used for embeddings and reranking
+DASHSCOPE_API_KEY=your-dashscope-api-key
+```
+
+### Memory Configuration
+
+Xagent supports two memory storage types:
+
+#### In-Memory Storage (Default)
+
+Fast, non-persistent storage. No configuration required.
+
+#### LanceDB Storage
+
+Persistent vector storage for semantic search:
+
+```bash
+# Optional: Override automatic detection
+MEMORY_STORE_TYPE=in_memory  # or lancedb
+
+# LanceDB directory (when using lancedb)
+MEMORY_LANCEDB_DIR=./memory_store
+
+# Connection TTL (seconds)
+LANCEDB_CONNECTION_TTL=300
+```
+
+<Info>
+If embedding API keys are configured, LanceDB is used automatically for memory storage at `<project_root>/memory_store/`. Without embedding keys, in-memory storage is used.
+</Info>
+
+### Tool Configuration
+
+#### Web Search
+
+```bash
+# Google Custom Search API
+GOOGLE_API_KEY=your-google-api-key
+GOOGLE_CSE_ID=your-custom-search-engine-id
+```
+
+#### Proxy Settings
+
+```bash
+# HTTP/HTTPS proxy
+HTTP_PROXY=http://proxy.example.com:8080
+HTTPS_PROXY=http://proxy.example.com:8080
+http_proxy=http://proxy.example.com:8080
+https_proxy=http://proxy.example.com:8080
+```
+
+#### Image Processing
+
+```bash
+# Concurrent image processing tasks
+CONCURRENT=5
+```
+
+### Tracing & Observability
+
+#### Langfuse
+
+Track and debug agent executions:
+
+```bash
+LANGFUSE_HOST=http://127.0.0.1:3000
+LANGFUSE_PUBLIC_KEY=your-public-key
+LANGFUSE_SECRET_KEY=your-secret-key
+```
+
+### Frontend Configuration
+
+For Next.js frontend, create `.env.local`:
+
+```bash
+# Backend API URL
+NEXT_PUBLIC_API_URL=http://localhost:8000
+
+# WebSocket URL
+NEXT_PUBLIC_WS_URL=ws://localhost:8000
+
+# Theme (optional: dark, light, blue, green, purple, cyber, cyberLight)
+NEXT_PUBLIC_THEME=dark
+
+# Branding (optional)
+NEXT_PUBLIC_APP_NAME=Xagent
+NEXT_PUBLIC_APP_SUBTITLE=下一代智能体操作系统
+NEXT_PUBLIC_LOGO_PATH=/xagent_logo.svg
+
+# Colors (optional)
+NEXT_PUBLIC_GRADIENT_FROM=blue-400
+NEXT_PUBLIC_GRADIENT_VIA=blue-500
+NEXT_PUBLIC_GRADIENT_TO=indigo-500
+```
+
+## Example Configuration Files
+
+### Docker Compose (.env)
+
+```bash
+# ===========================================
+# Core Settings
+# ===========================================
+POSTGRES_PASSWORD=xagent_password
+PORT=80
+
+# ===========================================
+# LLM Models
+# ===========================================
+OPENAI_API_KEY=sk-...
+INFERENCE_API_KEY=your-inference-api-key
+DEEPSEEK_API_KEY=sk-...
+
+# ===========================================
+# Embeddings
+# ===========================================
+DASHSCOPE_API_KEY=your-dashscope-api-key
+OPENAI_EMBEDDING_API_KEY=your-openai-api-key
+
+# ===========================================
+# Encryption
+# ===========================================
+ENCRYPTION_KEY=RQMpe38gK3m0szjpSmTNw_sP3Y54r6hDc6JewBoPKXc=
+
+# ===========================================
+# Optional: Web Search
+# ===========================================
+GOOGLE_API_KEY=your-google-api-key
+GOOGLE_CSE_ID=your-cse-id
+
+# ===========================================
+# Optional: Tracing
+# ===========================================
+LANGFUSE_HOST=http://127.0.0.1:3000
+LANGFUSE_PUBLIC_KEY=pk-...
+LANGFUSE_SECRET_KEY=sk-...
+```
+
+### Local Development (.env)
+
+```bash
+# Database (SQLite for local development)
+DATABASE_URL=sqlite:///home/xagent/.xagent/xagent.db
+
+# Models
+OPENAI_API_KEY=sk-...
+DEEPSEEK_API_KEY=sk-...
+
+# Embeddings
+DASHSCOPE_API_KEY=your-dashscope-api-key
+
+# Encryption
+ENCRYPTION_KEY=your-encryption-key
+
+# Port
+PORT=8000
+
+# Optional: Tracing
+LANGFUSE_HOST=http://127.0.0.1:3000
+LANGFUSE_PUBLIC_KEY=pk-...
+LANGFUSE_SECRET_KEY=sk-...
+```
+
+## Security Best Practices
+
+<Alert type="warning">
+  **Never commit .env files to version control**
+
+  Add `.env` to your `.gitignore` file.
+</Alert>
+
+1. **Generate strong keys** — Use cryptographic tools for secrets
+2. **Restrict permissions** — `chmod 600 .env`
+3. **Environment isolation** — Different keys for dev, staging, production
+4. **Regular rotation** — Update secrets periodically
+5. **Use vaults** — AWS Secrets Manager, HashiCorp Vault for production
+
+## Next Steps
+
+- [Self-hosted deployment](/deployment/self-hosted)
+- [Installation guide](/installation)
+- [Build your first agent](/guides/quick-win)

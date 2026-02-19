@@ -1,0 +1,294 @@
+---
+title: "Memory Types"
+description: "Understanding memory categories in Xagent"
+icon: "database"
+---
+
+# Memory Types
+
+Xagent organizes memories into categories to make them more useful and searchable.
+
+## Memory Categories
+
+### Plan Execution Memory
+
+Stores insights from task planning and DAG generation:
+
+**What's Stored:**
+- Planning strategies that worked
+- Step decomposition approaches
+- DAG generation patterns
+- Tool selection insights
+- Task complexity analysis
+
+**Example:**
+```
+"For data analysis tasks with multiple steps, generate a DAG
+with parallel processing for independent calculations. Use
+Python executor for transformations."
+```
+
+**When Retrieved:**
+- Starting similar tasks
+- Planning multi-step workflows
+- Selecting execution strategies
+
+### Execution Memory
+
+Stores results and learnings from task execution:
+
+**What's Stored:**
+- Execution outcomes (success/failure)
+- User feedback and corrections
+- Tool effectiveness ratings
+- Performance bottlenecks
+- Error patterns and solutions
+
+**Example:**
+```
+"When processing CSV files larger than 100MB, use chunked
+reading with pandas. Web search API times out after 30
+seconds for complex queries."
+```
+
+**When Retrieved:**
+- Encountering similar challenges
+- Optimizing performance
+- Avoiding known issues
+
+### ReAct Memory
+
+Stores insights from ReAct (Reasoning-Action) loop execution:
+
+**What's Stored:**
+- Reasoning patterns
+- Tool usage effectiveness
+- Step-by-step execution insights
+- Iteration strategies
+
+**Example:**
+```
+"For research tasks requiring multiple sources, start with web
+search to identify key sources, then use file tools to process
+and synthesize findings."
+```
+
+**When Retrieved:**
+- Using ReAct execution mode
+- Choosing reasoning strategies
+- Optimizing tool sequences
+
+### General Memory
+
+Stores general insights and user preferences:
+
+**What's Stored:**
+- User communication preferences
+- Format and style preferences
+- Project-specific context
+- Domain knowledge patterns
+- Behavioral observations
+
+**Example:**
+```
+"User prefers concise summaries with bullet points over detailed
+explanations. For technical topics, include code examples."
+```
+
+**When Retrieved:**
+- Personalizing responses
+- Adapting communication style
+- Understanding user context
+
+## Memory Structure
+
+Each memory contains:
+
+### Core Fields
+
+**content** (required)
+- The memory content in natural language
+- Structured as clear, actionable insights
+- Can include examples and recommendations
+
+**id** (auto-generated)
+- Unique identifier
+- UUID format
+- Used for referencing specific memories
+
+**category** (required)
+- Memory category (plan_execution, execution, react, general)
+- Determines when memory is retrieved
+- Helps filter search results
+
+### Metadata Fields
+
+**keywords** (optional)
+- List of relevant keywords
+- Improves searchability
+- Extracted automatically or manually added
+
+**tags** (optional)
+- Custom labels for organization
+- User-defined classifications
+- Enables filtering by topic
+
+**timestamp** (auto-generated)
+- When the memory was created
+- Used for time-based filtering
+- Helps identify recent vs. old memories
+
+**metadata** (optional)
+- Additional custom fields
+- Flexible key-value pairs
+- Stores related information
+
+**Examples:**
+- Task type
+- Tools used
+- User ID
+- Project name
+
+## Memory Search
+
+### Semantic Search
+
+When searching for relevant memories:
+1. **Embed query** - Convert search query to vector
+2. **Similarity search** - Find semantically similar memories
+3. **Score results** - Rank by relevance
+4. **Filter by category** - Only search relevant categories
+5. **Return top-k** - Limit results for performance
+
+**Example Query:**
+```
+"Data analysis with large CSV files"
+```
+
+**Returns memories about:**
+- Processing large files
+- Data optimization techniques
+- Performance tips
+- Similar tool combinations
+
+### Text Search
+
+Falls back to text-based search when:
+- Embedding model not available
+- Vector search fails
+- Exact keyword matching needed
+
+**Searches in:**
+- Content field
+- Keywords
+- Tags
+
+### Filter Options
+
+Narrow search results with filters:
+
+**By Category**
+```python
+filters = {"category": "execution"}
+```
+
+**By Tags**
+```python
+filters = {"tags": ["performance", "optimization"]}
+```
+
+**By Time Range**
+```python
+filters = {"timestamp": {"$gt": "2024-01-01"}}
+```
+
+**By Custom Metadata**
+```python
+filters = {"metadata": {"user_id": "123"}}
+```
+
+## Memory Lifecycle
+
+### Creation
+
+Memories are created:
+- **Automatically** after task completion
+- **Manually** by users or admins
+- **Periodically** from aggregated insights
+
+### Updates
+
+Memories can be updated:
+- **Content refinement** - Improve clarity
+- **Add metadata** - Enhance searchability
+- **Merge duplicates** - Combine similar memories
+- **Adjust scores** - Update relevance ratings
+
+### Deletion
+
+Memories are deleted:
+- **Manual deletion** - User removes specific memories
+- **Automatic cleanup** - Remove old/unused memories
+- **Privacy requests** - "Right to be forgotten"
+- **Data retention** - Per retention policies
+
+## Memory Quality
+
+### Good Memories
+
+**Characteristics:**
+- Clear and specific
+- Actionable insights
+- Relevant context
+- Properly categorized
+
+**Example:**
+```
+"When processing CSV files over 100MB, use pandas chunked
+reading with chunksize=10000. This prevents memory errors
+and improves performance by 3x."
+```
+
+### Poor Memories
+
+**Characteristics:**
+- Vague or generic
+- Lack context
+- Not actionable
+- Wrong category
+
+**Example:**
+```
+"Used a file tool. It worked okay."
+```
+
+**Improvement:**
+```
+"For processing Excel files with multiple sheets, use the
+document_parser tool with parse_method='openpyxl'. This
+preserves formatting and handles complex structures better."
+```
+
+## Important Notes
+
+### Automatic Management
+
+Memory categories and content are fully managed by Xagent:
+- **Automatic categorization** - LLM decides which category to use
+- **Automatic content generation** - LLM creates memory content from task execution
+- **Automatic tagging** - Keywords and tags extracted automatically
+- **No manual control** - Users cannot directly create or edit memories
+
+### What Influences Memory
+
+While you can't directly control memory, your interactions affect what gets stored:
+- **Task patterns** - Repeated approaches get recognized and stored
+- **Explicit preferences** - Stated preferences get recorded in general memory
+- **Success/failure** - What works and what doesn't gets remembered
+- **Corrections** - Your feedback during execution creates learning memories
+
+## Next Steps
+
+- [Memory Overview](/memory/overview) - Learn about memory concepts
+- [Memory Configuration](/memory/configuration) - Configure memory settings
+- [Building Agents](/agents/building) - Create memory-enabled agents

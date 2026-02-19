@@ -1,0 +1,247 @@
+---
+title: "Memory Overview"
+description: "Understanding agent memory and learning"
+icon: "brain"
+---
+
+# Memory Overview
+
+![Memory Interface](/images/memory.png)
+
+Memory enables agents to learn from past experiences and improve over time. Instead of treating each task as isolated, agents can remember what worked, what didn't, and apply those lessons to future tasks.
+
+## What is Memory?
+
+Memory stores execution results, insights, and experiences from tasks:
+- **Task patterns** - What approaches worked for similar tasks
+- **User preferences** - Communication style, format preferences
+- **Execution insights** - Successes, failures, lessons learned
+- **Best practices** - Effective tool combinations and strategies
+
+### Why Memory Matters
+
+<Columns cols={2}>
+  <Card
+    title="Continuous Learning"
+    icon="arrow-up"
+  >
+    Agents improve with each task execution
+  </Card>
+  <Card
+    title="Pattern Recognition"
+    icon="grid"
+  >
+    Identify what works across similar tasks
+  </Card>
+  <Card
+    title="Context Enhancement"
+    icon="zap"
+  >
+    Enrich new tasks with relevant past experiences
+  </Card>
+  <Card
+    title="Efficiency"
+    icon="clock"
+  >
+    Avoid repeating mistakes and redundant steps
+  </Card>
+</Columns>
+
+## How Memory Works
+
+### Memory Storage
+
+After completing a task, Xagent automatically:
+1. **Analyzes results** - What succeeded, what failed
+2. **Extracts insights** - Key learnings and patterns
+3. **Stores memory** - Saves structured notes to memory
+4. **Indexes content** - Makes memories searchable
+
+### Memory Retrieval
+
+When starting a new task, Xagent:
+1. **Searches memory** - Finds relevant past experiences
+2. **Selects matches** - Filters by similarity and category
+3. **Enhances goal** - Uses memory to improve task understanding
+4. **Applies learning** - Avoids past mistakes, reuses successes
+
+### Memory Categories
+
+**Plan Execution Memory**
+- Task planning strategies
+- Step decomposition approaches
+- DAG generation patterns
+
+**Execution Memory**
+- Execution results and outcomes
+- User feedback and corrections
+- Success/failure patterns
+- Performance insights
+
+**ReAct Memory**
+- ReAct loop execution records
+- Tool usage effectiveness
+- Reasoning patterns
+
+**General Memory**
+- User preferences
+- Behavioral patterns
+- Project-specific context
+- Domain knowledge
+
+## Memory Storage Types
+
+### In-Memory Storage
+
+**For:** Development, testing, short-term tasks
+
+**Characteristics:**
+- Fast performance
+- No persistence (lost on restart)
+- In-memory dictionary
+- Text-based search
+
+**Use when:**
+- Testing and development
+- Temporary tasks
+- Low-latency requirements
+
+### Vector Database Storage
+
+**For:** Production, long-term learning, semantic search
+
+**Characteristics:**
+- Persistent storage (LanceDB)
+- Semantic similarity search
+- Embedding-based retrieval
+- Scales to large memory
+
+**Use when:**
+- Production environments
+- Long-running agents
+- Large task volumes
+- Need semantic search
+
+## Memory in Action
+
+### Learning from Success
+
+```
+Task 1: "Create a data analysis report"
+Execution: Successful
+Stored Memory: "For data analysis tasks, use Python executor
+with pandas. Create visualizations with matplotlib."
+
+Task 2 (similar): "Analyze sales data and create charts"
+Agent retrieves memory and uses Python executor + matplotlib
+Result: Faster execution, better quality
+```
+
+### Avoiding Mistakes
+
+```
+Task 1: "Scrape data from website X"
+Execution: Failed - site blocks automated scraping
+Stored Memory: "Website X blocks automation, try manual
+download or official API instead."
+
+Task 2: "Get recent data from website X"
+Agent retrieves memory and avoids scraping
+Result: Suggests API approach instead
+```
+
+### User Preferences
+
+```
+Session 1:
+User: "I prefer detailed technical explanations"
+Stored Memory: "User prefers detailed technical explanations
+over high-level summaries"
+
+Session 2:
+User: "How does this work?"
+Agent retrieves memory and provides detailed explanation
+Result: Personalized response style
+```
+
+## Memory Lifecycle
+
+### Storage Trigger
+
+Memory is automatically stored when:
+- Task completes (successfully or with learnings from failures)
+- Agent identifies useful insights
+- User provides explicit preferences
+- Patterns emerge from execution
+
+### Retrieval Trigger
+
+Memory is retrieved when:
+- Starting a new task
+- Similar patterns detected
+- User asks about past experiences
+- Agent needs context for decisions
+
+### Memory Maintenance
+
+- **Automatic deduplication** - Removes duplicate memories
+- **Relevance scoring** - Tracks memory usefulness
+- **Periodic cleanup** - Removes outdated or unused memories
+- **Search optimization** - Updates indices for performance
+
+## Memory vs Knowledge Base
+
+| Feature | Memory | Knowledge Base |
+|---------|--------|----------------|
+| **Source** | Generated from task execution | Uploaded documents |
+| **Content** | Insights, patterns, learnings | Facts, documentation, data |
+| **Structure** - Unstructured notes | Structured documents |
+| **Search** - Semantic similarity | Vector similarity + keyword |
+| **Purpose** | Learn and improve | Reference information |
+
+**Together they enable:**
+- Knowledge base provides domain information
+- Memory provides experiential learning
+- Agents use both for optimal performance
+
+## Benefits
+
+### For Users
+
+- **Consistent experience** - Agents remember your preferences
+- **Better results** - Learnings improve over time
+- **Fewer corrections** - Avoids repeating mistakes
+- **Faster execution** - Reuses proven approaches
+
+### For Agent Builders
+
+- **Continuous improvement** - Agents get better automatically
+- **Reduced tuning** - Less manual configuration needed
+- **Better user experience** - More personalized interactions
+- **Performance insights** - See what works and what doesn't
+
+## Privacy and Security
+
+### Data Isolation
+
+- **Per-user memory** - Each user has separate memory space
+- **Per-agent isolation** - Agents don't share memory by default
+- **Encrypted storage** - Memory data encrypted at rest
+
+### User Control
+
+While memory is automatically managed by Xagent, you can:
+
+- **View memories** - See what Xagent has learned from your tasks
+- **Delete memories** - Remove specific memories or clear all
+- **Export data** - Download your memory data
+
+<Info>
+Memory storage and retrieval is fully automatic. The LLM decides what to store and when to use it based on task execution patterns.
+</Info>
+
+## Next Steps
+
+- [Memory Types](/memory/types) - Learn about memory categories
+- [Memory Configuration](/memory/configuration) - Configure memory settings
+- [Building Agents](/agents/building) - Create memory-enabled agents

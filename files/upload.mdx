@@ -1,0 +1,237 @@
+---
+title: "File Upload"
+description: "Uploading files for task execution"
+icon: "upload"
+---
+
+# File Upload
+
+Upload files to your task workspace so agents can access and process them during execution.
+
+## Upload Methods
+
+### From Task Page
+
+When creating a task on the Task page:
+
+1. **Click the attachment icon** - File upload button
+2. **Select files** - Choose files from your device
+3. **Add to task** - Files are attached to your task request
+
+**Multiple files:** You can upload multiple files at once
+
+### Drag and Drop
+
+Simply drag and drop files onto the Task page:
+- Drag files from your file manager
+- Drop onto the task input area
+- Files are automatically attached
+
+## File Size Limits
+
+### Default Limits
+
+- **Maximum file size** - Typically 10-100MB per file
+- **Total upload size** - Varies by plan
+- **Recommendations** - Compress large files before uploading
+
+### Handling Large Files
+
+If your file exceeds the limit:
+- **Compress** - Use ZIP compression
+- **Split** - Divide large files into smaller chunks
+- **Optimize** - Reduce image resolution or remove unnecessary data
+
+<Info>
+Upload limits depend on your Xagent configuration and plan. Contact your administrator for specific limits.
+</Info>
+
+## Upload Process
+
+### Step 1: Select Files
+
+Choose files from your device:
+- Click file upload button or drag & drop
+- Select one or multiple files
+- Files appear in upload queue
+
+### Step 2: Upload Progress
+
+Files are uploaded to your task workspace:
+- **Progress indicator** - Shows upload status
+- **Success confirmation** - Files ready for use
+- **Error handling** - Failed uploads show error message
+
+### Step 3: Submit Task
+
+With files attached:
+- **Describe your task** - Tell Xagent what to do with the files
+- **Submit task** - Files are stored in task workspace
+- **Execution begins** - Agent can now access files
+
+## During Task Execution
+
+### File Access
+
+Once uploaded and task is submitted:
+- Files are stored in task workspace
+- Agent can access files automatically
+- Agent decides when and how to use files
+- Files remain available throughout task execution
+
+### Agent File Operations
+
+Agent can:
+- **Read** - Access file contents for analysis
+- **Parse** - Extract text and data from documents
+- **Process** - Analyze and transform content
+- **Create** - Generate new files as output
+
+### File References
+
+You can reference uploaded files in your request:
+
+```
+User: [Uploads sales_data.csv, product_info.pdf]
+User: "Analyze the sales data and create a presentation
+        incorporating information from the product PDF"
+
+Agent:
+1. Reads sales_data.csv to understand data structure
+2. Reads product_info.pdf for product details
+3. Analyzes data and extracts key information
+4. Creates PowerPoint presentation
+5. Saves presentation to workspace
+```
+
+## Supported File Types
+
+### Documents
+
+- **PDF** - `.pdf`
+- **Word** - `.doc`, `.docx`
+- **Text** - `.txt`
+- **Markdown** - `.md`
+- **HTML** - `.html`, `.htm`
+
+### Data Files
+
+- **CSV** - `.csv`
+- **Excel** - `.xlsx`, `.xls`
+- **JSON** - `.json`
+
+### Presentations
+
+- **PowerPoint** - `.pptx`
+
+### Images
+
+- **PNG** - `.png`
+- **JPG/JPEG** - `.jpg`, `.jpeg`
+- **GIF** - `.gif`
+
+### Code
+
+- **Python** - `.py`
+- **JavaScript** - `.js`
+- **TypeScript** - `.ts`
+- **Java** - `.java`
+- **And more** - Most programming languages
+
+### Archives
+
+- **ZIP** - `.zip`
+
+## Best Practices
+
+### File Preparation
+
+**Before uploading:**
+- Use clear, descriptive filenames
+- Organize related content in single files when possible
+- Remove sensitive or confidential information
+- Compress large files
+- Check file size limits
+
+**Good examples:**
+- `sales_q4_2023.csv` - Descriptive name
+- `contract_vendor_acme.pdf` - Clear identification
+- `code_review_main.py` - Purpose in name
+
+**Less effective:**
+- `data.csv` - Not descriptive
+- `file1.pdf` - No context
+- `document.txt` - Generic name
+
+### Multiple Files
+
+**When uploading multiple files:**
+- Use consistent naming conventions
+- Group related files
+- Provide context in task description
+- Consider upload order if it matters
+
+**Example:**
+```
+User: [Uploads q1_sales.xlsx, q2_sales.xlsx, q3_sales.xlsx, q4_sales.xlsx]
+User: "These are quarterly sales files for 2023. Analyze trends
+        across all quarters and create a comprehensive report."
+```
+
+### Task Descriptions
+
+**Help the agent understand your files:**
+
+Instead of:
+```
+"Process these files"
+```
+
+Try:
+```
+"Analyze the sales data in sales_2023.csv and create a visualization
+showing monthly trends. Use the brand guidelines in brand.pdf
+for the presentation style."
+```
+
+## Troubleshooting
+
+### Upload Failed
+
+**Check:**
+- File size within limits
+- File format is supported
+- Network connection is stable
+- Sufficient storage space
+
+**Solutions:**
+- Compress large files
+- Try different format
+- Check internet connection
+- Contact administrator if issue persists
+
+### File Not Found During Task
+
+**Possible reasons:**
+- File upload didn't complete
+- File was deleted from workspace
+- Wrong file path used by agent
+
+**Solutions:**
+- Verify upload completed successfully
+- Check file appears in attachments
+- Resubmit task with files
+
+### Can't Upload File Type
+
+**Workarounds:**
+- Convert to supported format
+- Compress multiple files into ZIP
+- Extract text and upload as text file
+- Contact administrator about format support
+
+## Next Steps
+
+- [Files Overview](/files/overview) - Learn about files in Xagent
+- [File Management](/files/management) - Managing files during tasks
+- [Tools](/tools/built-in) - File tools available to agents

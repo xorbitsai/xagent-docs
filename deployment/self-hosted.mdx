@@ -1,0 +1,283 @@
+---
+title: "Self-Hosted Deployment"
+description: "Deploy Xagent on your own infrastructure"
+---
+
+# Self-Hosted Deployment
+
+Run Xagent on your own infrastructure for full control, data privacy, and customization.
+
+## Why Self-Host?
+
+<Columns cols={2}>
+  <Card
+    title="Data Privacy"
+    icon="shield"
+  >
+    Keep all data on your infrastructure
+  </Card>
+  <Card
+    title="Customization"
+    icon="sliders"
+  >
+    Modify and extend as needed
+  </Card>
+  <Card
+    title="Compliance"
+    icon="check-square"
+  >
+    Meet regulatory requirements
+  </Card>
+  <Card
+    title="Cost Control"
+    icon="dollar-sign"
+  >
+    Predictable infrastructure costs
+  </Card>
+</Columns>
+
+## Deployment Options
+
+### Docker Compose (Simplest)
+
+Best for: Small teams, testing, initial deployment
+
+```bash
+git clone https://github.com/xorbitsai/xagent.git
+cd xagent
+cp example.env .env
+# Edit .env with your configuration
+docker compose up -d
+```
+
+**Requirements:**
+- Docker Engine 20+
+- Docker Compose 2+
+- 4GB RAM minimum
+- 20GB disk space
+
+**What's Included:**
+- PostgreSQL database
+- Xagent backend
+- Next.js frontend
+- nginx reverse proxy
+
+### Manual Deployment
+
+Best for: Custom setups, specific requirements
+
+See [Installation](/installation) for step-by-step instructions.
+
+## Production Checklist
+
+### Security
+
+<Accordion>
+  <AccordionItem title="Use Strong Encryption Keys">
+    Generate secure ENCRYPTION_KEY for database
+  </AccordionItem>
+  <AccordionItem title="Enable HTTPS">
+    Use SSL/TLS certificates (Let's Encrypt, or your own)
+  </AccordionItem>
+  <AccordionItem title="Configure Firewall">
+    Only expose necessary ports (80/443)
+  </AccordionItem>
+  <AccordionItem title="Regular Updates">
+    Keep dependencies updated
+  </AccordionItem>
+</Accordion>
+
+### Database
+
+<Accordion>
+  <AccordionItem title="Use Managed Databases">
+    AWS RDS, Google Cloud SQL, Azure Database
+  </AccordionItem>
+  <AccordionItem title="Enable Backups">
+    Automated daily backups with retention
+  </AccordionItem>
+  <AccordionItem title="Configure Replication">
+    High availability with read replicas
+  </AccordionItem>
+  <AccordionItem title="Monitor Performance">
+    Connection pool, query performance, disk usage
+  </AccordionItem>
+</Accordion>
+
+### Observability
+
+<Accordion>
+  <AccordionItem title="Application Monitoring">
+    Use Langfuse for tracing and debugging
+  </AccordionItem>
+  <AccordionItem title="Log Aggregation">
+    ELK Stack, CloudWatch, or similar
+  </AccordionItem>
+  <AccordionItem title="Uptime Monitoring">
+    Pingdom, UptimeRobot, or internal
+  </AccordionItem>
+</Accordion>
+
+### Scalability
+
+<Accordion>
+  <AccordionItem title="Load Balancing">
+    Use nginx, HAProxy, or cloud load balancers
+  </AccordionItem>
+  <AccordionItem title="Horizontal Scaling">
+    Run multiple backend instances behind load balancer
+  </AccordionItem>
+  <AccordionItem title="CDN">
+    Serve static assets via CloudFront, Cloudflare, etc.
+  </AccordionItem>
+</Accordion>
+
+## Cloud Deployment Guides
+
+### AWS
+
+<Accordion>
+  <AccordionItem title="ECS">
+    Use AWS Fargate for serverless containers
+  </AccordionItem>
+  <AccordionItem title="EKS">
+    Kubernetes on AWS for full control
+  </AccordionItem>
+  <AccordionItem title="RDS">
+    Managed PostgreSQL database
+  </AccordionItem>
+</Accordion>
+
+### Google Cloud
+
+<Accordion>
+  <AccordionItem title="Cloud Run">
+    Serverless container deployment
+  </AccordionItem>
+  <AccordionItem title="GKE">
+    Managed Kubernetes
+  </AccordionItem>
+  <AccordionItem title="Cloud SQL">
+    Managed PostgreSQL
+  </AccordionItem>
+</Accordion>
+
+### Azure
+
+<Accordion>
+  <AccordionItem title="Container Instances">
+    Simple container deployment
+  </AccordionItem>
+  <AccordionItem title="AKS">
+    Managed Kubernetes
+  </AccordionItem>
+  <AccordionItem title="Database">
+    Azure Database for PostgreSQL
+  </AccordionItem>
+</Accordion>
+
+## Backup & Recovery
+
+### Database Backups
+
+```bash
+# Automated backups (recommended)
+# Configure in your managed database service
+
+# Manual backup (PostgreSQL)
+pg_dump -U xagent -h localhost xagent > backup.sql
+
+# Restore
+psql -U xagent -h localhost xagent < backup.sql
+
+# Manual backup (SQLite)
+cp xagent.db xagent.db.backup
+```
+
+### Configuration Backups
+
+```bash
+# Backup environment configuration
+cp .env .env.backup
+
+# Backup custom configurations
+tar -czf config-backup.tar.gz custom/
+```
+
+### Memory Store Backups
+
+If using LanceDB for memory:
+
+```bash
+# Backup memory store
+tar -czf memory-backup.tar.gz memory_store/
+```
+
+## Performance Tuning
+
+### Database
+
+- Enable connection pooling
+- Add indexes for common queries
+- Regular vacuum and analyze (PostgreSQL)
+- Monitor slow queries
+
+### Application
+
+- Increase CONCURRENT for parallel image processing
+- Tune memory store settings
+- Enable gzip compression
+- Use CDN for static assets
+
+### Infrastructure
+
+- Use SSD storage
+- Sufficient memory for database and models
+- Network optimization within VPC
+
+## Troubleshooting
+
+### Database Connection Issues
+
+**Check:**
+- DATABASE_URL is correctly formatted
+- Database is running and accessible
+- Network allows connection
+- Credentials are correct
+
+**Solutions:**
+- Verify database is running: `docker ps`
+- Check database logs: `docker logs postgres`
+- Test connection: `psql $DATABASE_URL`
+
+### Memory Issues
+
+**Check:**
+- Available system memory
+- Concurrent operations limit
+- Memory store size
+
+**Solutions:**
+- Reduce CONCURRENT value
+- Use in-memory store instead of LanceDB
+- Increase available RAM
+- Clear memory store cache
+
+### API Key Errors
+
+**Check:**
+- API keys are set in .env
+- Keys have necessary permissions
+- Keys are valid and not expired
+
+**Solutions:**
+- Verify .env file is loaded
+- Regenerate expired keys
+- Check API key permissions
+- Verify BASE_URL if using custom endpoint
+
+## Next Steps
+
+- [Configuration guide](/deployment/configuration)
+- [Environment variables reference](/deployment/environment)
+- [Build your first agent](/guides/quick-win)

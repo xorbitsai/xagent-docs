@@ -1,0 +1,175 @@
+---
+title: "API Reference"
+description: "Xagent API documentation"
+---
+
+# API Reference
+
+The Xagent API provides programmatic access to all platform capabilities.
+
+## Base URL
+
+```
+Self-hosted: http://localhost:8000
+Production: https://your-domain.com
+```
+
+## Authentication
+
+Most API endpoints require authentication using a Bearer token:
+
+```bash
+curl http://localhost:8000/api/agents \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+## Interactive Documentation
+
+For interactive API documentation with request/response examples, visit:
+
+- **Swagger UI**: `http://localhost:8000/docs`
+- **ReDoc**: `http://localhost:8000/redoc`
+
+## Available APIs
+
+<Columns cols={2}>
+  <Card
+    title="Authentication"
+    icon="shield"
+    href="authentication"
+  >
+    User authentication and token management
+  </Card>
+  <Card
+    title="Agents"
+    icon="robot"
+    href="agents"
+  >
+    Create and manage AI agents
+  </Card>
+  <Card
+    title="Tasks"
+    icon="play"
+    href="tasks"
+  >
+    Submit and monitor task executions
+  </Card>
+  <Card
+    title="Files"
+    icon="file"
+    href="files"
+  >
+    Upload and manage task files
+  </Card>
+  <Card
+    title="Knowledge Base"
+    icon="database"
+    href="knowledge"
+  >
+    Manage document collections
+  </Card>
+  <Card
+    title="Memory"
+    icon="brain"
+    href="memory"
+  >
+    Agent memory and learning
+  </Card>
+  <Card
+    title="Models"
+    icon="box"
+    href="models"
+  >
+    Configure and use LLM models
+  </Card>
+  <Card
+    title="Tools"
+    icon="wrench"
+    href="tools"
+  >
+    Available agent tools
+  </Card>
+  <Card
+    title="Skills"
+    icon="zap"
+    href="skills"
+  >
+    Agent skill management
+  </Card>
+  <Card
+    title="Templates"
+    icon="copy"
+    href="templates"
+  >
+    Agent templates
+  </Card>
+  <Card
+    title="MCP"
+    icon="server"
+    href="mcp"
+  >
+    MCP server management
+  </Card>
+  <Card
+    title="Text2SQL"
+    icon="code"
+    href="text2sql"
+  >
+    Database query generation
+  </Card>
+</Columns>
+
+## Quick Start
+
+### Login
+
+```bash
+curl -X POST http://localhost:8000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username": "admin", "password": "your-password"}'
+```
+
+### Create an Agent
+
+```bash
+curl -X POST http://localhost:8000/api/agents \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Research Assistant",
+    "description": "Helps with research tasks",
+    "instruction": "You are a helpful research assistant."
+  }'
+```
+
+### Submit a Task
+
+```bash
+curl -X POST http://localhost:8000/api/chat/tasks \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "agent_id": "agent-id",
+    "query": "Research recent AI trends"
+  }'
+```
+
+## Rate Limits
+
+API calls may be rate limited. Check response headers for limit information:
+
+```
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1640995200
+```
+
+## Error Handling
+
+Errors follow standard HTTP status codes:
+
+- **200** - Success
+- **400** - Bad Request
+- **401** - Unauthorized
+- **422** - Validation Error
+- **500** - Server Error

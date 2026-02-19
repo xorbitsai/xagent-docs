@@ -1,0 +1,138 @@
+---
+title: "Quick Start"
+description: "Create your first task in 5 minutes"
+icon: "zap"
+---
+
+# Quick Start
+
+Get Xagent running and create your first task in 5 minutes.
+
+## Step 1: Install Xagent
+
+<Info>
+If you haven't installed Xagent yet, follow the [Installation Guide](/installation).
+</Info>
+
+For Docker (fastest):
+
+```bash
+git clone https://github.com/xorbitsai/xagent.git
+cd xagent
+cp example.env .env
+docker compose up -d
+```
+
+Open `http://localhost:80` in your browser.
+
+## Step 2: Login
+
+**Default credentials:**
+- Username: `administrator`
+- Password: `administrator`
+
+## Step 3: Configure LLM
+
+Before creating tasks, you need to configure an LLM provider.
+
+1. Click **Models** in the left sidebar
+2. Add your API key (OpenAI, Anthropic, or others)
+3. Select a default model
+
+<Info>
+Xagent needs an LLM to plan and execute tasks. See [LLM Models](/models/llm) for details.
+</Info>
+
+## Step 4: Create Your First Task
+
+1. Go to the **Task** page
+2. Type your request in the chat box
+
+Try one of these examples:
+
+```bash
+"Research the latest AI developments and write a summary"
+"Create a 10-slide presentation about renewable energy"
+"Design a promotional poster for a coffee shop"
+```
+
+3. Press Enter or click Send
+4. Watch Xagent execute the task in real-time
+
+## Step 5: View Execution
+
+Xagent will:
+1. Plan the task automatically
+2. Show the DAG (workflow) visualization
+3. Execute each step
+4. Display results
+
+You can:
+- Click nodes in the DAG to see details
+- Send follow-up messages
+- Upload additional files
+- Review execution history
+
+## What's Next?
+
+<Columns cols={2}>
+  <Card
+    title="Learn More About Tasks"
+    icon="play"
+    href="/tasks/overview"
+    buttonText="Explore Tasks"
+    primary
+  >
+    Understand how tasks work and how to get the most out of them
+  </Card>
+  <Card
+    title="Build an Agent"
+    icon="robot"
+    href="/agents/building"
+    buttonText="Create Agent"
+  >
+    Convert your tasks into reusable agents
+  </Card>
+  <Card
+    title="Explore Templates"
+    icon="file"
+    href="/templates/overview"
+  >
+    Use pre-built templates for common workflows
+  </Card>
+  <Card
+    title="Add Knowledge Base"
+    icon="database"
+    href="/knowledge/overview"
+  >
+    Give your agents domain-specific knowledge
+  </Card>
+</Columns>
+
+## Troubleshooting
+
+### Task not starting
+
+Check that:
+- LLM API key is configured correctly
+- Model is selected in Models settings
+- Your request is clear and specific
+
+### Execution stuck
+
+- Wait longer (some tasks take time)
+- Check the DAG for stuck steps
+- Click cancel and try again
+
+### API errors
+
+- Verify your API key is valid
+- Check API rate limits
+- Try a different model
+
+## Next Steps
+
+- [Learn more about tasks](/tasks/overview)
+- [Build your first agent](/agents/building)
+- [Use templates](/templates/overview)
+- [Configure LLM models](/models/llm)

@@ -1,0 +1,438 @@
+---
+title: "Built-in Tools"
+description: "Detailed reference for all built-in tools"
+icon: "box"
+---
+
+# Built-in Tools
+
+Complete reference for all built-in tools available in Xagent, organized by category.
+
+## Basic Tools
+
+### web_search
+
+Search the internet for current information.
+
+**Capabilities:**
+- Find recent news and information
+- Research topics online
+- Get current data
+- Fact-check statements
+
+**Parameters:**
+- `query` (required) - Search query
+- `num_results` (optional) - Number of results to return (default: 10)
+- `include_content` (optional) - Whether to include full page content
+
+**Returns:**
+- Search results with titles, links, and snippets
+- Full page content (if requested)
+- Source information
+
+**Uses Google Custom Search API and Zhipu AI search**
+
+### python_executor
+
+Execute Python code safely for data analysis and computation.
+
+**Capabilities:**
+- Run Python code
+- Data analysis with pandas
+- Visualization with matplotlib
+- Mathematical computations
+- Data transformations
+
+**Parameters:**
+- `code` (required) - Python code to execute
+- `libraries` - Available libraries: pandas, numpy, matplotlib, etc.
+
+**Returns:**
+- Output from code execution
+- Error messages if code fails
+- Displayed figures (saved as images)
+
+**Security:** Executes in isolated environment with syntax checking
+
+## Knowledge Tools
+
+### list_knowledge_bases
+
+List all available knowledge bases.
+
+**Capabilities:**
+- See all knowledge bases in your workspace
+- Get document and chunk counts
+- Check knowledge base status
+
+**Parameters:**
+- None (automatically uses accessible knowledge bases)
+
+**Returns:**
+- List of knowledge base names
+- Document counts
+- Chunk counts
+- Embedding model information
+
+### search_knowledge_base
+
+Search for relevant documents in your knowledge bases.
+
+**Capabilities:**
+- Find relevant information
+- Semantic search with embeddings
+- Keyword search
+- Hybrid search (semantic + keyword)
+
+**Parameters:**
+- `query` (required) - Search query
+- `collections` (optional) - Specific knowledge bases to search
+- `search_type` (optional) - "dense", "sparse", or "hybrid" (default: "hybrid")
+- `top_k` (optional) - Maximum results per knowledge base (default: 5)
+- `min_score` (optional) - Minimum relevance score (default: 0.3)
+
+**Returns:**
+- Relevant document chunks
+- Relevance scores
+- Source document names
+- Section/page references
+
+## File Tools
+
+### read_file
+
+Read content from text files.
+
+**Capabilities:**
+- Read text files (TXT, MD, CSV, JSON, etc.)
+- Parse PDF documents
+- Extract text from DOCX
+- Read Excel files
+
+**Parameters:**
+- `file_path` (required) - Path to file in workspace
+
+**Returns:**
+- File content as text
+- Document structure for complex formats
+- Metadata (page count, sections, etc.)
+
+### write_file
+
+Write content to files.
+
+**Capabilities:**
+- Create new text files
+- Save results
+- Generate reports
+- Export data
+
+**Parameters:**
+- `file_path` (required) - Path where to save the file
+- `content` (required) - Content to write
+
+**Returns:**
+- Success status
+- Saved file path
+- File size
+
+### list_files
+
+List files and directories in workspace.
+
+**Capabilities:**
+- Browse workspace structure
+- Find files by pattern
+- Check directory contents
+
+**Parameters:**
+- `directory_path` (optional) - Directory to list (default: workspace root)
+- `pattern` (optional) - File pattern to match
+
+**Returns:**
+- List of files and directories
+- File sizes and types
+- Directory structure
+
+### edit_file
+
+Edit existing file content.
+
+**Capabilities:**
+- Replace text
+- Insert new content
+- Delete sections
+- Multiple replacements at once
+
+**Parameters:**
+- `file_path` (required) - Path to file
+- `operations` (required) - List of edit operations
+  - `operation` - "replace", "insert", or "delete"
+  - `old_text` - Text to replace (for replace operation)
+  - `new_text` - New text (for replace/insert operations)
+
+**Returns:**
+- Success status
+- Number of changes made
+- Updated file content preview
+
+### document_parser
+
+Parse various document formats.
+
+**Supported Formats:**
+- PDF (.pdf)
+- Word (.doc, .docx)
+- PowerPoint (.pptx)
+- Excel (.xlsx, .xls)
+- Images (.png, .jpg) for OCR
+- HTML (.html, .htm)
+
+**Parameters:**
+- `file_path` (required) - Path to document
+- `parse_method` (optional) - Parsing method (default, pypdf, pdfplumber, etc.)
+
+**Returns:**
+- Extracted text content
+- Document structure
+- Tables (for spreadsheet files)
+- Metadata
+
+## Vision Tools
+
+### understand_images
+
+Analyze images and answer questions about them.
+
+**Capabilities:**
+- Understand image content
+- Answer specific questions
+- Extract information
+- OCR and text recognition
+- Chart and graph analysis
+
+**Parameters:**
+- `images` (required) - List of image paths or URLs
+- `question` (optional) - Specific question about images
+
+**Returns:**
+- Detailed answer to question
+- Description of image content
+- Detected text (OCR)
+- Object information
+
+**Limit:** Maximum 10 images per call
+
+**Requires:** Vision model (multimodal LLM)
+
+### describe_images
+
+Generate detailed descriptions of images.
+
+**Capabilities:**
+- Generate comprehensive image descriptions
+- Identify elements and objects
+- Describe scenes and activities
+- Extract text from images
+
+**Parameters:**
+- `images` (required) - List of image paths or URLs
+
+**Returns:**
+- Detailed textual description
+- Key elements identified
+- Context and setting
+
+**Limit:** Maximum 10 images per call
+
+**Requires:** Vision model (multimodal LLM)
+
+### detect_objects
+
+Detect and identify objects in images.
+
+**Capabilities:**
+- Find objects in images
+- Count occurrences
+- Locate positions
+- Object categories
+
+**Parameters:**
+- `images` (required) - List of image paths or URLs
+- `objects` (optional) - Specific objects to detect
+
+**Returns:**
+- Detected objects list
+- Bounding boxes
+- Confidence scores
+- Object counts
+
+**Limit:** Maximum 10 images per call
+
+**Requires:** Vision model (multimodal LLM)
+
+## Image Tools
+
+### generate_image
+
+Generate images from text descriptions.
+
+**Capabilities:**
+- Create images from text
+- Various styles and formats
+- Automatic prompt optimization
+- Text handling in images
+
+**Parameters:**
+- `prompt` (required) - Description of desired image
+- `size` (optional) - Image size (default: "1024*1024")
+- `model_id` (optional) - Specific model to use
+
+**Returns:**
+- Generated image URL
+- Image file path (saved to workspace)
+- Generation metadata
+
+**Requires:** Image generation model (OpenAI, DashScope, Xinference)
+
+### edit_image
+
+Edit and modify existing images.
+
+**Capabilities:**
+- Modify image content
+- Change styles
+- Add/remove elements
+- Combine multiple images
+
+**Parameters:**
+- `image_url` (required) - Source image(s) to edit
+- `prompt` (required) - Description of desired changes
+- `model_id` (optional) - Specific model to use
+
+**Returns:**
+- Edited image URL
+- Image file path (saved to workspace)
+- Edit metadata
+
+**Requires:** Image generation model with edit capability
+
+## Browser Tools
+
+### browser_automation
+
+Automate web browser interactions using Playwright.
+
+**Capabilities:**
+- Navigate to websites
+- Click buttons and links
+- Fill forms
+- Extract data
+- Take screenshots
+- Manage multiple tabs
+
+**Parameters:**
+- `actions` (required) - List of browser actions
+  - `action` - "goto", "click", "fill", "screenshot", etc.
+  - `selector` - CSS selector for element
+  - `value` - Value to input or text to find
+
+**Returns:**
+- Screenshot images
+- Extracted data
+- Action results
+- Page information
+
+**Features:**
+- Anti-detection settings
+- Multi-tab support
+- Session persistence
+- Error recovery
+
+## Special Image Tools
+
+### search_images
+
+Search for images on the web.
+
+**Capabilities:**
+- Find images by query
+- Get image URLs
+- Browse image collections
+
+**Parameters:**
+- `query` (required) - Search query for images
+- `num_results` (optional) - Number of results (default: 10)
+
+**Returns:**
+- Image URLs
+- Image sources
+- Thumbnail links
+
+### logo_overlay
+
+Add logo overlay to images.
+
+**Capabilities:**
+- Place logo on images
+- Position control
+- Size adjustment
+- Opacity settings
+
+**Parameters:**
+- `image_url` (required) - Base image
+- `logo_url` (required) - Logo image
+- `position` (optional) - Logo position (default: "top-right")
+- `opacity` (optional) - Logo opacity (default: 0.8)
+
+**Returns:**
+- Composite image URL
+- Saved file path
+
+## Tool Requirements
+
+Some tools require specific models or configurations:
+
+| Tool | Requirement |
+|------|-------------|
+| `understand_images`, `describe_images`, `detect_objects` | Vision model (multimodal LLM) |
+| `generate_image`, `edit_image` | Image generation model |
+| `search_knowledge_base` | Embedding model + knowledge base |
+| `web_search` | Search API credentials |
+| `browser_automation` | Browser automation enabled |
+
+## Best Practices
+
+### Choosing Tools
+
+- **Web search** - For current events and online information
+- **Knowledge base** - For domain-specific documentation
+- **File operations** - For working with uploaded files
+- **Vision tools** - For image analysis and OCR
+- **Image generation** - For creating visual content
+- **Python executor** - For data analysis and computation
+- **Browser automation** - For web scraping and automation
+
+### Tool Chaining
+
+Xagent can use multiple tools in sequence:
+```
+1. Search web for information
+2. Save results to file
+3. Analyze data with Python
+4. Generate report
+```
+
+### Error Handling
+
+Tools automatically handle errors:
+- Retry failed operations
+- Provide clear error messages
+- Suggest alternatives
+- Fall back to safe defaults
+
+## Next Steps
+
+- [Tools Overview](/tools/overview) - Learn about tool categories
+- [Building Agents](/agents/building) - Configure tools in your agents
+- [Models](/models/overview) - Configure models required for tools

@@ -1,0 +1,381 @@
+---
+title: "Creating Templates"
+description: "How to create and contribute templates"
+icon: "plus"
+---
+
+# Creating Templates
+
+Create and contribute your own templates to share with the Xagent community.
+
+## Template Structure
+
+Templates are defined as YAML files with the following structure:
+
+```yaml
+id: my-custom-template
+name: My Custom Template
+category: General & Productivity
+tags:
+  - productivity
+  - automation
+  - workflow
+descriptions:
+  en: Description of what this template does
+  zh: 模板的中文描述
+featured: false
+author: Your Name or Organization
+version: "1.0"
+
+agent_config:
+  instructions: |
+    You are a helpful assistant that...
+  skills: []
+  tool_categories: []
+  execution_mode: "react"
+```
+
+## Template Fields
+
+### Metadata
+
+**id** (Required)
+- Unique identifier for the template
+- Use kebab-case (e.g., `customer-support-agent`)
+- Must be unique across all templates
+
+**name** (Required)
+- Display name shown in the template library
+- Use clear, descriptive names
+- Maximum 200 characters
+
+**category** (Required)
+- Template category for organization
+- Common categories:
+  - Customer Service
+  - General & Productivity
+  - Finance, LMS & Ops
+  - Healthcare & Fitness
+  - Security
+
+**tags** (Optional)
+- List of searchable tags
+- Help users discover your template
+- Use lowercase, hyphenated tags
+
+**descriptions** (Required)
+- Multi-language descriptions
+- **en** (English) is required
+- **zh** (Chinese) is recommended
+- Keep descriptions concise and clear
+
+**featured** (Optional)
+- Set to `true` for highlighted templates
+- Default: `false`
+- Featured templates are shown prominently
+
+**author** (Optional)
+- Template author or organization
+- Default: "Xagent"
+
+**version** (Optional)
+- Template version
+- Follow semantic versioning (e.g., "1.0", "1.1", "2.0")
+- Default: "1.0"
+
+### Agent Configuration
+
+**instructions** (Required)
+- System prompt defining the agent's role and behavior
+- Be specific about what the agent should do
+- Include guidelines for tone, approach, and constraints
+
+**skills** (Optional)
+- List of pre-built skill IDs
+- Leave empty if no skills needed
+- Default: `[]`
+
+**tool_categories** (Optional)
+- List of tool categories to enable:
+  - `basic` - Basic tools (web search, calculator)
+  - `file` - File upload and management
+  - `vision` - Image understanding
+  - `image` - Image generation and editing
+  - `knowledge` - Knowledge base operations
+  - `mcp` - MCP protocol tools
+  - `browser` - Browser automation
+  - `ppt` - PowerPoint processing
+  - `office` - Office document processing
+  - `special_image` - Special image processing
+- Default: `[]`
+
+**execution_mode** (Optional)
+- `react` - ReAct loop (reasoning → acting)
+- `graph` - DAG planning-execution
+- Default: `"react"`
+
+## Creating a Template
+
+### Step 1: Design Your Template
+
+Before writing the YAML, plan your template:
+
+1. **Identify the use case** - What problem does it solve?
+2. **Define the agent's role** - What should it do?
+3. **Determine required tools** - What tools does it need?
+4. **Choose execution mode** - React or Graph?
+
+### Step 2: Create the YAML File
+
+Create a new YAML file with your template definition:
+
+```yaml
+id: marketing-content-creator
+name: Marketing Content Creator
+category: General & Productivity
+tags:
+  - marketing
+  - content
+  - writing
+descriptions:
+  en: Create marketing content for various channels
+  zh: 为不同渠道创建营销内容
+featured: false
+author: Your Name
+version: "1.0"
+
+agent_config:
+  instructions: |
+    You are a marketing content creator. Your role is to:
+    - Create engaging marketing copy for social media, email, and web
+    - Adapt tone and style for different audiences and channels
+    - Ensure brand consistency across all content
+    - Optimize content for SEO when appropriate
+    - Follow marketing best practices and guidelines
+
+    Always ask clarifying questions if the request is unclear.
+    Provide multiple options when appropriate.
+  skills: []
+  tool_categories:
+    - basic
+    - knowledge
+  execution_mode: "react"
+```
+
+### Step 3: Test Your Template
+
+Before contributing, test your template:
+
+1. **Local Testing**
+   - Add your YAML file to the templates directory
+   - Restart Xagent
+   - Create an agent from your template
+   - Test with various inputs
+   - Verify behavior matches expectations
+
+2. **Validation Checklist**
+   - YAML syntax is valid
+   - All required fields are present
+   - Instructions are clear and specific
+   - Tools work as expected
+   - Template solves the intended problem
+
+## Contributing Templates
+
+Templates are maintained in the Xagent repository. To contribute your template:
+
+### Step 1: Fork the Repository
+
+```bash
+# Fork https://github.com/xorbitsai/xagent
+# Clone your fork
+git clone https://github.com/YOUR_USERNAME/xagent.git
+cd xagent
+```
+
+### Step 2: Add Your Template
+
+Place your YAML file in the templates directory:
+
+```bash
+# Navigate to templates directory
+cd src/xagent/templates/built_in
+
+# Create your template file
+vim my-template.yaml
+```
+
+### Step 3: Test Locally
+
+Test your template in your local Xagent instance:
+1. Start Xagent
+2. Go to Build page
+3. Click New Agent
+4. Find your template in the library
+5. Create an agent and test it
+
+### Step 4: Submit a Pull Request
+
+```bash
+# Commit your changes
+git add src/xagent/templates/built_in/my-template.yaml
+git commit -m "Add template: My Template Name"
+
+# Push to your fork
+git push origin main
+
+# Create pull request on GitHub
+# Visit: https://github.com/xorbitsai/xagent/pulls
+```
+
+### PR Guidelines
+
+**Title Format**
+```
+Add template: [Template Name]
+```
+
+**Description Template**
+```markdown
+## Template Description
+
+Briefly describe what this template does and what use case it addresses.
+
+## Changes
+
+- Added `template-id` template
+- Category: Category Name
+- Tools: list of tools used
+
+## Testing
+
+- [ ] Tested locally with Xagent
+- [ ] Verified YAML syntax
+- [ ] Tested with multiple inputs
+- [ ] All required fields included
+
+## Screenshots (Optional)
+
+Attach screenshots showing the template in action.
+```
+
+**Review Process**
+- Maintainers will review your template
+- Feedback will be provided if changes are needed
+- Once approved, your template will be merged
+- Templates are released with Xagent updates
+
+## Best Practices
+
+### Instructions
+
+- **Be Specific** - Clearly define the agent's role and behavior
+- **Include Guidelines** - Specify tone, approach, and constraints
+- **Set Boundaries** - Explain what the agent should not do
+- **Provide Examples** - Include example behaviors in instructions
+
+### Tool Selection
+
+- **Minimal Tools** - Only enable tools the template needs
+- **Clear Purpose** - Each tool should have a clear use case
+- **Test Tools** - Verify tools work as expected
+
+### Categories and Tags
+
+- **Choose Appropriate Category** - Match existing categories when possible
+- **Use Descriptive Tags** - Help users discover your template
+- **Avoid Over-tagging** - 3-5 relevant tags are sufficient
+
+### Documentation
+
+- **Clear Descriptions** - Explain what the template does
+- **Multi-language** - Include both English and Chinese
+- **Concise** - Keep descriptions brief but informative
+
+## Template Examples
+
+### Simple Template
+
+```yaml
+id: meeting-summarizer
+name: Meeting Summarizer
+category: General & Productivity
+tags:
+  - meeting
+  - summary
+  - productivity
+descriptions:
+  en: Summarize meeting notes and extract action items
+  zh: 总结会议记录并提取行动项
+author: Xagent
+version: "1.0"
+
+agent_config:
+  instructions: |
+    You are a meeting summarizer. Your task is to:
+    1. Summarize key discussion points
+    2. Extract decisions made
+    3. List action items with owners
+    4. Identify follow-up tasks
+
+    Keep summaries concise and organized.
+  skills: []
+  tool_categories: []
+  execution_mode: "react"
+```
+
+### Advanced Template
+
+```yaml
+id: data-analysis-assistant
+name: Data Analysis Assistant
+category: Finance, LMS & Ops
+tags:
+  - data
+  - analysis
+  - visualization
+  - reporting
+descriptions:
+  en: Analyze data, create visualizations, and generate reports
+  zh: 分析数据、创建可视化并生成报告
+featured: true
+author: Xagent
+version: "1.0"
+
+agent_config:
+  instructions: |
+    You are a data analysis assistant. Your capabilities include:
+    - Analyzing structured data (CSV, Excel, JSON)
+    - Identifying trends, patterns, and outliers
+    - Creating appropriate visualizations
+    - Generating comprehensive reports
+    - Providing data-driven insights
+
+    Approach:
+    1. Understand the analysis objective
+    2. Explore and clean the data
+    3. Perform appropriate analyses
+    4. Create clear visualizations
+    5. Summarize findings and recommendations
+
+    Always explain your analysis process and findings clearly.
+  skills: []
+  tool_categories:
+    - basic
+    - file
+    - knowledge
+  execution_mode: "graph"
+```
+
+## Resources
+
+- [Xagent Repository](https://github.com/xorbitsai/xagent) - Source code
+- [Built-in Templates](https://github.com/xorbitsai/xagent/tree/main/src/xagent/templates/built_in) - Example templates
+- [Building Agents](/agents/building) - Agent configuration guide
+- [Contributing Guidelines](https://github.com/xorbitsai/xagent/blob/main/CONTRIBUTING.md) - Contribution guidelines
+
+## Next Steps
+
+- [Templates](/templates/overview) - Browse available templates
+- [Building Agents](/agents/building) - Learn about agent configuration
+- [Xagent GitHub](https://github.com/xorbitsai/xagent) - Contribute to the project

@@ -1,0 +1,345 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "willow",
+  "name": "Xagent",
+  "colors": {
+    "primary": "#6A0CF5",
+    "light": "#AB66F3",
+    "dark": "#5A0BD3"
+  },
+  "favicon": "/favicon.png",
+  "openapi": "api-reference/openapi.json",
+  "navigation": {
+    "versions": [
+      {
+        "version": "Latest",
+        "languages": [
+          {
+            "language": "en",
+            "default": true,
+            "dropdowns": [
+              {
+                "dropdown": "Use Xagent",
+                "icon": "sparkles",
+                "pages": [
+                  {
+                    "group": " ",
+                    "pages": [
+                      {
+                        "group": "Overview",
+                        "expanded": true,
+                        "pages": [
+                          "index",
+                          "quickstart",
+                          "installation"
+                        ]
+                      },
+                      {
+                        "group": "Tasks",
+                        "expanded": false,
+                        "pages": [
+                          "tasks/overview",
+                          "tasks/execution"
+                        ]
+                      },
+                      {
+                        "group": "Agents",
+                        "expanded": false,
+                        "pages": [
+                          "agents/overview",
+                          "agents/building"
+                        ]
+                      },
+                      {
+                        "group": "Templates",
+                        "expanded": false,
+                        "pages": [
+                          "templates/overview",
+                          "templates/creating"
+                        ]
+                      },
+                      {
+                        "group": "Knowledge Base",
+                        "expanded": false,
+                        "pages": [
+                          "knowledge/overview",
+                          "knowledge/uploading",
+                          "knowledge/retrieval"
+                        ]
+                      },
+                      {
+                        "group": "Models",
+                        "expanded": false,
+                        "pages": [
+                          "models/overview",
+                          "models/llm",
+                          "models/embedding",
+                          "models/image-generation"
+                        ]
+                      },
+                      {
+                        "group": "Tools",
+                        "expanded": false,
+                        "pages": [
+                          "tools/overview",
+                          "tools/built-in",
+                          "tools/custom"
+                        ]
+                      },
+                      {
+                        "group": "Memory",
+                        "expanded": false,
+                        "pages": [
+                          "memory/overview",
+                          "memory/types",
+                          "memory/configuration"
+                        ]
+                      },
+                      {
+                        "group": "Files",
+                        "expanded": false,
+                        "pages": [
+                          "files/overview",
+                          "files/upload",
+                          "files/management"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "dropdown": "Platform",
+                "icon": "server",
+                "pages": [
+                  {
+                    "group": "Deployment",
+                    "expanded": false,
+                    "pages": [
+                      "deployment/configuration",
+                      "deployment/self-hosted"
+                    ]
+                  }
+                ]
+              },
+              {
+                "dropdown": "API Reference",
+                "icon": "code",
+                "pages": [
+                  "api-reference/introduction",
+                  {
+                    "group": "Authentication",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/authentication/login",
+                      "api-reference/authentication/register",
+                      "api-reference/authentication/refresh-token",
+                      "api-reference/authentication/change-password",
+                      "api-reference/authentication/check-auth",
+                      "api-reference/authentication/verify-current-token"
+                    ]
+                  },
+                  {
+                    "group": "Agents",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/agents/list-agents",
+                      "api-reference/agents/create-agent",
+                      "api-reference/agents/get-agent",
+                      "api-reference/agents/update-agent",
+                      "api-reference/agents/delete-agent",
+                      "api-reference/agents/publish-agent",
+                      "api-reference/agents/unpublish-agent",
+                      "api-reference/agents/preview-agent",
+                      "api-reference/agents/upload-agent-logo"
+                    ]
+                  },
+                  {
+                    "group": "Tasks",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/chat/get-tasks",
+                      "api-reference/chat/get-task",
+                      "api-reference/chat/create-task",
+                      "api-reference/chat/delete-task",
+                      "api-reference/chat/get-task-status",
+                      "api-reference/chat/get-task-output-files",
+                      "api-reference/chat/get-task-workspace-files"
+                    ]
+                  },
+                  {
+                    "group": "Files",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/files/upload-file",
+                      "api-reference/files/upload-multiple-files",
+                      "api-reference/files/list-files",
+                      "api-reference/files/preview-file",
+                      "api-reference/files/public-preview-file",
+                      "api-reference/files/download-file",
+                      "api-reference/files/delete-file"
+                    ]
+                  },
+                  {
+                    "group": "Knowledge Base",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/kb/search",
+                      "api-reference/kb/ingest",
+                      "api-reference/kb/ingest-web",
+                      "api-reference/kb/list-collections-api",
+                      "api-reference/kb/rename-collection-api",
+                      "api-reference/kb/delete-collection-api",
+                      "api-reference/kb/delete-document-api"
+                    ]
+                  },
+                  {
+                    "group": "Memory",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/memory/get-memory",
+                      "api-reference/memory/list-memories",
+                      "api-reference/memory/create-memory",
+                      "api-reference/memory/update-memory",
+                      "api-reference/memory/delete-memory",
+                      "api-reference/memory/get-memory-stats",
+                      "api-reference/memory/get-store-info"
+                    ]
+                  },
+                  {
+                    "group": "Models",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/models/list-models",
+                      "api-reference/models/get-model",
+                      "api-reference/models/create-model",
+                      "api-reference/models/update-model",
+                      "api-reference/models/delete-model",
+                      "api-reference/models/get-models-summary",
+                      "api-reference/models/get-default-model",
+                      "api-reference/models/set-user-default-model",
+                      "api-reference/models/get-user-default-model",
+                      "api-reference/models/get-user-default-models",
+                      "api-reference/models/delete-user-default-model",
+                      "api-reference/models/list-model-providers",
+                      "api-reference/models/get-compact-default-model",
+                      "api-reference/models/get-general-default-model",
+                      "api-reference/models/get-small-fast-default-model",
+                      "api-reference/models/get-visual-default-model",
+                      "api-reference/models/get-embedding-default-model",
+                      "api-reference/models/list-model-abilities",
+                      "api-reference/models/list-model-categories",
+                      "api-reference/models/list-public-models",
+                      "api-reference/models/list-public-providers",
+                      "api-reference/models/list-public-categories",
+                      "api-reference/models/get-public-summary",
+                      "api-reference/models/fetch-provider-models",
+                      "api-reference/models/fetch-multiple-providers-models",
+                      "api-reference/models/test-models"
+                    ]
+                  },
+                  {
+                    "group": "Tools",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/tools/get-available-tools",
+                      "api-reference/tools/get-tool-usage"
+                    ]
+                  },
+                  {
+                    "group": "Skills",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/skills/list-skills",
+                      "api-reference/skills/get-skill",
+                      "api-reference/skills/recall-skill",
+                      "api-reference/skills/reload-skills"
+                    ]
+                  },
+                  {
+                    "group": "Templates",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/templates/list-templates",
+                      "api-reference/templates/get-template",
+                      "api-reference/templates/use-template",
+                      "api-reference/templates/like-template"
+                    ]
+                  },
+                  {
+                    "group": "MCP",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/mcp-management/list-mcp-servers",
+                      "api-reference/mcp-management/get-mcp-server",
+                      "api-reference/mcp-management/create-mcp-server",
+                      "api-reference/mcp-management/update-mcp-server",
+                      "api-reference/mcp-management/delete-mcp-server",
+                      "api-reference/mcp-management/toggle-mcp-server",
+                      "api-reference/mcp-management/test-mcp-connection",
+                      "api-reference/mcp-management/get-mcp-server-tools",
+                      "api-reference/mcp-management/get-mcp-server-logs",
+                      "api-reference/mcp-management/get-supported-transports"
+                    ]
+                  },
+                  {
+                    "group": "Text2SQL",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/text2sql/get-databases",
+                      "api-reference/text2sql/create-database",
+                      "api-reference/text2sql/update-database",
+                      "api-reference/text2sql/delete-database",
+                      "api-reference/text2sql/test-database-connection",
+                      "api-reference/text2sql/predict-data"
+                    ]
+                  },
+                  {
+                    "group": "Monitor",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/monitor/get-dashboard-stats",
+                      "api-reference/monitor/get-monitoring-stats",
+                      "api-reference/monitor/get-agents",
+                      "api-reference/monitor/get-tools",
+                      "api-reference/monitor/get-popular-tools",
+                      "api-reference/monitor/get-model-stats"
+                    ]
+                  },
+                  {
+                    "group": "Admin",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/admin-users/get-users",
+                      "api-reference/admin-users/delete-user"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/xorbitsai/xagent"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "header": true,
+      "label": "Get Started",
+      "href": "/quickstart"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/xorbitsai/xagent",
+      "x": "https://x.com/xorbitsai"
+    }
+  }
+}

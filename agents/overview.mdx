@@ -1,0 +1,159 @@
+---
+title: "Agents Overview"
+description: "Understanding agents vs tasks in Xagent"
+icon: "robot"
+---
+
+# Agents Overview
+
+Agents are reusable AI assistants with predefined roles and configurations. Unlike one-time tasks, agents maintain consistent behavior and can be shared across your team.
+
+## Agent vs Task
+
+### When to Use Tasks
+
+**Tasks** are best for:
+- One-time executions
+- Quick exploratory work
+- Testing ideas
+- Ad-hoc requests
+- Temporary workflows
+
+**Example:** "Summarize this document" - a one-time request that doesn't need to be saved or reused.
+
+### When to Use Agents
+
+**Agents** are best for:
+- Reusable workflows
+- Repeated operations
+- Team collaboration
+- Production use cases
+- Specialized roles
+
+**Example:** A "Customer Support Agent" that handles FAQ requests, searches documentation, and provides consistent responses.
+
+### Comparison
+
+| Feature | Tasks | Agents |
+|---------|-------|--------|
+| **Use case** | One-time executions | Reusable workflows |
+| **Configuration** | Auto-generated | Customizable |
+| **Persistence** | Not saved | Saved and shareable |
+| **Behavior** | Varies by request | Consistent |
+| **Sharing** | Not shareable | Can be published |
+| **Role definition** | Per task | Predefined |
+
+## Key Agent Features
+
+### 1. Role Definition
+
+Define your agent's purpose and behavior:
+- "You are a customer support assistant"
+- "You are a data analyst"
+- "You are a research assistant"
+
+### 2. Execution Mode
+
+Choose how your agent processes tasks:
+- **React Mode**: Reasoning → Acting cycle (default)
+- **Graph Mode**: Plan all steps first, then execute
+
+### 3. Tool Access
+
+Control what tools your agent can use:
+- Basic tools (web search, calculator)
+- File operations
+- Image understanding/generation
+- Knowledge base operations
+- And more
+
+### 4. Knowledge Integration
+
+Add domain-specific knowledge:
+- Attach knowledge bases
+- Agent retrieves relevant information
+- Enhances response accuracy
+
+### 5. Model Configuration
+
+Select models for different purposes:
+- **General Model**: Main reasoning engine
+- **Fast Model**: For simple operations
+- **Visual Model**: For image tasks
+- **Compact Model**: For long conversations
+
+## How It Works
+
+### Creating Tasks
+
+For one-time tasks, simply:
+1. Go to **Task** page
+2. Enter your request
+3. Upload files if needed
+4. Xagent executes and shows results
+
+### Creating Agents
+
+For reusable workflows:
+1. Go to **Build** page
+2. Create new agent
+3. Configure role, models, tools, knowledge
+4. Test with live preview
+5. Save and publish
+
+After publishing, users can:
+- Find the agent in the agents list
+- Start a conversation with the agent
+- Agent uses its configured behavior consistently
+
+### Shared Execution Interface
+
+Both tasks and agents use the same execution interface:
+- Real-time progress tracking
+- Step-by-step execution details
+- Tool calls and responses
+- Chat interaction
+
+When using an agent, the interface displays:
+- Agent's logo and name
+- Agent's configuration
+- Consistent behavior based on agent's settings
+
+## Typical Workflow
+
+### For One-Time Tasks
+
+```
+Task Page → Enter Request → Execution → Results
+```
+
+**Done!** No need to save or configure anything.
+
+### For Creating Agents
+
+```
+Build Page → Create Agent → Configure → Test → Save → Publish
+```
+
+After publishing:
+```
+Agents List → Select Agent → Chat → Agent responds with configured behavior
+```
+
+## Agent Templates
+
+Jump-start agent creation with pre-built templates:
+- **Customer Support**: FAQ handling, documentation search
+- **Data Analyst**: Data processing, visualization, reporting
+- **Research Assistant**: Information gathering, synthesis
+- **Content Creator**: Writing, editing, image generation
+
+Templates provide a starting point that you can customize for your specific needs.
+
+[Explore templates →](/templates/overview)
+
+## Next Steps
+
+- [Building Agents](/agents/building) - Create and configure your agents
+- [Templates](/templates/overview) - Explore pre-built agent templates
+- [Tasks](/tasks/overview) - Learn about task execution

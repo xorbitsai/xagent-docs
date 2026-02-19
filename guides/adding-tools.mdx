@@ -1,0 +1,203 @@
+---
+title: "Adding Tools"
+description: "Extend agent capabilities with tools and integrations"
+---
+
+# Adding Tools
+
+Tools give agents the ability to take actions — searching the web, querying databases, calling APIs, and more.
+
+## What Are Tools?
+
+Tools are capabilities that agents can use to accomplish tasks:
+
+<Columns cols={2}>
+  <Card
+    title="Information Access"
+    icon="database"
+  >
+    Web Search, Database Query, File Reader
+  </Card>
+  <Card
+    title="Communication"
+    icon="send"
+  >
+    Email, Slack, Webhooks, HTTP Requests
+  </Card>
+  <Card
+    title="Data Processing"
+    icon="cpu"
+  >
+    Python, SQL, Excel, Data Analysis
+  </Card>
+  <Card
+    title="Productivity"
+    icon="check-square"
+  >
+    Calendar, Tasks, Notes, Reminders
+  </Card>
+</Columns>
+
+## Built-in Tools
+
+Xagent includes commonly-used tools:
+
+### Web Search
+
+Search the web and retrieve current information.
+
+**Use for:** Research, competitive analysis, news gathering, fact-checking
+
+### Database Query
+
+Query SQL databases directly.
+
+**Use for:** Business intelligence, reporting, data retrieval
+
+### File Operations
+
+Read, write, and manipulate files.
+
+**Use for:** Document processing, report generation, data export
+
+### Code Execution
+
+Run Python code for analysis and automation.
+
+**Use for:** Data processing, calculations, transformations
+
+## Adding Tools to Agents
+
+### Step 1: Access Agent Configuration
+
+Navigate to your agent and go to **Tools**.
+
+### Step 2: Enable Required Tools
+
+Toggle on the tools your agent needs.
+
+### Step 3: Configure Tool Settings
+
+Some tools require configuration:
+
+<Accordion>
+  <AccordionItem title="Database Connections">
+    Provide connection details (host, port, credentials)
+  </AccordionItem>
+  <AccordionItem title="API Keys">
+    Add authentication for external services
+  </AccordionItem>
+  <AccordionItem title="File Access">
+    Specify which directories the agent can access
+  </AccordionItem>
+</Accordion>
+
+### Step 4: Test the Agent
+
+Verify the agent uses tools appropriately:
+
+```
+"Search for recent AI industry news and summarize the top 3 stories"
+```
+
+## Custom Tools
+
+Connect your own APIs and services as tools.
+
+### REST APIs
+
+Wrap any REST API as a tool:
+
+```json
+{
+  "name": "crm_search",
+  "description": "Search the CRM for customer information",
+  "endpoint": "https://api.yourcrm.com/search",
+  "method": "POST",
+  "authentication": "bearer_token"
+}
+```
+
+### Custom Functions
+
+Write custom logic in Python:
+
+```python
+def calculate_pricing(quantity, customer_tier):
+    """Calculate pricing based on quantity and customer tier"""
+    base_price = 100
+    if customer_tier == "enterprise":
+        return base_price * quantity * 0.7
+    return base_price * quantity
+```
+
+See [API Reference](/api-reference/introduction) for details on custom tools.
+
+## Tool Selection
+
+Xagent automatically selects the right tools for each task. You don't need to specify which tools to use when — just enable them and the agent will choose appropriately.
+
+### Example
+
+With Web Search and Database Query enabled:
+
+```
+User: "What are our Q3 sales figures?"
+
+Agent: [Uses Database Query to retrieve sales data]
+```
+
+```
+User: "What are competitors saying about this feature?"
+
+Agent: [Uses Web Search to find public information]
+```
+
+## Tool Best Practices
+
+<Accordion>
+  <AccordionItem title="Start Essential">
+    Only enable tools the agent actually needs. Too many options can reduce performance.
+  </AccordionItem>
+  <AccordionItem title="Provide Context">
+    Clear tool descriptions help agents choose the right tool.
+  </AccordionItem>
+  <AccordionItem title="Secure Configuration">
+    Use environment variables for sensitive data (API keys, passwords).
+  </AccordionItem>
+  <AccordionItem title="Error Handling">
+    Design tools to provide clear error messages when operations fail.
+  </AccordionItem>
+</Accordion>
+
+## Common Tool Combinations
+
+### Research Agent
+
+- Web Search
+- Database Query
+- File Reader
+
+### Data Analyst
+
+- SQL
+- Python
+- Visualization
+
+### Content Creator
+
+- Web Search
+- File Writer
+- Templates
+
+### Automation Agent
+
+- HTTP Requests
+- Database Query
+- Webhooks
+
+## Next Steps
+
+- [Connect a knowledge base](/guides/knowledge-base)
+- [Configure deployment](/deployment/configuration)
+- [Explore examples](/examples/research-agent)

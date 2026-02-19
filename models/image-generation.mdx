@@ -1,0 +1,214 @@
+---
+title: "Image Generation Models"
+description: "Configuring image generation and editing models"
+icon: "image"
+---
+
+# Image Generation Models
+
+Image generation models enable Xagent to create and modify images through text prompts.
+
+## Purpose
+
+**Enable Image Tools:**
+- `generate_image` - Create images from text descriptions
+- `edit_image` - Modify existing images
+- Visual content creation and editing
+
+**How it works:**
+- Accept text prompts describing desired image
+- Generate new images or modify existing ones
+- Return image files saved to workspace
+
+## When to Use
+
+**Required for:**
+- Image generation tasks
+- Image editing and modification
+- Visual content creation
+- Design and marketing materials
+
+**Not required for:**
+- Image understanding or analysis (uses Vision LLMs)
+- Image OCR or text extraction (uses Vision LLMs)
+- Chart/graph analysis (uses Vision LLMs)
+
+## Supported Providers
+
+### OpenAI & OpenAI-compatible
+
+**Models:** gpt-image-1 and compatible models
+
+**Setup:**
+1. Get API key from [OpenAI Platform](https://platform.openai.com)
+2. For compatible services, provide base URL and API key
+3. Select image model
+
+**Abilities:** Both "generate" and "edit"
+
+**Best for:**
+- High-quality image generation
+- Creative tasks
+- Marketing materials
+- Wide compatibility
+
+### DashScope (Alibaba Cloud)
+
+**Models:** qwen-image
+
+**Setup:**
+1. Get API key from [DashScope Console](https://dashscope.aliyuncs.com)
+2. Configure API key
+3. Select model
+
+**Abilities:** Primarily "generate" (can support "edit")
+
+**Best for:**
+- Chinese language optimization
+- Cost-effective for Asian markets
+- Alibaba Cloud integration
+
+**Supported formats:**
+- JPG, JPEG, PNG, BMP, TIFF, WEBP
+- Max file size: 10MB for editing
+
+### Xinference
+
+**Models:** Stable Diffusion variants (stable-diffusion-2-1, etc.)
+
+**Setup:**
+1. Deploy Xinference server
+2. Launch image generation model
+3. Configure base URL in Xagent
+4. Select model from Xinference
+
+**Abilities:** Configurable (default: ["generate"], supports "edit")
+
+**Best for:**
+- Self-hosted deployment
+- Data privacy
+- Cost control
+- Using open-source models
+
+**Features:**
+- List available models from server
+- Support for various Stable Diffusion models
+- Image-to-image and inpainting capabilities
+
+## Configuration
+
+### Step 1: Add Image Provider
+
+1. Go to **Models** in the sidebar
+2. Click **Add Model** or **Add Provider**
+3. Select image generation provider
+4. Enter API credentials
+
+### Step 2: Configure Model
+
+1. Select the image model
+2. Configure parameters:
+   - Image size (e.g., 1024*1024, 1792*1024)
+   - Response format (url or b64_json)
+   - Number of images (n)
+3. Test generation
+
+### Step 3: Set Abilities
+
+Image models can have these abilities:
+- **generate** - Create new images from text
+- **edit** - Modify existing images
+
+<Info>
+Not all image models support both generation and editing. Check provider documentation.
+</Info>
+
+## Usage Examples
+
+### Generating Images
+
+```
+User: "Create a promotional poster for a coffee shop"
+Xagent: [Uses generate_image tool]
+[Generates image based on description, saves to workspace]
+```
+
+### Editing Images
+
+```
+User: "Change the color scheme to warm tones"
+Xagent: [Uses edit_image tool]
+[Modifies existing image, saves to workspace]
+```
+
+### Multi-Image Editing
+
+```
+User: "Combine these two images with a sunset background"
+Xagent: [Uses edit_image tool with multiple images]
+[Edits multiple images into one result]
+```
+
+## Troubleshooting
+
+### Generation Failed
+
+**Check:**
+- API key is valid
+- Model supports generation ability
+- Prompt follows guidelines
+- Content policy violations
+
+### Poor Quality
+
+**Try:**
+- Improving prompt specificity
+- Adding style instructions
+- Using negative prompts
+- Trying different model
+- Adjusting image size
+
+### Slow Generation
+
+**Optimize:**
+- Reduce image size
+- Consider faster model
+- Check network connectivity
+
+### Edits Not Working
+
+**Verify:**
+- Model supports edit ability
+- Edit instructions are clear
+- Original image is accessible
+- Image format is supported
+- File size within limits (DashScope: 10MB)
+
+### File Not Found
+
+**Check:**
+- Image path is correct
+- File exists in workspace
+- Use workspace file browser to verify path
+- URL is accessible
+
+## Security & Privacy
+
+**Important considerations:**
+- Generated images are saved to workspace
+- Check provider's data retention policy
+- Be aware of content policies
+- Copyright and usage rights
+
+**Recommendations:**
+- Review provider content policy
+- Ensure rights to generated content
+- Consider compliance requirements
+- Be mindful of copyright
+
+## Next Steps
+
+- [LLM Models](/models/llm) - Configure language models
+- [Vision LLMs](/models/llm#vision-optional) - Configure image understanding models
+- [Embedding Models](/models/embedding) - Configure vector embeddings
+- [Model Overview](/models/overview) - Understanding all model types
