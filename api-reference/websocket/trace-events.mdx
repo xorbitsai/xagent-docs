@@ -1,0 +1,580 @@
+---
+title: "Trace Events Reference"
+description: "Complete reference for trace events in WebSocket streams"
+icon: "pulse"
+---
+
+# Trace Events Reference
+
+Trace events provide real-time visibility into task execution through WebSocket connections. Each event represents a specific action, state change, or milestone during execution.
+
+## Event Structure
+
+All trace events follow this structure:
+
+```json
+{
+  "id": "unique_event_id",
+  "event_type": "step_start_dag",
+  "scope": "step",
+  "action": "start",
+  "category": "dag",
+  "timestamp": 1234567890.123,
+  "task_id": "task_123",
+  "step_id": "step_456",
+  "data": {
+    "additional": "information"
+  },
+  "parent_id": "parent_event_id"
+}
+```
+
+### Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Unique event identifier |
+| `event_type` | string | Event type identifier |
+| `scope` | string | Event scope: `task`, `step`, `action`, `system` |
+| `action` | string | Action: `start`, `end`, `error`, `info`, `update` |
+| `category` | string | Category: `dag`, `react`, `general`, `tool`, `llm`, `memory`, etc. |
+| `timestamp` | float | Unix timestamp with milliseconds |
+| `task_id` | string | Associated task ID |
+| `step_id` | string | Associated step ID (for step/action scope) |
+| `data` | object | Event-specific data |
+| `parent_id` | string | Parent event ID for hierarchical events |
+
+## Event Types by Scope
+
+### Task-Level Events
+
+Scope: `task` - Events related to the entire task execution.
+
+#### TASK_START_DAG
+
+Task DAG planning started.
+
+```json
+{
+  "event_type": "task_start_dag",
+  "scope": "task",
+  "action": "start",
+  "category": "dag",
+  "data": {
+    "goal": "Task description",
+    "planner_model": "gpt-4"
+  }
+}
+```
+
+#### TASK_END_DAG
+
+Task DAG planning completed.
+
+```json
+{
+  "event_type": "task_end_dag",
+  "scope": "task",
+  "action": "end",
+  "category": "dag",
+  "data": {
+    "total_steps": 5,
+    "estimated_duration": 300
+  }
+}
+```
+
+#### TASK_START_REACT
+
+Task ReAct execution started.
+
+```json
+{
+  "event_type": "task_start_react",
+  "scope": "task",
+  "action": "start",
+  "category": "react",
+  "data": {
+    "execution_mode": "react"
+  }
+}
+```
+
+#### TASK_END_REACT
+
+Task ReAct execution completed.
+
+```json
+{
+  "event_type": "task_end_react",
+  "scope": "task",
+  "action": "end",
+  "category": "react",
+  "data": {
+    "iterations": 3,
+    "final_result": "Task result"
+  }
+}
+```
+
+#### TASK_START_GENERAL
+
+General task execution started.
+
+```json
+{
+  "event_type": "task_start_general",
+  "scope": "task",
+  "action": "start",
+  "category": "general",
+  "data": {
+    "mode": "auto"
+  }
+}
+```
+
+#### TASK_END_GENERAL
+
+General task execution completed.
+
+```json
+{
+  "event_type": "task_end_general",
+  "scope": "task",
+  "action": "end",
+  "category": "general",
+  "data": {
+    "status": "success"
+  }
+}
+```
+
+#### TASK_ERROR
+
+Task-level error occurred.
+
+```json
+{
+  "event_type": "task_error",
+  "scope": "task",
+  "action": "error",
+  "category": "general",
+  "data": {
+    "error": "Error message",
+    "error_type": "ValueError",
+    "stack_trace": "Error stack trace"
+  }
+}
+```
+
+### Step-Level Events
+
+Scope: `step` - Events for individual execution steps.
+
+#### STEP_START_DAG
+
+DAG step started.
+
+```json
+{
+  "event_type": "step_start_dag",
+  "scope": "step",
+  "action": "start",
+  "category": "dag",
+  "data": {
+    "step_name": "Web Search",
+    "step_type": "tool",
+    "tool_name": "web_search"
+  }
+}
+```
+
+#### STEP_END_DAG
+
+DAG step completed.
+
+```json
+{
+  "event_type": "step_end_dag",
+  "scope": "step",
+  "action": "end",
+  "category": "dag",
+  "data": {
+    "status": "success",
+    "result": "Step result",
+    "duration": 2.5
+  }
+}
+```
+
+#### STEP_START_REACT
+
+ReAct step started.
+
+```json
+{
+  "event_type": "step_start_react",
+  "scope": "step",
+  "action": "start",
+  "category": "react",
+  "data": {
+    "thought": "Agent's reasoning",
+    "action_type": "tool_use"
+  }
+}
+```
+
+#### STEP_END_REACT
+
+ReAct step completed.
+
+```json
+{
+  "event_type": "step_end_react",
+  "scope": "step",
+  "action": "end",
+  "category": "react",
+  "data": {
+    "observation": "Tool output"
+  }
+}
+```
+
+#### STEP_ERROR
+
+Step-level error occurred.
+
+```json
+{
+  "event_type": "step_error",
+  "scope": "step",
+  "action": "error",
+  "category": "general",
+  "data": {
+    "error": "Step execution failed",
+    "recoverable": true
+  }
+}
+```
+
+### Action-Level Events
+
+Scope: `action` - Events for atomic actions within steps.
+
+#### ACTION_START_TOOL
+
+Tool execution started.
+
+```json
+{
+  "event_type": "action_start_tool",
+  "scope": "action",
+  "action": "start",
+  "category": "tool",
+  "data": {
+    "tool_name": "web_search",
+    "tool_input": {
+      "query": "search term"
+    }
+  }
+}
+```
+
+#### ACTION_END_TOOL
+
+Tool execution completed.
+
+```json
+{
+  "event_type": "action_end_tool",
+  "scope": "action",
+  "action": "end",
+  "category": "tool",
+  "data": {
+    "tool_name": "web_search",
+    "tool_output": {
+      "results": [...]
+    },
+    "duration": 1.2
+  }
+}
+```
+
+#### ACTION_START_LLM
+
+LLM call started.
+
+```json
+{
+  "event_type": "action_start_llm",
+  "scope": "action",
+  "action": "start",
+  "category": "llm",
+  "data": {
+    "model": "gpt-4",
+    "prompt_tokens": 100,
+    "max_tokens": 1000
+  }
+}
+```
+
+#### ACTION_END_LLM
+
+LLM call completed.
+
+```json
+{
+  "event_type": "action_end_llm",
+  "scope": "action",
+  "action": "end",
+  "category": "llm",
+  "data": {
+    "model": "gpt-4",
+    "prompt_tokens": 100,
+    "completion_tokens": 200,
+    "total_tokens": 300,
+    "response": "LLM response",
+    "duration": 2.5
+  }
+}
+```
+
+### Memory Events
+
+Memory operation events.
+
+#### MEMORY_GENERATE_START
+
+Memory generation started.
+
+```json
+{
+  "event_type": "memory_generate_start",
+  "scope": "action",
+  "action": "start",
+  "category": "memory",
+  "data": {
+    "query": "Information to remember"
+  }
+}
+```
+
+#### MEMORY_GENERATE_END
+
+Memory generation completed.
+
+```json
+{
+  "event_type": "memory_generate_end",
+  "scope": "action",
+  "action": "end",
+  "category": "memory",
+  "data": {
+    "memory_id": "mem_123",
+    "content": "Generated memory"
+  }
+}
+```
+
+#### MEMORY_STORE_START
+
+Memory storage started.
+
+```json
+{
+  "event_type": "memory_store_start",
+  "scope": "action",
+  "action": "start",
+  "category": "memory",
+  "data": {
+    "memory_count": 5
+  }
+}
+```
+
+#### MEMORY_STORE_END
+
+Memory storage completed.
+
+```json
+{
+  "event_type": "memory_store_end",
+  "scope": "action",
+  "action": "end",
+  "category": "memory",
+  "data": {
+    "stored_count": 5
+  }
+}
+```
+
+#### MEMORY_RETRIEVE_START
+
+Memory retrieval started.
+
+```json
+{
+  "event_type": "memory_retrieve_start",
+  "scope": "action",
+  "action": "start",
+  "category": "memory",
+  "data": {
+    "query": "Search query",
+    "top_k": 5
+  }
+}
+```
+
+#### MEMORY_RETRIEVE_END
+
+Memory retrieval completed.
+
+```json
+{
+  "event_type": "memory_retrieve_end",
+  "scope": "action",
+  "action": "end",
+  "category": "memory",
+  "data": {
+    "results": [
+      {
+        "memory_id": "mem_123",
+        "score": 0.95,
+        "content": "Memory content"
+      }
+    ]
+  }
+}
+```
+
+### System Events
+
+Scope: `system` - System-level informational events.
+
+#### SYSTEM_VISUALIZATION_UPDATE
+
+Visualization data update.
+
+```json
+{
+  "event_type": "system_visualization_update",
+  "scope": "system",
+  "action": "update",
+  "category": "visualization",
+  "data": {
+    "dag": {
+      "nodes": [...],
+      "edges": [...]
+    }
+  }
+}
+```
+
+#### SYSTEM_INFO
+
+General system information.
+
+```json
+{
+  "event_type": "system_info",
+  "scope": "system",
+  "action": "info",
+  "category": "general",
+  "data": {
+    "message": "Information message",
+    "details": {}
+  }
+}
+```
+
+## Event Categories
+
+| Category | Description |
+|----------|-------------|
+| `dag` | DAG planning and execution events |
+| `react` | ReAct loop execution events |
+| `general` | General purpose events |
+| `tool` | Tool execution events |
+| `llm` | LLM API call events |
+| `memory` | Memory operation events |
+| `visualization` | UI visualization updates |
+| `compact` | Data compaction events |
+
+## Event Actions
+
+| Action | Description |
+|--------|-------------|
+| `start` | Operation started |
+| `end` | Operation completed |
+| `error` | Operation failed |
+| `info` | Informational event |
+| `update` | Progress update |
+
+## Usage Example
+
+```javascript
+const ws = new WebSocket(`ws://localhost:8000/ws/chat/${taskId}?token=${token}`);
+
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+
+  switch (data.scope) {
+    case 'task':
+      handleTaskEvent(data);
+      break;
+    case 'step':
+      handleStepEvent(data);
+      break;
+    case 'action':
+      handleActionEvent(data);
+      break;
+    case 'system':
+      handleSystemEvent(data);
+      break;
+  }
+};
+
+function handleTaskEvent(event) {
+  if (event.action === 'start') {
+    console.log(`Task started with ${event.category} mode`);
+    updateTaskStatus('running');
+  } else if (event.action === 'end') {
+    console.log(`Task completed`);
+    updateTaskStatus('completed');
+  } else if (event.action === 'error') {
+    console.error(`Task error: ${event.data.error}`);
+    showError(event.data.error);
+  }
+}
+
+function handleStepEvent(event) {
+  const stepName = event.data.step_name || event.data.step_id;
+  if (event.action === 'start') {
+    console.log(`Step started: ${stepName}`);
+    addStepToTimeline(event);
+  } else if (event.action === 'end') {
+    console.log(`Step completed: ${stepName}`);
+    updateStepStatus(event.step_id, 'completed');
+  }
+}
+
+function handleActionEvent(event) {
+  if (event.category === 'tool') {
+    if (event.action === 'start') {
+      console.log(`Tool ${event.data.tool_name} started`);
+    } else if (event.action === 'end') {
+      console.log(`Tool ${event.data.tool_name} completed`);
+    }
+  } else if (event.category === 'llm') {
+    if (event.action === 'end') {
+      console.log(`LLM used ${event.data.total_tokens} tokens`);
+    }
+  }
+}
+```
+
+## Next Steps
+
+- [WebSocket API](/api-reference/websocket/websocket)
+- [Tasks API](/api-reference/tasks)
+- [Execution Guide](/tasks/execution)

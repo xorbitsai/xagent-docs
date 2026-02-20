@@ -313,6 +313,14 @@
                       "api-reference/admin-users/get-users",
                       "api-reference/admin-users/delete-user"
                     ]
+                  },
+                  {
+                    "group": "WebSocket",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/websocket/websocket",
+                      "api-reference/websocket/trace-events"
+                    ]
                   }
                 ]
               }

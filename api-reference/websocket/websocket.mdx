@@ -1,0 +1,327 @@
+---
+title: "WebSocket API"
+description: "Real-time WebSocket communication for task execution"
+icon: "radio"
+---
+
+# WebSocket API
+
+Xagent provides WebSocket endpoints for real-time task execution and monitoring.
+
+## Base URL
+
+```
+ws://localhost:8000
+wss://your-domain.com  (for HTTPS)
+```
+
+## Authentication
+
+WebSocket connections require authentication via query parameter:
+
+```javascript
+const ws = new WebSocket(`ws://localhost:8000/ws/chat/123?token=YOUR_AUTH_TOKEN`);
+```
+
+## Endpoints
+
+### Chat WebSocket
+
+**Endpoint:** `ws://localhost:8000/ws/chat/{task_id}`
+
+Real-time communication for task execution, status updates, and intervention.
+
+#### Connection
+
+```javascript
+const ws = new WebSocket(`ws://localhost:8000/ws/chat/${taskId}?token=${token}`);
+
+ws.onopen = () => {
+  console.log('Connected to task WebSocket');
+};
+
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  console.log('Received:', data);
+};
+
+ws.onerror = (error) => {
+  console.error('WebSocket error:', error);
+};
+
+ws.onclose = () => {
+  console.log('WebSocket disconnected');
+};
+```
+
+#### Client Message Types
+
+**Chat Message**
+
+Send a message to the agent:
+
+```json
+{
+  "type": "chat",
+  "message": "Your question here"
+}
+```
+
+**Execute Task**
+
+Start task execution:
+
+```json
+{
+  "type": "execute_task",
+  "query": "Task description"
+}
+```
+
+**Intervention**
+
+Manually intervene in task execution:
+
+```json
+{
+  "type": "intervention",
+  "step_id": "step_123",
+  "action": "approve",  // or "reject", "modify"
+  "data": {
+    "input": "modified input"
+  }
+}
+```
+
+**Pause Task**
+
+Pause a running task:
+
+```json
+{
+  "type": "pause_task"
+}
+```
+
+**Resume Task**
+
+Resume a paused task:
+
+```json
+{
+  "type": "resume_task"
+}
+```
+
+**Status Request**
+
+Request current task status:
+
+```json
+{
+  "type": "status_request"
+}
+```
+
+#### Server Event Types
+
+**Trace Event**
+
+Real-time execution trace:
+
+```json
+{
+  "id": "event_123",
+  "event_type": "step_start_dag",
+  "scope": "step",
+  "action": "start",
+  "category": "dag",
+  "timestamp": 1234567890.123,
+  "task_id": "task_123",
+  "step_id": "step_456",
+  "data": {
+    "step_name": "Web Search",
+    "description": "Searching for information"
+  }
+}
+```
+
+See [Trace Events](/api-reference/websocket/trace-events) for complete event reference.
+
+**Chat Response**
+
+Agent response:
+
+```json
+{
+  "type": "chat",
+  "message": "Agent response here",
+  "step_id": "step_123"
+}
+```
+
+**Task Status**
+
+Current task status:
+
+```json
+{
+  "type": "status",
+  "status": "running",  // "pending", "running", "completed", "failed"
+  "progress": 0.5,
+  "current_step": "step_123"
+}
+```
+
+**Error**
+
+Error occurred:
+
+```json
+{
+  "type": "error",
+  "message": "Error description"
+}
+```
+
+**Intervention Processed**
+
+Manual intervention was processed:
+
+```json
+{
+  "type": "intervention_processed",
+  "message": "Manual intervention processed: approve",
+  "intervention_id": "step_123",
+  "timestamp": "2024-01-01T00:00:00Z"
+}
+```
+
+### Build Preview WebSocket
+
+**Endpoint:** `ws://localhost:8000/ws/build/preview`
+
+Real-time agent preview for the build page without database storage.
+
+#### Connection
+
+```javascript
+const ws = new WebSocket(`ws://localhost:8000/ws/build/preview?token=${token}`);
+```
+
+#### Client Message Types
+
+**Preview**
+
+Execute agent preview:
+
+```json
+{
+  "type": "preview",
+  "instructions": "Agent instructions",
+  "execution_mode": "graph",  // "graph" or "react"
+  "models": {
+    "general": "gpt-4",
+    "compact": "gpt-3.5-turbo"
+  },
+  "knowledge_bases": ["kb1"],
+  "skills": ["skill1"],
+  "tool_categories": ["web_search"],
+  "message": "User message",
+  "files": [
+    {
+      "filename": "document.pdf",
+      "content": "base64_content"
+    }
+  ]
+}
+```
+
+## Best Practices
+
+### Reconnection
+
+Implement automatic reconnection:
+
+```javascript
+let ws;
+let reconnectAttempts = 0;
+const maxReconnectAttempts = 5;
+
+function connect() {
+  ws = new WebSocket(`ws://localhost:8000/ws/chat/${taskId}?token=${token}`);
+
+  ws.onclose = () => {
+    if (reconnectAttempts < maxReconnectAttempts) {
+      reconnectAttempts++;
+      setTimeout(connect, 1000 * reconnectAttempts);
+    }
+  };
+
+  ws.onopen = () => {
+    reconnectAttempts = 0;  // Reset on successful connection
+  };
+}
+```
+
+### Error Handling
+
+Handle WebSocket errors gracefully:
+
+```javascript
+ws.onerror = (error) => {
+  console.error('WebSocket error:', error);
+  // Show user-friendly error message
+  // Attempt reconnection
+};
+
+ws.onclose = (event) => {
+  if (event.code === 4001) {
+    // Authentication error - redirect to login
+    console.error('Authentication failed');
+  } else if (event.code === 1000) {
+    // Normal closure
+    console.log('Connection closed normally');
+  } else {
+    // Unexpected closure - attempt reconnection
+    console.error('Unexpected closure:', event.code, event.reason);
+  }
+};
+```
+
+### Message Queue
+
+Queue messages when disconnected:
+
+```javascript
+const messageQueue = [];
+
+function sendMessage(message) {
+  if (ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify(message));
+    // Send queued messages
+    while (messageQueue.length > 0) {
+      ws.send(JSON.stringify(messageQueue.shift()));
+    }
+  } else {
+    messageQueue.push(message);
+  }
+}
+```
+
+## Error Codes
+
+| Code | Description |
+|------|-------------|
+| 4001 | Authentication required |
+| 4002 | Invalid token |
+| 4003 | Task not found |
+| 1000 | Normal closure |
+| 1001 | Endpoint going away |
+| 1006 | Abnormal closure |
+
+## Next Steps
+
+- [Trace Events Reference](/api-reference/websocket/trace-events)
+- [Tasks API](/api-reference/tasks)
+- [Agents API](/api-reference/agents)
