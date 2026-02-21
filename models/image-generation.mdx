@@ -72,6 +72,38 @@ Image generation models enable Xagent to create and modify images through text p
 - JPG, JPEG, PNG, BMP, TIFF, WEBP
 - Max file size: 10MB for editing
 
+### Gemini (Google)
+
+**Models:** gemini-3-pro-preview-image
+
+**Setup:**
+1. Get API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Configure API key (supports `GEMINI_API_KEY` or `GOOGLE_API_KEY`)
+3. Select image model
+
+**Abilities:** "generate" only
+
+**Best for:**
+- High-quality image generation
+- Google Cloud integration
+- Multiple resolution support
+- Various aspect ratios
+
+**Supported formats:**
+- Aspect ratios: 1:1, 2:3, 3:2, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9, 21:9
+- Image sizes: 1K (up to 1024px), 2K (up to 2048px), 4K (up to 4096px)
+- Output: PNG format (base64 encoded)
+
+**Features:**
+- Text-to-image generation using Google's Imagen
+- Automatic aspect ratio detection and selection
+- Resolution based on model capabilities (2K/4K)
+- Support for negative prompts
+
+<Info>
+Gemini image models don't support image editing. Use generate_image only.
+</Info>
+
 ### Xinference
 
 **Models:** Stable Diffusion variants (stable-diffusion-2-1, etc.)
