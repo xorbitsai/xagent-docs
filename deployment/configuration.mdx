@@ -67,6 +67,23 @@ PORT=80
 # Generate with:
 # python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 ENCRYPTION_KEY=your-encryption-key-here
+
+# JWT auth (quick-start defaults)
+XAGENT_JWT_SECRET=replace-with-a-long-random-secret
+XAGENT_JWT_ALGORITHM=HS256
+XAGENT_ACCESS_TOKEN_EXPIRE_MINUTES=120
+XAGENT_REFRESH_TOKEN_EXPIRE_DAYS=7
+XAGENT_PASSWORD_MIN_LENGTH=6
+```
+
+<Warning>
+`XAGENT_JWT_SECRET=replace-with-a-long-random-secret` is a placeholder. Replace it before production deployment.
+</Warning>
+
+Generate a strong JWT secret with:
+
+```bash
+python -c "import secrets; print(secrets.token_urlsafe(48))"
 ```
 
 ### Model Providers
