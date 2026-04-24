@@ -83,7 +83,8 @@
                         "pages": [
                           "tools/overview",
                           "tools/built-in",
-                          "tools/custom"
+                          "tools/custom",
+                          "tools/mcp-providers"
                         ]
                       },
                       {
