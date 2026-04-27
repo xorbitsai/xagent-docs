@@ -83,8 +83,7 @@
                         "pages": [
                           "tools/overview",
                           "tools/built-in",
-                          "tools/custom",
-                          "tools/mcp-providers"
+                          "tools/custom"
                         ]
                       },
                       {
@@ -113,6 +112,7 @@
                 "dropdown": "Platform",
                 "icon": "server",
                 "pages": [
+                  "tools/mcp-providers",
                   {
                     "group": "Deployment",
                     "expanded": false,
