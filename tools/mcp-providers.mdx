@@ -1,0 +1,104 @@
+---
+title: "MCP Providers Configuration"
+description: "How to configure OAuth credentials for Google, LinkedIn, and Microsoft MCP integrations."
+---
+
+When using built-in Model Context Protocol (MCP) tools that require OAuth authentication (such as Google, LinkedIn, or Microsoft services), you need to configure OAuth credentials for each provider. 
+
+This guide explains how to obtain the **Client ID** and **Client Secret**, configure API permissions, and set the correct redirect URLs.
+
+## General Setup
+
+For all providers, you will need to register an OAuth application and set an **Authorized Redirect URI**. The typical format for this URI in Xagent is:
+
+```text
+https://<YOUR_XAGENT_DOMAIN>/api/auth/<provider>/callback
+```
+
+Replace `<YOUR_XAGENT_DOMAIN>` with your actual deployment domain, and `<provider>` with the respective provider name (e.g., `google`, `linkedin`, `microsoft`). If you are running locally, it might be `http://localhost:8000/api/auth/<provider>/callback` depending on your setup.
+
+---
+
+## Google (Drive, Gmail, etc.)
+
+To configure Google services, you need to create a project in the Google Cloud Console.
+
+### 1. Create a Project and Enable APIs
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
+2. Create a new project or select an existing one.
+3. Navigate to **APIs & Services > Library**.
+4. Search for and enable the APIs you need (e.g., **Google Drive API**, **Gmail API**).
+
+### 2. Configure OAuth Consent Screen
+1. Go to **APIs & Services > OAuth consent screen**.
+2. Choose **External** or **Internal** user type.
+3. Fill in the required app information (App name, User support email, Developer contact information).
+4. Add the required scopes. For example, `https://www.googleapis.com/auth/drive` for Google Drive or `https://mail.google.com/` for Gmail.
+5. Add test users if your app is in "Testing" mode.
+
+### 3. Create Credentials
+1. Go to **APIs & Services > Credentials**.
+2. Click **Create Credentials** and select **OAuth client ID**.
+3. Choose **Web application** as the application type.
+4. Under **Authorized redirect URIs**, add your Xagent callback URL:
+   `https://<YOUR_XAGENT_DOMAIN>/api/auth/google/callback`
+5. Click **Create**.
+6. You will be presented with your **Client ID** and **Client Secret**. Copy these to your Xagent configuration.
+
+---
+
+## LinkedIn
+
+To integrate with LinkedIn, you need to create an application in the LinkedIn Developer Portal.
+
+### 1. Create an App
+1. Go to the [LinkedIn Developer Portal](https://developer.linkedin.com/).
+2. Click **Create app**.
+3. Fill in the App name, associate it with a LinkedIn Page, and upload an App logo.
+4. Agree to the terms and create the app.
+
+### 2. Request API Products and Permissions
+1. Navigate to the **Products** tab.
+2. Request access to the necessary products, such as **Sign In with LinkedIn using OpenID Connect** and **Share on LinkedIn**.
+   > **Note:** LinkedIn strictly enforces API scopes. Requesting standard scopes like `openid`, `profile`, and `email` is generally straightforward. However, the `r_member_social` scope (needed to read posts) requires the **Community Management API** product, which is mutually exclusive with standard Sign-In products.
+
+### 3. Configure Auth and Get Credentials
+1. Navigate to the **Auth** tab.
+2. Under **OAuth 2.0 settings**, add your **Authorized redirect URLs for your app**:
+   `https://<YOUR_XAGENT_DOMAIN>/api/auth/linkedin/callback`
+3. In the **Application credentials** section, you will find your **Client ID** and **Primary Client Secret**. Reveal the secret and copy both to your Xagent configuration.
+
+---
+
+## Microsoft (Office 365, Outlook, Graph API)
+
+To configure Microsoft integrations, you need to register an application in the Microsoft Entra ID (formerly Azure Active Directory).
+
+### 1. Register an Application
+1. Go to the [Azure Portal](https://portal.azure.com/).
+2. Navigate to **Microsoft Entra ID** > **App registrations**.
+3. Click **New registration**.
+4. Enter a name for your application.
+5. Choose the **Supported account types** (e.g., "Accounts in any organizational directory and personal Microsoft accounts").
+6. Under **Redirect URI**, select **Web** and enter:
+   `https://<YOUR_XAGENT_DOMAIN>/api/auth/microsoft/callback`
+7. Click **Register**.
+
+### 2. Get Client ID
+1. Once registered, you will be on the application's **Overview** page.
+2. Copy the **Application (client) ID**.
+
+### 3. Generate Client Secret
+1. Go to **Certificates & secrets** in the left menu.
+2. Click **New client secret**.
+3. Provide a description and select an expiration period.
+4. Click **Add**.
+5. **Important:** Copy the **Value** of the client secret immediately. It will be hidden after you leave the page.
+
+### 4. Configure API Permissions
+1. Go to **API permissions**.
+2. Click **Add a permission** and select **Microsoft Graph**.
+3. Choose **Delegated permissions**.
+4. Search for and select the permissions your MCP tool needs (e.g., `Mail.Read`, `Mail.Send`, `Files.ReadWrite`, `offline_access`).
+5. Click **Add permissions**.
+6. (Optional) If required, click **Grant admin consent** for your organization.

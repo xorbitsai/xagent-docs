@@ -112,6 +112,7 @@
                 "dropdown": "Platform",
                 "icon": "server",
                 "pages": [
+                  "tools/mcp-providers",
                   {
                     "group": "Deployment",
                     "expanded": false,
