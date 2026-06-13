@@ -45,7 +45,7 @@ In the Xagent web app, go to **Channels** and add a new **Telegram Bot** channel
 For Telegram, the UI currently supports these fields:
 
 - **Bot token**: required
-- **Allowed users**: optional, comma-separated Telegram user IDs
+- **Allowed users**: optional, comma-separated Telegram user IDs in the UI, represented as an array of strings in the API and stored channel config
 - **Active**: whether this bot should be running
 
 If you leave **Allowed users** empty, the bot allows any Telegram user who can reach it. If you set it, only the listed Telegram user IDs can use the bot.
