@@ -6,7 +6,7 @@ icon: "robot"
 
 # Agents Overview
 
-Agents are reusable AI assistants with predefined roles and configurations. Unlike one-time tasks, agents maintain consistent behavior and can be shared across your team.
+Agents are reusable AI assistants with predefined roles and configurations. Unlike one-time tasks, agents maintain consistent behavior, can be published for internal use, and can also power share links, embedded widgets, and larger workforce compositions.
 
 ## Agent vs Task
 
@@ -40,7 +40,7 @@ Agents are reusable AI assistants with predefined roles and configurations. Unli
 | **Configuration** | Auto-generated | Customizable |
 | **Persistence** | Not saved | Saved and shareable |
 | **Behavior** | Varies by request | Consistent |
-| **Sharing** | Not shareable | Can be published |
+| **Sharing** | Not shareable | Can be published, shared, and embedded |
 | **Role definition** | Per task | Predefined |
 
 ## Key Agent Features
@@ -82,6 +82,18 @@ Select models for different purposes:
 - **Visual Model**: For image tasks
 - **Compact Model**: For long conversations
 
+### 6. Distribution Options
+
+Once an agent is published, you can expose it in several ways:
+- **Internal agent list** - Team members can discover and use it from the app
+- **Share link** - Create a guest-facing public link for a specific agent experience
+- **Embedded widget** - Allow approved domains to launch the agent in your own product
+- **Runtime API key** - Call the agent through the SDK-oriented `/v1` APIs
+
+### 7. Workforce Building Block
+
+Agents are also the units used inside **workforces**. A workforce combines a manager agent with one or more worker agents so complex tasks can be delegated across specialized roles.
+
 ## How It Works
 
 ### Creating Tasks
@@ -104,7 +116,9 @@ For reusable workflows:
 After publishing, users can:
 - Find the agent in the agents list
 - Start a conversation with the agent
-- Agent uses its configured behavior consistently
+- Share it externally with a managed share link
+- Embed it on approved domains with the widget flow
+- Reuse it as a worker or manager inside a workforce
 
 ### Shared Execution Interface
 
@@ -155,5 +169,8 @@ Templates provide a starting point that you can customize for your specific need
 ## Next Steps
 
 - [Building Agents](/agents/building) - Create and configure your agents
+- [Sharing Agents](/agents/sharing) - Publish via share links and guest access
+- [Embed Widget](/agents/widget-embed) - Use agents in your own application
+- [Workforces](/workforces/overview) - Combine agents into multi-agent systems
 - [Templates](/templates/overview) - Explore pre-built agent templates
 - [Tasks](/tasks/overview) - Learn about task execution

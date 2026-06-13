@@ -195,6 +195,44 @@ https_proxy=http://proxy.example.com:8080
 CONCURRENT=5
 ```
 
+### Background Jobs
+
+If you enable asynchronous jobs for long-running ingestion, indexing, or other deferred work, configure the worker runtime and broker:
+
+```bash
+XAGENT_CELERY_ENABLED=true
+XAGENT_CELERY_BROKER_URL=redis://redis:6379/0
+XAGENT_CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+XAGENT_BACKGROUND_JOB_VISIBILITY_TIMEOUT_SECONDS=3600
+XAGENT_BACKGROUND_JOB_MAX_RETRIES=3
+XAGENT_BACKGROUND_JOB_STALE_SECONDS=86400
+XAGENT_BACKGROUND_JOB_SWEEP_INTERVAL_SECONDS=300
+```
+
+<Info>
+The bundled Docker Compose deployment includes Redis plus worker processes for this mode. If you disable background jobs, keep the rest of the stack aligned with your deployment choice.
+</Info>
+
+### Authentication Providers
+
+#### Google OIDC
+
+Use Google as an external login provider:
+
+```bash
+GOOGLE_OIDC_CLIENT_ID=your-google-client-id
+GOOGLE_OIDC_CLIENT_SECRET=your-google-client-secret
+GOOGLE_OIDC_REDIRECT_URI=https://your-domain/api/auth/google/callback
+FRONTEND_URL=https://your-domain
+OIDC_LOGIN_TTL_SECONDS=600
+OIDC_EXCHANGE_TTL_SECONDS=300
+```
+
+<Info>
+`FRONTEND_URL` should match the user-facing URL of your Xagent deployment so browser redirects and auth hand-offs resolve correctly.
+</Info>
+
 ### Tracing & Observability
 
 #### Langfuse
@@ -262,6 +300,27 @@ OPENAI_EMBEDDING_API_KEY=your-openai-api-key
 ENCRYPTION_KEY=RQMpe38gK3m0szjpSmTNw_sP3Y54r6hDc6JewBoPKXc=
 
 # ===========================================
+# Optional: Background Jobs
+# ===========================================
+XAGENT_CELERY_ENABLED=true
+XAGENT_CELERY_BROKER_URL=redis://redis:6379/0
+XAGENT_CELERY_RESULT_BACKEND=redis://redis:6379/0
+XAGENT_BACKGROUND_JOB_VISIBILITY_TIMEOUT_SECONDS=3600
+XAGENT_BACKGROUND_JOB_MAX_RETRIES=3
+XAGENT_BACKGROUND_JOB_STALE_SECONDS=86400
+XAGENT_BACKGROUND_JOB_SWEEP_INTERVAL_SECONDS=300
+
+# ===========================================
+# Optional: Google OIDC
+# ===========================================
+GOOGLE_OIDC_CLIENT_ID=your-google-client-id
+GOOGLE_OIDC_CLIENT_SECRET=your-google-client-secret
+GOOGLE_OIDC_REDIRECT_URI=https://your-domain/api/auth/google/callback
+FRONTEND_URL=https://your-domain
+OIDC_LOGIN_TTL_SECONDS=600
+OIDC_EXCHANGE_TTL_SECONDS=300
+
+# ===========================================
 # Optional: Web Search
 # ===========================================
 GOOGLE_API_KEY=your-google-api-key
@@ -294,6 +353,12 @@ ENCRYPTION_KEY=your-encryption-key
 # Port
 PORT=8000
 
+# Optional: Background Jobs
+XAGENT_CELERY_ENABLED=false
+
+# Optional: Google OIDC
+FRONTEND_URL=http://localhost:3000
+
 # Optional: Tracing
 LANGFUSE_HOST=http://127.0.0.1:3000
 LANGFUSE_PUBLIC_KEY=pk-...
@@ -318,4 +383,5 @@ LANGFUSE_SECRET_KEY=sk-...
 
 - [Self-hosted deployment](/deployment/self-hosted)
 - [Installation guide](/installation)
+- [SDK guide](/guides/sdk)
 - [Build your first agent](/guides/quick-win)

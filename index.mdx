@@ -5,6 +5,8 @@ mode: "wide"
 icon: "rocket"
 ---
 
+<div className="xagent-homewide">
+
 # Xagent
 
 ## Describe tasks. Not workflows.
@@ -13,7 +15,7 @@ icon: "rocket"
 **No more rigid automation.**
 **Just tell Xagent what you want.**
 
-![Xagent Interface](/images/introduction.png)
+![Xagent Interface](/images/xagent-frontpage.png)
 
 ## Examples
 
@@ -24,7 +26,7 @@ icon: "rocket"
 "Design a promotional poster for a coffee shop"
 ```
 
-Xagent plans, decomposes, selects tools, executes, and iterates automatically.
+Xagent plans, decomposes, selects tools, executes, and iterates automatically. Start with one-off tasks, turn successful patterns into reusable agents, and scale further with multi-agent workforces.
 
 ## The Problem
 
@@ -54,7 +56,7 @@ Xagent plans, decomposes, selects tools, executes, and iterates automatically.
 **Xagent is:**
 - A dynamic task execution engine
 - An autonomous planning system
-- A foundation for building real AI agents
+- A foundation for building real AI agents and multi-agent workforces
 
 ## Get Started in 3 Minutes
 
@@ -81,12 +83,24 @@ Xagent plans, decomposes, selects tools, executes, and iterates automatically.
   </Step>
 </Steps>
 
-<Card
-  title="Ready to build?"
-  icon="rocket"
-  href="/quickstart"
-  buttonText="Start Building"
-  primary
->
-  Follow the quickstart guide to create your first agent.
-</Card>
+<Columns cols={2}>
+  <Card
+    title="Ready to build?"
+    icon="rocket"
+    href="/quickstart"
+    buttonText="Start Building"
+    primary
+  >
+    Follow the quickstart guide to create your first task and first agent.
+  </Card>
+  <Card
+    title="Need a workforce?"
+    icon="users"
+    href="/workforces/overview"
+    buttonText="Explore Workforces"
+  >
+    Learn when to move from one agent to a coordinated manager-plus-workers setup.
+  </Card>
+</Columns>
+
+</div>

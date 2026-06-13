@@ -1,0 +1,67 @@
+---
+title: "SDK & API Keys"
+description: "Use personal keys and agent runtime keys with the Xagent SDK API."
+icon: "key-round"
+---
+
+# SDK & API Keys
+
+Xagent now exposes a separate `/v1/*` API surface for SDK and SaaS-style integrations.
+
+## `/api/*` vs `/v1/*`
+
+Use `/api/*` when:
+
+- You are acting as an authenticated owner in the web app model
+- You manage agents, workforces, or knowledge with JWT-based auth
+
+Use `/v1/*` when:
+
+- You want a stable programmatic integration surface
+- You are calling Xagent from your own backend or application
+- You want API-key-based access instead of browser session auth
+
+## Two key types
+
+### Personal keys
+
+Personal keys identify a user. They are suitable for:
+
+- Developer tooling
+- Personal automation
+- Service-to-service access tied to a user identity
+
+### Agent runtime keys
+
+Agent runtime keys are scoped to a specific agent and are designed for the `/v1/*` agent execution flow.
+
+They are managed by the agent owner and can be rotated independently of user JWT sessions.
+
+## Common SDK flow
+
+The typical sequence is:
+
+1. Create or choose an agent
+2. Generate the agent runtime key
+3. Call `POST /v1/chat/tasks`
+4. Poll `GET /v1/chat/tasks/{task_id}`
+5. Fetch steps or append messages as needed
+
+## Related endpoints
+
+- Personal keys: [API Reference](/api-reference/me/list-personal-keys)
+- Agent runtime key: [API Reference](/api-reference/sdk-v1/rotate-agent-runtime-key)
+- SDK tasks: [API Reference](/api-reference/sdk-v1/create-chat-task)
+- SDK task status: [API Reference](/api-reference/sdk-v1/get-chat-task)
+- Append message to task: [API Reference](/api-reference/sdk-v1/append-message-to-task)
+
+## When to document more
+
+If your team is integrating Xagent into another product, you will usually want an internal guide that adds:
+
+- Request examples
+- Retry strategy
+- Error handling conventions
+- Key rotation policy
+
+This page is the conceptual starting point; the exact schema lives in the API reference.

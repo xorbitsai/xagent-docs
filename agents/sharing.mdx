@@ -1,0 +1,81 @@
+---
+title: "Sharing Agents"
+description: "Publish agents, enable share links, and expose reusable agent experiences."
+icon: "share"
+---
+
+# Sharing Agents
+
+Xagent supports two distinct ways to expose an agent beyond its owner:
+
+- **Published agents** for authenticated internal users
+- **Share links** for public or guest access
+
+These solve different problems and can be used together.
+
+## Publishing vs share links
+
+Publishing makes an agent visible as a reusable asset inside your Xagent environment.
+
+Share links create a public guest entry point for a published agent, with separate authentication and runtime handling.
+
+| Capability | Published agent | Share link |
+| --- | --- | --- |
+| Internal reuse | Yes | No |
+| Guest access | No | Yes |
+| Appears in agents list | Yes | No |
+| Public token-based entry | No | Yes |
+
+## Requirements for share links
+
+Share links are meant for agents that are already ready for outside use. In practice, you should:
+
+- Finalize instructions and prompts
+- Test suggested prompts
+- Review file handling behavior
+- Confirm the agent should be publicly reachable
+
+## Share link lifecycle
+
+Owners can manage share links through dedicated endpoints:
+
+- Get current share-link state
+- Enable or create a share link
+- Rotate the share token
+- Disable the share link
+
+The token itself is owner-only state and should be treated like a secret URL.
+
+## What guests can do
+
+Guest users entering through a share link can:
+
+- Authenticate through the share flow
+- Upload files through share-specific upload endpoints
+- Create chat tasks against the shared agent
+- Continue the conversation over the public chat runtime
+
+This is separate from the normal owner JWT flow.
+
+## Suggested prompts matter more here
+
+When an agent is shared publicly, suggested prompts become more important because:
+
+- Guests have less context
+- They may not know the agent's boundaries
+- Good prompts reduce misuse and confusion
+
+## Safety considerations
+
+Before enabling a share link, verify:
+
+- The agent does not expose sensitive internal knowledge by default
+- Tool access is appropriate for a public audience
+- Output style is suitable for unauthenticated or external users
+- File handling is acceptable for guest sessions
+
+## Related features
+
+- [Widget embedding](/agents/widget-embed)
+- [Building Agents](/agents/building)
+- [API Reference: Share Link Endpoints](/api-reference/agents/get-agent-share-link)

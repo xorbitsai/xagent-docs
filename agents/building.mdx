@@ -50,6 +50,11 @@ The editor has a two-column layout:
 - Upload an image to represent your agent
 - Displayed in agent listings and chat interface
 
+**Distribution Controls** (Optional)
+- Configure whether the agent can be shared publicly
+- Enable widget access for embedded use cases
+- Restrict widget access to approved domains
+
 ### Execution Mode
 
 Choose how your agent processes tasks:
@@ -194,6 +199,12 @@ Publish your agent when:
 4. Publication timestamp is recorded
 5. Agent becomes visible to authorized users
 
+After publishing, you can decide how the agent is consumed:
+- Keep it internal for signed-in users
+- Generate a share link for guest access
+- Enable widget access for selected domains
+- Create a runtime API key for SDK or server-side integration
+
 ### Unpublishing
 
 To unpublish an agent:
@@ -225,6 +236,8 @@ When chatting, the agent:
 - Accesses **enabled tools** based on tool categories
 - Retrieves information from **knowledge bases**
 - Applies its **instructions** and **skills**
+
+The same published configuration is also reused when the agent is launched from a share link, from an embedded widget, or from a workforce run.
 
 ### Task Creation
 
@@ -272,6 +285,7 @@ Templates provide starting points. Always test and customize for your specific u
 - Focused skill set
 - Relevant suggested prompts
 - Appropriate tool access
+- A clear decision about internal-only, share-link, widget, or API use
 
 ### Test Thoroughly
 
@@ -279,6 +293,7 @@ Templates provide starting points. Always test and customize for your specific u
 - Test with various inputs
 - Verify tool access is appropriate
 - Check knowledge retrieval accuracy
+- If using share links or widgets, test the guest entry flow separately
 
 ### Iterate and Improve
 
@@ -322,6 +337,10 @@ Templates provide starting points. Always test and customize for your specific u
 ## Next Steps
 
 - [Templates](/templates/overview) - Explore pre-built agent templates
+- [Sharing Agents](/agents/sharing) - Configure public share links
+- [Embed Widget](/agents/widget-embed) - Enable embedded agent access
+- [SDK Guide](/guides/sdk) - Call published agents through `/v1`
+- [Workforces](/workforces/overview) - Reuse agents in multi-agent orchestration
 - [Knowledge Base](/knowledge/overview) - Add domain knowledge to your agent
 - [Tools](/tools/overview) - Understand available tools
 - [Models](/models/overview) - Configure AI models for your agent

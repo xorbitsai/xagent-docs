@@ -47,7 +47,17 @@
                         "expanded": false,
                         "pages": [
                           "agents/overview",
-                          "agents/building"
+                          "agents/building",
+                          "agents/sharing",
+                          "agents/widget-embed"
+                        ]
+                      },
+                      {
+                        "group": "Workforces",
+                        "expanded": false,
+                        "pages": [
+                          "workforces/overview",
+                          "workforces/building"
                         ]
                       },
                       {
@@ -113,6 +123,15 @@
                 "icon": "server",
                 "pages": [
                   "tools/mcp-providers",
+                  "guides/sdk",
+                  {
+                    "group": "Channels",
+                    "expanded": false,
+                    "pages": [
+                      "channels/overview",
+                      "channels/telegram"
+                    ]
+                  },
                   {
                     "group": "Deployment",
                     "expanded": false,

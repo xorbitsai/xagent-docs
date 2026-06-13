@@ -1,0 +1,4 @@
+html[data-page-mode="wide"] #content-area:has(.xagent-homewide) {
+  width: 100%;
+  max-width: none;
+}

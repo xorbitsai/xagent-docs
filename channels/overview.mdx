@@ -1,0 +1,109 @@
+---
+title: "Channels Overview"
+description: "Connect Xagent to external chat platforms such as Telegram and Feishu."
+icon: "message-square"
+---
+
+# Channels Overview
+
+Channels let you connect Xagent to external chat platforms so users can interact with agents and tasks outside the web app.
+
+In the current Xagent implementation, channels are user-owned integrations:
+
+- A signed-in Xagent user creates the channel
+- The channel stores platform credentials and access settings
+- Incoming channel messages create or continue tasks in that user's workspace
+
+## What channels are for
+
+Use channels when you want Xagent to be reachable through messaging platforms such as:
+
+- Telegram
+- Feishu
+
+Typical use cases:
+
+- Personal assistant bots
+- Internal team bots
+- Lightweight task intake from chat
+- Running the same Xagent workflow from a messaging surface instead of the web UI
+
+## How channels work
+
+At a high level, the flow is:
+
+1. Create a bot or app on the target platform
+2. Add the credentials in Xagent
+3. Activate the channel
+4. Send messages from the external platform
+5. Xagent creates or continues tasks for that conversation
+
+From the Xagent side, channels are managed through the **Channels** page and the `/api/channels` endpoints.
+
+## Shared channel concepts
+
+All channels currently follow the same basic model:
+
+- `channel_type`: the platform type, such as `telegram` or `feishu`
+- `channel_name`: a readable display name
+- `config`: platform-specific configuration
+- `is_active`: whether the bot or app should currently be running
+
+Sensitive fields inside `config` are stored as protected channel secrets.
+
+## Access model
+
+Channels are not global public bots by default. They belong to a specific Xagent user account.
+
+That means:
+
+- the configured channel runs on behalf of the owning Xagent user
+- tasks created from the channel are associated with that owner's workspace
+- optional platform-user allowlists can be used to limit who may interact with the bot
+
+## Conversation behavior
+
+Channel conversations map into Xagent task execution.
+
+In practice, that means users can:
+
+- send a new request from chat
+- continue an existing thread
+- upload files when the platform supports attachments
+- receive task results back in the same channel
+
+Platform-specific behavior, commands, and attachment handling differ by integration.
+
+## Available integrations
+
+### Telegram
+
+Telegram is currently documented in detail and supports:
+
+- bot-token setup via BotFather
+- per-channel activation
+- optional `allowed_users` filtering
+- text, attachments, and basic task lifecycle commands
+
+[Open Telegram setup →](/channels/telegram)
+
+### Feishu
+
+Feishu support exists in the product and APIs, but does not yet have a dedicated guide page in this docs set.
+
+For now, use the Channels UI and the channel API reference as the source of truth.
+
+## API reference
+
+Channel management endpoints:
+
+- [List channels](/api-reference/channels/get-user-channels)
+- [Create channel](/api-reference/channels/create-user-channel)
+- [Update channel](/api-reference/channels/update-user-channel)
+- [Delete channel](/api-reference/channels/delete-user-channel)
+
+## Next steps
+
+- [Telegram](/channels/telegram)
+- [Agents Overview](/agents/overview)
+- [Tasks Overview](/tasks/overview)

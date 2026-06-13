@@ -1,0 +1,194 @@
+---
+title: "Telegram"
+description: "Connect a Telegram bot to Xagent for chat-based task execution."
+icon: "send"
+---
+
+# Telegram
+
+Xagent can connect a Telegram bot to your account so you can start and continue tasks directly from Telegram.
+
+The current integration is user-owned:
+
+- You create a channel under the **Channels** page in Xagent
+- You provide a Telegram bot token from BotFather
+- Xagent starts or reloads the bot automatically when the channel is saved and active
+
+## What this integration supports
+
+The current Telegram channel supports:
+
+- Text conversations
+- Continuing an existing conversation in the same chat
+- Starting a fresh conversation with `/new`
+- Stopping or pausing the current run with `/stop` or `/pause`
+- Uploading files such as documents, images, audio, or video into the task workspace
+
+## Quick setup
+
+### 1. Create a bot in BotFather
+
+Open Telegram and chat with `@BotFather`.
+
+Use `/newbot`, follow the prompts, and save the bot token.
+
+The token looks like:
+
+```text
+123456789:ABCdefGHIjklmNOPqrsTUVwxyz
+```
+
+### 2. Open the Channels page in Xagent
+
+In the Xagent web app, go to **Channels** and add a new **Telegram Bot** channel.
+
+For Telegram, the UI currently supports these fields:
+
+- **Bot token**: required
+- **Allowed users**: optional, comma-separated Telegram user IDs in the UI, represented as an array of strings in the API and stored channel config
+- **Active**: whether this bot should be running
+
+If you leave **Allowed users** empty, the bot allows any Telegram user who can reach it. If you set it, only the listed Telegram user IDs can use the bot.
+
+### 3. Save and activate the channel
+
+When you save the channel:
+
+- Xagent validates and stores the configuration
+- Xagent attempts to resolve the bot name from Telegram
+- The backend reloads the active Telegram bot set automatically
+
+You do not need to manually configure a webhook in the current Xagent flow.
+
+## Channel configuration model
+
+The Telegram channel is stored as a normal user channel:
+
+```json
+{
+  "channel_type": "telegram",
+  "channel_name": "My Telegram Bot",
+  "config": {
+    "bot_token": "123456789:ABCdefGHIjklmNOPqrsTUVwxyz",
+    "allowed_users": ["12345678", "87654321"]
+  },
+  "is_active": true
+}
+```
+
+Notes:
+
+- `channel_name` can be omitted in API calls; the backend will try to fetch the bot name automatically
+- `allowed_users` is optional
+- `bot_token` is required for Telegram
+
+## Using the Telegram bot
+
+### Start chatting
+
+After the channel is active, open your bot in Telegram and send a message.
+
+Xagent will create a task for that conversation and continue the same task on later messages unless you explicitly start over.
+
+### Start fresh with `/new`
+
+Use:
+
+```text
+/new
+```
+
+This clears the current active Telegram conversation for that user and starts the next message as a new task.
+
+### Stop or pause a run
+
+Use either:
+
+```text
+/stop
+/pause
+```
+
+Xagent will try to pause the active task execution and keep the conversation available for later follow-up.
+
+### Upload files
+
+You can send files or media to the Telegram bot. Xagent downloads the attachment, registers it in the task workspace, and makes it available to the agent during execution.
+
+This currently covers common Telegram attachments such as:
+
+- documents
+- photos
+- audio
+- video
+
+## Access control
+
+The Telegram integration currently uses a simple allowlist model.
+
+If `config.allowed_users` is set, the sender's Telegram user ID must be included. Otherwise, the bot replies with an authorization error.
+
+Use numeric Telegram user IDs, for example:
+
+```json
+{
+  "allowed_users": ["12345678", "87654321"]
+}
+```
+
+## API example
+
+You can also create the Telegram channel via API:
+
+```bash
+curl -X POST "$XAGENT_API_URL/api/channels" \
+  -H "Authorization: Bearer $XAGENT_JWT" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "channel_type": "telegram",
+    "config": {
+      "bot_token": "123456789:ABCdefGHIjklmNOPqrsTUVwxyz",
+      "allowed_users": ["12345678"]
+    },
+    "is_active": true
+  }'
+```
+
+Relevant API pages:
+
+- [List channels](/api-reference/channels/get-user-channels)
+- [Create channel](/api-reference/channels/create-user-channel)
+- [Update channel](/api-reference/channels/update-user-channel)
+- [Delete channel](/api-reference/channels/delete-user-channel)
+
+## Security notes
+
+- Telegram bot tokens should be treated like secrets
+- Xagent stores sensitive channel secrets encrypted at rest when encryption is configured
+- Restrict `allowed_users` for private bots instead of leaving the bot open to anyone
+
+## Troubleshooting
+
+### The bot does not respond
+
+Check:
+
+- the channel is saved with `is_active: true`
+- the `bot_token` is valid
+- the backend process is running
+
+### Save fails when creating the channel
+
+Common causes:
+
+- missing `bot_token`
+- duplicate bot token already configured in another channel
+- duplicate channel name for the same user
+
+### A user gets an authorization error
+
+Check `config.allowed_users`. If it is set, the sender's Telegram user ID must be present in that list.
+
+### The bot name is wrong or missing
+
+If `channel_name` is omitted, Xagent tries to fetch the name from Telegram with `getMe`. If that lookup fails, you may see a generic fallback name such as `Telegram Bot`.
