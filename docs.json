@@ -125,6 +125,14 @@
                   "tools/mcp-providers",
                   "guides/sdk",
                   {
+                    "group": "Channels",
+                    "expanded": false,
+                    "pages": [
+                      "channels/overview",
+                      "channels/telegram"
+                    ]
+                  },
+                  {
                     "group": "Deployment",
                     "expanded": false,
                     "pages": [
