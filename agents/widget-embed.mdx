@@ -1,0 +1,71 @@
+---
+title: "Embedding Agents as Widgets"
+description: "Expose agents through embeddable widgets with domain controls."
+icon: "panel-right-open"
+---
+
+# Embedding Agents as Widgets
+
+Xagent can expose an agent through an embeddable widget flow for website or product integration.
+
+## How widgets work
+
+The widget flow is guest-oriented. A client:
+
+1. Authenticates a guest against a specific agent
+2. Receives a guest chat token
+3. Uploads files if needed
+4. Creates a widget chat task
+5. Continues the session over the public chat runtime
+
+This is different from owner chat and different from public share links, even though all three rely on the same core task execution system.
+
+## Agent-level widget controls
+
+Agents now expose widget-related settings:
+
+- `widget_enabled`
+- `allowed_domains`
+
+That means widget access is not global. It is controlled per agent.
+
+## Domain allowlist
+
+The widget authentication flow validates the request origin against the agent's allowed domains.
+
+Use this to restrict where the widget can be embedded:
+
+- Exact domains
+- Subdomains
+- `*` for unrestricted access, only if you deliberately want that behavior
+
+For production use, prefer a strict allowlist.
+
+## Recommended setup
+
+For a production widget agent:
+
+- Use a focused prompt
+- Keep tools narrow and predictable
+- Add safe suggested prompts
+- Restrict allowed domains
+- Test guest file uploads and session continuity
+
+## Widget vs share link
+
+Use a widget when:
+
+- The agent is embedded into your product or site
+- You need origin checks
+- The conversation is part of a product experience
+
+Use a share link when:
+
+- You want a public standalone entry point
+- The interaction is link-driven rather than embedded
+
+## Related pages
+
+- [Sharing Agents](/agents/sharing)
+- [Building Agents](/agents/building)
+- [API Reference: Widget Endpoints](/api-reference/widget/authenticate-widget)

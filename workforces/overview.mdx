@@ -1,0 +1,112 @@
+---
+title: "Workforces Overview"
+description: "How Xagent workforces coordinate multiple agents for team workflows."
+icon: "users"
+---
+
+# Workforces Overview
+
+Workforces let you combine multiple agents into a reusable team. Instead of asking one agent to do everything, you define a manager plus specialized workers and let Xagent coordinate handoffs.
+
+## When to use a workforce
+
+Use a workforce when the outcome needs:
+
+- Multiple roles with different instructions
+- Delegation between specialists
+- Shared context across repeated operations
+- A reusable structure for a team workflow
+
+Typical examples:
+
+- A support workforce that routes between triage, documentation, and escalation agents
+- A marketing workforce that coordinates research, copywriting, and design tasks
+- A security workforce that combines email analysis, policy lookup, and reporting
+
+## Workforce vs agent
+
+| Use case | Best fit |
+| --- | --- |
+| One reusable specialist | Agent |
+| A coordinated team of specialists | Workforce |
+| One-off exploratory work | Task |
+
+An agent is one configured role. A workforce is a system of roles with a manager that delegates to workers.
+
+## Core structure
+
+Every workforce has:
+
+- A **manager agent** that receives the request and decides what to delegate
+- One or more **worker agents** with assignment-specific instructions
+- A **canvas layout** that represents the team visually
+- A **run history** for repeated execution
+
+## What the manager does
+
+The manager agent is the front door of the workforce. It can:
+
+- Interpret the incoming request
+- Decide which worker should handle each part
+- Reuse global tools and knowledge when appropriate
+- Return a unified result to the user
+
+The manager is still an agent, but it runs with workforce-aware delegation logic.
+
+## What workers do
+
+Workers are normal agents attached to the workforce with extra assignment instructions. Each worker can have:
+
+- Its own role and prompt
+- Its own tools, skills, and knowledge bases
+- A human-friendly alias inside the workforce
+- A position on the workforce canvas
+
+This keeps responsibilities clear without forcing you to build a brittle manual workflow.
+
+## Workforce lifecycle
+
+The common lifecycle looks like this:
+
+1. Create a manager agent
+2. Add worker agents
+3. Test the workforce structure
+4. Publish when ready
+5. Start runs with a user message and optional files
+
+You can also bootstrap a workforce from a prompt, then refine it with the builder and canvas.
+
+## Builder and canvas
+
+Xagent includes builder endpoints and a canvas model for workforce iteration. In practice, this means you can:
+
+- Propose structural changes from a prompt
+- Apply a generated patch to the workforce
+- Inspect the workforce as nodes and edges
+- Adjust worker membership and layout over time
+
+## Publishing and running
+
+Workforces move through draft and active states, with archive support when a team structure should no longer be used. Once active, they become stable reusable team structures for repeated work.
+
+Each execution creates a workforce run. A run records:
+
+- The user message
+- The backing task
+- The workforce status
+- The latest result and timestamps
+
+## Related features
+
+Workforces fit naturally with:
+
+- [Agents](/agents/overview) for reusable specialists
+- [Knowledge Base](/knowledge/overview) for shared retrieval context
+- [Files](/files/overview) for run inputs and artifacts
+- [API Reference: Workforces](/api-reference/workforces/list-workforces) for full endpoint details
+
+## Next steps
+
+- [Build a workforce](/workforces/building)
+- [Build reusable agents](/agents/building)
+- [Review the API Reference](/api-reference/workforces/list-workforces)

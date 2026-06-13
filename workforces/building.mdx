@@ -1,0 +1,144 @@
+---
+title: "Building Workforces"
+description: "Create, configure, and run multi-agent workforces in Xagent."
+icon: "network"
+---
+
+# Building Workforces
+
+Workforces are built from a manager agent plus a set of worker agents. The goal is not to draw a rigid workflow, but to define a strong team structure that can adapt at runtime.
+
+## Before you start
+
+You will usually want:
+
+- At least one published or reusable manager-quality agent
+- Worker agents with clear, narrow roles
+- Models configured for both manager and worker agents
+- Optional knowledge bases and tool access for each worker
+
+## Step 1: Choose the manager
+
+The manager agent should be good at:
+
+- Breaking down requests
+- Choosing which worker should act
+- Combining intermediate results
+- Handling ambiguous or cross-domain tasks
+
+Good manager agents are usually broad, structured, and careful about delegation.
+
+## Step 2: Add workers
+
+For each worker, define:
+
+- **Source agent**: the existing agent to reuse
+- **Alias**: the name shown in the workforce
+- **Assignment instructions**: what this worker should focus on
+- **Enabled state**: whether it is currently active
+- **Canvas position**: optional visual placement
+
+Example worker assignments:
+
+- `Researcher`: gather sources and summarize findings
+- `Analyst`: structure comparisons and identify patterns
+- `Writer`: turn results into a final narrative
+- `Operator`: prepare output artifacts and next actions
+
+## Step 3: Use prompt-based bootstrap when helpful
+
+Xagent also supports creating a workforce from a prompt. This is useful when you know the team shape you want, but do not want to assemble the first draft manually.
+
+A strong prompt usually specifies:
+
+- The team goal
+- The manager role
+- The worker roles
+- What each worker should be responsible for
+
+After generation, treat the result as a draft and refine it.
+
+## Step 4: Refine with builder messages
+
+The workforce builder APIs support a propose/apply flow. That makes it practical to iterate on team structure without rebuilding everything by hand.
+
+Use this when you want to:
+
+- Add or remove workers
+- Reassign responsibilities
+- Change manager instructions
+- Reorganize the canvas structure
+
+## Step 5: Validate before publishing
+
+Before publishing, test that:
+
+- The manager chooses the right worker for common requests
+- Workers stay within their intended role
+- Knowledge and tools are available where needed
+- The final result is coherent and not overly repetitive
+
+## Running a workforce
+
+A workforce run starts with:
+
+- A message
+- Optional file IDs
+- An optional execution mode override
+
+The runtime then creates a backing task and tracks the workforce run state alongside it.
+
+## Publishing model
+
+Workforces use a draft/active lifecycle, with archive support:
+
+- **Draft**: still changing, safe for internal iteration
+- **Active**: ready for repeated team use
+- **Archived**: no longer active for normal use
+
+Publish after the structure is stable. Unpublish when you need to move an active workforce back to draft for further structural changes.
+
+## Design advice
+
+Keep the team small at first:
+
+- One manager
+- Two to four workers
+
+Too many workers can make delegation noisy. Add complexity only when you see a real need for specialization.
+
+Prefer workers with crisp boundaries:
+
+- What inputs they expect
+- What outputs they should produce
+- What they should not do
+
+## Common patterns
+
+### Research and reporting
+
+- Manager
+- Researcher
+- Analyst
+- Writer
+
+### Support and escalation
+
+- Manager
+- FAQ worker
+- Documentation worker
+- Escalation worker
+
+### Operations
+
+- Manager
+- Intake worker
+- Validation worker
+- Execution worker
+
+## Related pages
+
+- [Workforces Overview](/workforces/overview)
+- [Building Agents](/agents/building)
+- [API Reference: Create Workforce](/api-reference/workforces/create-workforce)
+- [API Reference: Create Workforce From Prompt](/api-reference/workforces/create-workforce-from-prompt-endpoint)

@@ -66,7 +66,7 @@ Each task has an isolated workspace:
 - **Output** - Generated files saved to workspace
 
 <Info>
-Files are managed per-task. When you create a task and upload files, they're stored in that task's workspace and accessible only during that task execution.
+Files are task-scoped by default. When you create a task and upload files, they're stored in that task's workspace and accessible only to that execution. Guest sessions created through share links or widgets follow the same task-scoped model for their uploaded files.
 </Info>
 
 ## Supported File Types
@@ -227,7 +227,7 @@ For very large files, consider splitting into smaller chunks or using compressio
 
 ### Privacy
 
-- **No sharing** - Files are not shared across tasks
+- **Task-scoped by default** - Files are isolated per task or guest session
 - **Auto-cleanup** - Files can be automatically cleaned up after task
 - **Secure** - Transfers and storage are encrypted
 
@@ -258,4 +258,6 @@ For very large files, consider splitting into smaller chunks or using compressio
 
 - [File Upload](/files/upload) - Learn how to upload files
 - [File Management](/files/management) - Managing files during tasks
+- [Sharing Agents](/agents/sharing) - Understand guest task behavior
+- [Embed Widget](/agents/widget-embed) - Understand embedded guest sessions
 - [Tools](/tools/built-in) - File tools available to agents
