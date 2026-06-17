@@ -7,7 +7,7 @@ html[data-page-mode="wide"] #content-area:has(.xagent-homewide) .xagent-homewide
   max-width: none;
 }
 
-html[data-page-mode="wide"] #content-area:has(.xagent-homewide) > div:not(#content) > div {
+html[data-page-mode="wide"] #content-area:has(.xagent-homewide) div:has(> .xagent-homewide) {
   box-sizing: border-box;
   padding-inline: clamp(1.5rem, 3vw, 4rem);
 }
