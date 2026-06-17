@@ -8,7 +8,9 @@
     "dark": "#5A0BD3"
   },
   "favicon": "/favicon.png",
-  "openapi": "api-reference/openapi.json",
+  "api": {
+    "openapi": "api-reference/openapi.json"
+  },
   "navigation": {
     "versions": [
       {
@@ -499,5 +501,8 @@
       "x": "https://x.com/xorbitsai"
     }
   },
-  "logo": "/favicon.svg"
+  "logo": {
+    "light": "/images/logo/xagent-logo-light.png",
+    "dark": "/images/logo/xagent-logo-dark.png"
+  }
 }
