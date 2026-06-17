@@ -1,4 +1,8 @@
-html[data-page-mode="wide"] #content-area:has(.xagent-homewide) {
+html[data-page-mode="wide"] #content-area:has(.xagent-homewide),
+html[data-page-mode="wide"] #content-area:has(.xagent-homewide) > div,
+html[data-page-mode="wide"] #content-area:has(.xagent-homewide) > div > div,
+html[data-page-mode="wide"] #content-area:has(.xagent-homewide) #content,
+html[data-page-mode="wide"] #content-area:has(.xagent-homewide) .xagent-homewide {
   width: 100%;
   max-width: none;
 }
