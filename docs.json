@@ -199,7 +199,24 @@
                     ]
                   },
                   {
-                    "group": "Tasks",
+                    "group": "SDK v1",
+                    "expanded": false,
+                    "pages": [
+                      "api-reference/sdk-v1/get-me",
+                      "api-reference/sdk-v1/list-templates",
+                      "api-reference/sdk-v1/get-template",
+                      "api-reference/sdk-v1/list-agents",
+                      "api-reference/sdk-v1/create-agent",
+                      "api-reference/sdk-v1/create-agent-from-template",
+                      "api-reference/sdk-v1/rotate-agent-runtime-key",
+                      "api-reference/sdk-v1/create-chat-task",
+                      "api-reference/sdk-v1/append-message-to-task",
+                      "api-reference/sdk-v1/get-chat-task",
+                      "api-reference/sdk-v1/get-chat-task-steps"
+                    ]
+                  },
+                  {
+                    "group": "Web App Tasks",
                     "expanded": false,
                     "pages": [
                       "api-reference/chat/create-task",
@@ -425,23 +442,6 @@
                       "api-reference/workforces/propose-workforce-changes",
                       "api-reference/workforces/apply-workforce-changes",
                       "api-reference/workforces/get-workforce-canvas"
-                    ]
-                  },
-                  {
-                    "group": "SDK v1",
-                    "expanded": false,
-                    "pages": [
-                      "api-reference/sdk-v1/get-me",
-                      "api-reference/sdk-v1/list-templates",
-                      "api-reference/sdk-v1/get-template",
-                      "api-reference/sdk-v1/list-agents",
-                      "api-reference/sdk-v1/create-agent",
-                      "api-reference/sdk-v1/create-agent-from-template",
-                      "api-reference/sdk-v1/rotate-agent-runtime-key",
-                      "api-reference/sdk-v1/create-chat-task",
-                      "api-reference/sdk-v1/append-message-to-task",
-                      "api-reference/sdk-v1/get-chat-task",
-                      "api-reference/sdk-v1/get-chat-task-steps"
                     ]
                   },
                   {
