@@ -23,10 +23,15 @@ uv tool install xagent-ai
 ```
 
 ```bash pip
+python -m venv .venv && source .venv/bin/activate
 pip install xagent-ai
 ```
 
 </CodeGroup>
+
+<Note>
+`uv tool install` puts Xagent in its own isolated environment. With `pip`, install into a virtual environment as shown — a global `pip install` fails with an `externally-managed-environment` error on Python 3.11+ (PEP 668).
+</Note>
 
 Start the server:
 
