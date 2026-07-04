@@ -14,7 +14,18 @@ Get Xagent running and create your first task in 5 minutes.
 If you haven't installed Xagent yet, follow the [Installation Guide](/installation).
 </Info>
 
-For Docker (fastest):
+For a single machine (lightest — no Docker, needs Python 3.11+):
+
+```bash
+uv tool install xagent-ai   # isolated, no venv needed
+# or with pip in a virtual environment (PEP 668):
+# python -m venv .venv && source .venv/bin/activate && pip install xagent-ai
+xagent                      # starts on http://127.0.0.1:8000
+```
+
+Open `http://127.0.0.1:8000` in your browser.
+
+For Docker (best for multi-user / team deployments):
 
 ```bash
 git clone https://github.com/xorbitsai/xagent.git

@@ -8,6 +8,57 @@ icon: "download"
 
 Xagent supports multiple deployment options depending on your needs.
 
+## pip / uv (single machine)
+
+The lightest way to run Xagent on your own machine — **no Docker, no Node, no external services**. The published package bundles the web UI and defaults to SQLite, so a single command starts the whole thing.
+
+<Note>Requires Python 3.11+.</Note>
+
+Install:
+
+<CodeGroup>
+
+```bash uv
+uv tool install xagent-ai
+```
+
+```bash pip
+python -m venv .venv && source .venv/bin/activate
+pip install xagent-ai
+```
+
+</CodeGroup>
+
+<Note>
+`uv tool install` puts Xagent in its own isolated environment. With `pip`, install into a virtual environment as shown — a global `pip install` fails with an `externally-managed-environment` error on Python 3.11+ (PEP 668).
+</Note>
+
+Start the server:
+
+```bash
+xagent                              # http://127.0.0.1:8000
+xagent --host 0.0.0.0 --port 8080   # custom host/port
+```
+
+Or run it without installing, using `uvx`:
+
+```bash
+uvx --from xagent-ai xagent
+```
+
+Then open `http://127.0.0.1:8000`, create your admin account at `/setup`, and configure an LLM provider.
+
+To use a provider without the UI, put a key in a `.env` file in the working directory (or export it):
+
+```bash
+OPENAI_API_KEY="sk-..."
+# or DEEPSEEK_API_KEY / GOOGLE_API_KEY / ANTHROPIC_API_KEY ...
+```
+
+<Info>
+Data is stored under `~/.xagent` (SQLite) — no PostgreSQL or Redis needed for single-machine use. Override the location with `XAGENT_STORAGE_ROOT`. For multi-user / team deployments, use Docker Compose below.
+</Info>
+
 ## Docker Compose (Recommended)
 
 The fastest way to get started.
