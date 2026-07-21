@@ -1,0 +1,308 @@
+---
+title: "Changelog"
+description: "Release notes for every Xagent version, with links to the full GitHub release."
+---
+
+<table>
+<thead>
+<tr>
+<th>Release note</th>
+<th>GitHub release</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<td>
+
+### Xagent v0.6.2 — July 17, 2026
+
+ElevenLabs voice cloning, a visual Flow view for Custom Agents, and MCP OAuth dynamic registration all land.
+
+**How to update**
+
+```bash
+cd xagent && git pull
+docker compose up -d
+# or
+pip install --upgrade xagent-ai
+```
+
+**Highlights**
+- 🎙️ ElevenLabs voice cloning & audio previews — clone voices and preview generated audio directly in the app
+- 🧩 Custom Agent Flow view — the agent builder adds a visual Flow view for orchestrating execution
+- 🔐 MCP OAuth dynamic client registration — supports the OAuth dynamic client registration flow for MCP
+
+**What's New**
+- 🔑 OAuth resolver runtime refresh — expired authorizations can be renewed without restarting the service
+- 📎 v1 SDK task attachments — task turns on the v1 SDK now support file attachments
+- 🔄 Durable task command transport — improves task execution reliability
+- 📄 Doc Summarizer & Action Extractor template — a ready-to-use P0 template
+- 🏷️ Localized built-in model indicator — supports localized copy and badges
+- 📊 Token usage by model — breakdowns by individual model
+- 🎙️ ElevenLabs voice cloning & audio previews
+- 👀 Admin read-only view of agent config
+- 🔐 MCP OAuth dynamic client registration
+- 👥 Team-scoped agent ownership & visibility
+- 🧭 Connector runtime scoped by task
+- 🎨 Revamped templates/tools pages & sidebar
+- 🧩 Flow view for Custom Agent builder
+- 🏢 Provider details across model selectors
+- 📥 Import agents from openclaw hermes
+- 🔗 Opt-in team ownership via hooks
+- 📝 Doc Summarizer template update
+- 🧠 Scope-dimension reap & enumeration for memory
+- ⚡ Routed agent context optimization
+- 🔊 Improved ElevenLabs pronunciation & interruption
+- 🗑️ Removed Google image search tool
+- 📁 Normalized file references
+
+**Stability & Polish**
+- Normalize DeepSeek tool protocol responses
+- Always show a thin scrollbar instead of revealing it on hover
+- Install HTTPX SOCKS support
+- Scope the execution plan to the DAG process
+- Avoid an extra DashScope embedding-model list GET request
+- Harden DeepSeek tool protocol recovery
+- Preserve connector settings during edits
+- Use the public API URL in A2A agent cards
+- Prevent MCP initialization from exhausting the DB connection pool
+- Handle Telegram voice messages and cloning tools
+- Surface failed task reasons live, plus a coded-error seam
+- Preserve audio playback and pending tool work
+- Poll for the detached resume-rejection payload (test)
+- Make built-in MCP runtime configuration deterministic
+- Make database startup failures self-explanatory
+- Fix Gmail trigger OAuth expiry timezone and Pub/Sub provisioning
+- Repair workforce setup and execution
+- Stop unconfigured agents from inheriting user custom APIs
+- Skip malformed rows in LanceDB search instead of truncating results
+- Install browser and router runtimes
+- Interpret nested metadata filters in InMemoryMemoryStore
+- Honor tags/keywords/date filters in LanceDBMemoryStore.search()
+- Prevent concurrent auth refresh from causing logout
+- Bump compose images to 0.6.1
+
+</td>
+<td>
+
+[View v0.6.2 on GitHub →](https://github.com/xorbitsai/xagent/releases/tag/v0.6.2)
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+### Xagent v0.6.1 — July 12, 2026
+
+Seedance video generation, the ElevenLabs voice suite, and A2A agent protocol support all land.
+
+**How to update**
+
+```bash
+cd xagent && git pull
+docker compose up -d
+# or
+pip install --upgrade xagent-ai
+```
+
+**Highlights**
+- 🎬 Seedance video generation — generate video content directly inside an agent
+- 🔊 ElevenLabs voice suite — TTS, STT, sound effects, and music generation all land in one release
+- 🤝 A2A agent protocol — extends multi-agent interoperability
+
+**What's New**
+- 🎬 Seedance video generation
+- 🗺️ Key-based MCP catalog apps (Google Maps), plus a new shared-env layer
+- 🖼 iframe embed auth parameter (embed_origin) for origin authentication
+- 🔊 ElevenLabs TTS
+- 🔑 Multiple API keys per agent with a centralized management page
+- 🛡️ Admin agent-config visibility & conversation-log rendering on the frontend
+- 📦 Sandbox management improvements — automatic reclamation on idle TTL
+- 📈 Context-window-based compaction threshold with usage indicators
+- 🧭 Execution scope context, enabling scope-based sandbox isolation
+- 🗂 Decoupled sandbox mount root from full workspace paths
+- 🎙 ElevenLabs STT
+- 🔐 OAuth token resolver hook for MCP, supporting custom auth-resolution logic
+- 📊 Optional quota enforcement hook interface
+- 🤝 A2A agent protocol support
+- 🧮 Enhanced model usage details (model_id, prompt-cache-hit token counts)
+- 🛠 Tool allowlist & layered quota error codes
+- 🎵 ElevenLabs sound effects & music generation
+- 🔁 Serialized task execution, avoiding concurrency conflicts
+- ⏸ Per-step interrupt mechanism, supporting mid-run quota enforcement
+- ⚡ Trigger pipeline optimization (provisioning, auditing, execution)
+- 🗄 Checkpoint trace dedup — 20 GB → 2.2 GB on a real DB
+- 💬 AI Chatbot template execution mode change
+- 🔑 Unified catalog-app auth classification
+- 📚 Slimmer KB compatibility adapters
+
+**Stability & Polish**
+- Strengthen object-storage key validation
+- Gate App Widget access behind a per-agent widget key
+- Merge duplicate alembic migration heads left by an earlier fix
+- Shrink KBCoordinator down to a pure router
+- Decouple durable file previews from storage paths
+- Persist connector runtime snapshots for web tasks
+- Scope model providers by category
+- Enforce scope on by-id get / update / delete operations
+- Scan due scheduled triggers in-process so they fire without Celery beat
+- Confine file-id resolution to the active execution scope
+- Scoped executions fail closed instead of falling back to local execution
+- Fix data loss caused by LanceDB schema mismatches
+- Fix MCP runtime translation-key resolution errors
+- Bind durable-storage handles to the active execution scope
+- Point the homepage docs link to the new hosted knowledge base
+- Re-check containment when resolving relative workspace paths
+- Make task message delivery interrupt-safe
+- Push memory-dimension filters down into the LanceDB where clause
+- Filter TTS voice metadata by configured models
+- Preserve OAuth resolver actor diagnostics
+- Deduplicate replayed user messages
+- Add a PyPI badge and pip / curl install instructions to the README
+- Remove a stray superpowers spec file and CHANGELOG.md
+
+</td>
+<td>
+
+[View v0.6.1 on GitHub →](https://github.com/xorbitsai/xagent/releases/tag/v0.6.1)
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+### Xagent v0.6.0 — July 3, 2026
+
+Skill Hub launch, MCP OAuth authorization, and a redesigned Workforce UI.
+
+**How to update**
+
+```bash
+cd xagent && git pull
+docker compose up -d
+```
+
+**Highlights**
+- 🔐 MCP OAuth authorization — OAuth app metadata handling and validation for MCP tools
+- 🧠 Skill Hub — browse, install, and author Claude-format skills
+- 🎨 Redesigned Workforce UI — new config panel, run page, and flow visualization
+
+**What's New**
+- 🔐 MCP OAuth authorization
+- 🧠 Skill Hub — extending the agent capability ecosystem
+- 🎨 Redesigned Workforce UI
+- 📝 Conversation logs API and frontend view for tracing task execution
+- 📧 Gmail trigger integration — watch state management and trigger wiring
+- 🧩 Meta MCP tool and related tests
+- 🗂 Expanded agent templates — Social Media Content Manager, Inbox Manager
+- 🔧 App Widget settings dialog for custom configuration
+- 📦 Full PyPI release — complete xagent-ai package (backend + static frontend)
+- 🔔 Unified TriggerProvider callback framework
+- ⚙️ Per-user MCP env overrides with a global default fallback
+
+**Stability & Polish**
+- Consolidate KB collection lifecycle operations into KBCollectionHandle
+- Move KB status and version lifecycle management into the collection handle
+- Push collection/document cascade-delete data-plane logic into LanceDBVectorIndexStore
+- Fix model provider compatibility issues
+- Fix Chinese text rendering when generating PPTX files
+- Stop the Preview thinking animation once the response completes
+- Load agent preview images via an authenticated file-preview endpoint
+- Fix recovery of the parse method for candidate semantic_id in the knowledge base
+- Fix REST SDK tasks getting stuck in RUNNING / task_busy state
+- Scope custom API selection to connectors
+- Merge two alembic migration heads on main
+- Add test coverage for numpy vectors and empty text in the KB version-candidate listing
+- Bump Compose images to 0.5.1
+- Update social media manager template copy and unfeature the LinkedIn and Inbound agents
+
+</td>
+<td>
+
+[View v0.6.0 on GitHub →](https://github.com/xorbitsai/xagent/releases/tag/v0.6.0)
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+### Xagent v0.5.1 — June 28, 2026
+
+Concurrent tool execution, sandbox lease management, and MCP OAuth metadata handling.
+
+**What's New**
+- In-turn tool concurrency for the ReAct pattern
+- Concurrency configuration for MCP tools execution
+- OAuth app metadata handling and validation for MCP
+- Concurrent sandbox execution with lease management
+
+**Enhancements**
+- Move document lifecycle into collection handle
+- Move parse and chunk lifecycle into handle
+- Move embedding lifecycle into handle
+- Batch agent model lookups into a single query
+- Move search lifecycle into handle
+
+**Stability & Polish**
+- Retry OpenRouter tool choice fallback
+- Harden embedding chunk read and batch env parsing
+- Route deploy snippets through configurable API target
+- Hide SDK tasks from chat history
+- Include xrouter-llm in backend-image and all extras
+- Handle max_completion_tokens for gpt-5 models in test-connection
+- Disable DeepSeek thinking by default
+- Scope custom API tools to agent config, not all user APIs
+- Unblock 'auto' model qwen3 routing dependency
+- Preserve empty reasoning content (DeepSeek)
+- Restore home page to pre-#560 state
+- Isolate db session per tool call for safe concurrency
+- Redesign Workforce UI — merge pages, add canvas, improve layout
+- Bump compose images to 0.5.0
+
+</td>
+<td>
+
+[View v0.5.1 on GitHub →](https://github.com/xorbitsai/xagent/releases/tag/v0.5.1)
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+### Xagent v0.5.0 — June 21, 2026
+
+Agent triggers and OpenRouter "auto" model routing.
+
+**What's New**
+- Add agent triggers
+- Add agent trigger UI
+- OpenRouter provider + 'auto' model routed by xrouter-llm
+
+**Stability & Polish**
+- Show only published agents on home
+- Default channel tasks to auto mode
+- Update documentation domain
+- Handle reasoning models in chat response and test-connection (Xinference)
+- Fall back to reasoning_content when content is empty (OpenAI)
+- Keep repeated tool final answers in ReAct
+- Stabilize system message timestamp for prefix cache
+- Handle OpenRouter DeepSeek thinking tool-choice errors
+- Add C13 public-surface audit guard tests
+- Split pull request CI checks
+- Bump compose images to 0.4.4
+
+</td>
+<td>
+
+[View v0.5.0 on GitHub →](https://github.com/xorbitsai/xagent/releases/tag/v0.5.0)
+
+</td>
+</tr>
+
+</tbody>
+</table>
