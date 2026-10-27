@@ -12999,6 +12999,36 @@
             ],
             "title": "Metadata",
             "description": "Free-form correlation data the SDK caller can pass through (trace_id, request_id, etc). Not interpreted server-side."
+          },
+          "dispatch_class": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "interactive",
+                  "batch"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dispatch Class",
+            "description": "Dispatch class to request for this task: 'interactive' or 'batch'. Omit it or send null to let the server decide. Whether the deployment honors the request is its own setting; the response's 'dispatch_class' shows the class the start command was given."
+          },
+          "priority": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10.0,
+                "minimum": -10.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Priority",
+            "description": "Priority of this task's commands, an integer from -10 to 10; higher goes first. Omit it or send null for 0. It takes effect only where the deployment dispatches fairly across accounts, and only orders commands of the same account and the same dispatch class. Messages appended to the task and manual resumes inherit it."
           }
         },
         "type": "object",
@@ -13031,6 +13061,22 @@
             "format": "date-time",
             "title": "Created At",
             "description": "UTC creation timestamp."
+          },
+          "dispatch_class": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "interactive",
+                  "batch"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dispatch Class",
+            "description": "Dispatch class the start command was given, which is the requested class only when the deployment accepted it. Null when the server runs the task in this process rather than through the dispatch queue. Later commands on the task are not reported here."
           }
         },
         "type": "object",
