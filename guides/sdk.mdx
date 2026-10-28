@@ -47,6 +47,41 @@ The typical sequence is:
 4. Poll `GET /v1/chat/tasks/{task_id}`
 5. Fetch steps or append messages as needed
 
+## Dispatch class and priority
+
+`POST /v1/chat/tasks` accepts two optional fields that tell the server how to schedule the task's execution commands.
+
+- `dispatch_class`: `interactive` or `batch`. Omit it or send `null` to let the server decide.
+- `priority`: an integer from -10 to 10. Omit it or send `null` for 0. A value out of range, a boolean, a float, or a number sent as a string is rejected with `422`.
+
+Both fields apply only when the task is created. The append and reply requests do not have them, and any value sent there is ignored. With the default classification, every later execution command of the task inherits its priority, including appended messages, answers, and manual and automatic resumes. When the requested class is adopted, those commands take it too, except answers to a waiting task.
+
+### When the server uses them
+
+- The task must run through the dispatch queue (shared task execution, `XAGENT_SHARED_TASK_EXECUTION_ENABLED`). Otherwise the fields are stored but have no scheduling effect.
+- With the default classification, a requested class is adopted only when both `XAGENT_DISPATCHER_FAIR_SHARE` and `XAGENT_DISPATCH_ACCEPT_REQUESTED_CLASS` are on. Both are off by default. Otherwise the class follows the task source, which is `batch` for SDK tasks.
+- With the default classification, an answer to a waiting task is always `interactive`.
+- The class is decided when each command is enqueued, so changing these settings affects only commands enqueued afterwards.
+- Priority is applied when commands are dispatched. It has an effect only when fair share is on and the process sees at least two accounts with queued commands. It orders commands of the same account and the same class, and never lets one account jump ahead of another. Some dispatch rounds still pick the oldest command first.
+- A deployment can install its own classification rule, which may also set its own priority. In that case, trust the `dispatch_class` in the response.
+
+### Checking the result
+
+The response includes `dispatch_class`, the class given to the task's start command. It is `null` when the task does not run through the dispatch queue. Servers that predate the field omit it, which the Python SDK reports as `None`. The response does not report the priority.
+
+```python
+from xagent_sdk import AgentClient
+
+client = AgentClient()  # reads XAGENT_API_KEY and XAGENT_BASE_URL
+result = client.tasks.create(
+    agent_id=agent_id,
+    message="Summarize the open tickets.",
+    dispatch_class="interactive",
+    priority=5,
+)
+print(result.dispatch_class)  # "interactive" if adopted; "batch" or None otherwise
+```
+
 ## Related endpoints
 
 - Personal keys: [API Reference](/api-reference/me/list-personal-keys)
