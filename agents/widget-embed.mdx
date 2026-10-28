@@ -115,7 +115,7 @@ A call with no `message`, or with `message` set to `undefined`, only opens the p
 - If the chat is busy, for example because an earlier call is still starting its conversation or a message the visitor typed is still being sent, the message waits for its turn. Only one message can wait. A newer call replaces the one that is waiting, so when a visitor clicks several buttons quickly, the messages in between are skipped.
 - `open` does not retry a message. If the chat cannot start the new conversation or cannot deliver the message, the message is dropped. The chat then shows the same error notice it shows when the visitor's own attempt fails in the same way, and a warning is written to the browser console.
 - Starting a new conversation discards any text the visitor typed into the chat input but did not send.
-- After `open` has been called with a valid message, that widget no longer sends the message set with its `data-initial-message` attribute. Calling `open` without a message leaves it unchanged.
+- After `open` has been called with a valid message, that widget no longer sends the message set with its `data-initial-message` attribute. Calling `open` without a message leaves it unchanged. If the widget had already sent the `data-initial-message` text to the chat, for example because the panel opened a moment earlier or `open()` was called without a message just before, that text is not withdrawn: the chat starts a conversation with it as usual, and the message from `open` then starts a new conversation that replaces it.
 - If the page has more than one widget, the call goes to the most recently initialized one that is still on the page.
 
 <Warning>
