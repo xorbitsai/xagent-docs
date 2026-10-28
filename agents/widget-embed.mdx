@@ -51,6 +51,77 @@ For a production widget agent:
 - Restrict allowed domains
 - Test guest file uploads and session continuity
 
+## Opening the chat from your page
+
+The widget script, `widget.js`, adds a chat button and a chat panel to your page. Once it has loaded, your own page code can open that panel, and can optionally start a new conversation with a message you choose. A typical use is a button such as "Ask about pricing" that hands a prepared question to the agent.
+
+### Example
+
+The page below embeds the widget and has two buttons. The first opens the chat with a prepared question. The second only opens the chat.
+
+```html
+<button id="ask-pricing">Ask about pricing</button>
+<button id="open-chat">Chat with us</button>
+
+<script src="https://YOUR_XAGENT_HOST/widget.js" data-widget-key="YOUR_WIDGET_KEY"></script>
+<script>
+  document.getElementById("ask-pricing").addEventListener("click", function () {
+    XagentWidget.open({ message: "What are your pricing plans?" });
+  });
+
+  document.getElementById("open-chat").addEventListener("click", function () {
+    XagentWidget.open();
+  });
+</script>
+```
+
+Use the embed snippet from the agent's widget settings for the `widget.js` tag. The tag above shows only the attributes needed for this example.
+
+### Calling `XagentWidget.open`
+
+```js
+XagentWidget.open(options)
+```
+
+`options` is optional. It is an object with one key:
+
+- `message` (string, optional): the text to send as the first message of a new conversation.
+
+The call returns nothing, and it behaves as follows:
+
+- `XagentWidget.open()` opens the chat panel and sends nothing.
+- `XagentWidget.open({ message })` opens the chat panel and starts a new conversation. If a conversation is already in progress, it is left behind and the new conversation starts instead. `message` is sent as the first message of the new conversation, and the agent starts answering it.
+- Every call takes effect, including when the panel is already open. The panel does not need to be closed first. If a visitor clicks a second button while the chat is open, the panel stays open and the second message starts another new conversation. Calls that arrive close together are covered under "Repeated and overlapping calls" below.
+
+`XagentWidget` exists only after `widget.js` has loaded, so code that runs before the script has loaded cannot call it. Calling `open` from click handlers, as in the example, avoids this. If the page has no active widget, for example because the embed tag is missing its widget key, `open` does nothing except write a warning to the browser console.
+
+### Message rules
+
+Leading and trailing whitespace is removed from `message`. What remains must not be empty and must not be longer than 2000 characters.
+
+If `message` does not meet these rules, or is not a string, the panel still opens, no message is sent, and the browser console shows this warning:
+
+```text
+Xagent Widget: XagentWidget.open() message must be a non-empty string of at most 2000 characters; opening the chat without sending it.
+```
+
+Options other than `message` are ignored and are named in a browser console warning. Passing something that is not an object also opens the panel without sending a message, with a console warning.
+
+### Repeated and overlapping calls
+
+- Each call with a valid message starts a new conversation. The conversation that was replaced is not stopped: if the agent was still answering in it, the answer is completed in the background. The visitor cannot return to the earlier conversation from the chat panel.
+- Each call with a valid message also starts a new agent run, which counts toward usage in the same way as a conversation the visitor starts in the panel. The widget itself does not limit how often `open` can be called.
+- If the chat has not finished loading, the message is held and sent as soon as the chat is ready. When several calls are made before that, only the last message is sent.
+- If the chat is busy, for example because an earlier call is still starting its conversation or a message the visitor typed is still being sent, the message waits for its turn. Only one message can wait. A newer call replaces the one that is waiting, so when a visitor clicks several buttons quickly, the messages in between are skipped.
+- A message is not retried. If the chat cannot start the conversation or cannot deliver the message, the message is dropped and a warning is written to the browser console.
+- Starting a new conversation discards any text the visitor typed into the chat input but did not send.
+- After `open` has been called with a valid message, that widget no longer sends the message set with its `data-initial-message` attribute. Calling `open` without a message leaves it unchanged.
+- If the page has more than one widget, the call goes to the most recently initialized one that is still on the page.
+
+<Warning>
+`message` is sent as if the visitor had typed it. Pass only text that you wrote into the page. Do not build it from URL parameters or any other input that a visitor can control. Call `open` only in response to a visitor action such as a click, and not when the page loads or from code that re-runs on every render, because every call with a message starts a new conversation and a new agent run.
+</Warning>
+
 ## Widget vs share link
 
 Use a widget when:
