@@ -62,7 +62,7 @@ Both fields apply only when the task is created. The append and reply requests d
 - With the default classification, a requested class is adopted only when both `XAGENT_DISPATCHER_FAIR_SHARE` and `XAGENT_DISPATCH_ACCEPT_REQUESTED_CLASS` are on. Both are off by default. Otherwise the class follows the task source, which is `batch` for SDK tasks.
 - With the default classification, an answer to a waiting task is always `interactive`.
 - The class is decided when each command is enqueued, so changing these settings affects only commands enqueued afterwards.
-- Priority is applied when commands are dispatched. It has an effect only when fair share is on and the process sees at least two accounts with queued commands. It orders commands of the same account and the same class, and never lets one account jump ahead of another. Some dispatch rounds still pick the oldest command first.
+- Priority is applied when commands are dispatched. It has an effect only when fair share is on. It orders commands of the same account and the same class, also when that account is the only one with queued commands, and never lets one account jump ahead of another. Some dispatch rounds still pick the oldest command first.
 - A deployment can install its own classification rule, which may also set its own priority. In that case, trust the `dispatch_class` in the response.
 
 ### Checking the result
