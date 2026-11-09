@@ -28,7 +28,7 @@
                     "group": " ",
                     "pages": [
                       {
-                        "group": "Overview",
+                        "group": "Getting started",
                         "expanded": true,
                         "pages": [
                           "index",
@@ -37,7 +37,7 @@
                         ]
                       },
                       {
-                        "group": "Tasks",
+                        "group": "Run tasks",
                         "expanded": false,
                         "pages": [
                           "tasks/overview",
@@ -45,10 +45,11 @@
                         ]
                       },
                       {
-                        "group": "Agents",
+                        "group": "Teammates",
                         "expanded": false,
                         "pages": [
                           "agents/overview",
+                          "templates/overview",
                           "agents/building",
                           "agents/sharing",
                           "agents/widget-embed"
@@ -60,14 +61,6 @@
                         "pages": [
                           "workforces/overview",
                           "workforces/building"
-                        ]
-                      },
-                      {
-                        "group": "Templates",
-                        "expanded": false,
-                        "pages": [
-                          "templates/overview",
-                          "templates/creating"
                         ]
                       },
                       {
@@ -134,6 +127,7 @@
                 "pages": [
                   "tools/mcp-providers",
                   "guides/sdk",
+                  "templates/creating",
                   {
                     "group": "Channels",
                     "expanded": false,
@@ -143,11 +137,12 @@
                     ]
                   },
                   {
-                    "group": "Deployment",
+                    "group": "Operate Xagent",
                     "expanded": false,
                     "pages": [
-                      "deployment/configuration",
-                      "deployment/self-hosted"
+                      "deployment/conversation-logs",
+                      "deployment/self-hosted",
+                      "deployment/configuration"
                     ]
                   }
                 ]

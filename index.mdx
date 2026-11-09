@@ -1,105 +1,40 @@
 ---
-title: "What is Xagent"
-description: "Describe tasks. Not workflows."
+title: "What is Xagent?"
+description: "An enterprise agent platform for building, deploying, and operating AI teammates."
 mode: "wide"
 icon: "rocket"
 ---
 
 <div className="xagent-homewide">
 
-# Xagent
+Open Xagent, describe a task in the workspace, and run it. For recurring work, [add a preconfigured teammate](/templates/overview) or build your own. Publish a teammate when you want other people to use it.
 
-## Describe tasks. Not workflows.
+## Why choose Xagent?
 
-**No more flowcharts.**
-**No more rigid automation.**
-**Just tell Xagent what you want.**
+Run a real task in the workspace, then configure a specialist for recurring work. A published teammate can take tasks in the workspace, join a Workforce, or serve end users. After deployment, use Conversation Logs to inspect the transcript and recorded tool calls.
 
-![Xagent Interface](/images/xagent-frontpage.png)
+## What is a teammate?
 
-## Examples
+A teammate is a reusable agent configured for a specific job. Give it instructions, a model, skills, tools, and knowledge. For example, a **Product Support** teammate can answer setup and billing questions using the product documentation you attach.
 
-```bash
-# Just tell Xagent what to do
-"Research the latest AI developments and write a summary"
-"Create a 10-slide presentation about renewable energy"
-"Design a promotional poster for a coffee shop"
-```
+<Frame caption="A published Product Support teammate and the page a visitor opens from its shareable link.">
+  <img src="/images/teammate-share-link.png" alt="Share link settings next to the Product Support chat page a visitor sees" />
+</Frame>
 
-Xagent plans, decomposes, selects tools, executes, and iterates automatically. Start with one-off tasks, turn successful patterns into reusable agents, and scale further with multi-agent workforces.
-
-## The Problem
-
-**Workflow builders are rigid. They break when requirements change.**
-
-- You map every decision branch manually
-- You orchestrate tools by hand
-- You maintain fragile flow diagrams
-- You re-engineer when logic changes
-
-## The Xagent Way
-
-**With Xagent, you describe the outcome — not the steps.**
-
-- Plans the task dynamically
-- Decomposes into executable steps
-- Selects the right tools automatically
-- Executes, evaluates, and iterates
-
-## Not a Workflow Builder
-
-**Xagent is not:**
-- A drag-and-drop flow editor
-- A static template engine
-- A chatbot wrapper
-
-**Xagent is:**
-- A dynamic task execution engine
-- An autonomous planning system
-- A foundation for building real AI agents and multi-agent workforces
-
-## Get Started in 3 Minutes
-
-<Steps>
-  <Step>
-    Clone and configure
-    ```bash
-    git clone https://github.com/xorbitsai/xagent.git
-    cd xagent
-    cp example.env .env
-    ```
-  </Step>
-  <Step>
-    Start with Docker
-    ```bash
-    docker compose up -d
-    ```
-  </Step>
-  <Step>
-    Open your browser
-    ```
-    http://localhost:80
-    ```
-  </Step>
-</Steps>
+## How to get started
 
 <Columns cols={2}>
-  <Card
-    title="Ready to build?"
-    icon="rocket"
-    href="/quickstart"
-    buttonText="Start Building"
-    primary
-  >
-    Follow the quickstart guide to create your first task and first agent.
+  <Card title="Run a task" icon="play" href="/quickstart#run-your-first-task">
+    Set up a model and send your first request from the workspace.
   </Card>
-  <Card
-    title="Need a workforce?"
-    icon="users"
-    href="/workforces/overview"
-    buttonText="Explore Workforces"
-  >
-    Learn when to move from one agent to a coordinated manager-plus-workers setup.
+  <Card title="Build a teammate" icon="robot" href="/agents/building">
+    Configure a specialist for a job and test it in Preview.
+  </Card>
+  <Card title="Deploy for end users" icon="share" href="/agents/sharing">
+    Give people access through a shareable link, widget, or API integration.
+  </Card>
+  <Card title="Operate Xagent" icon="chart-line" href="/deployment/conversation-logs">
+    Inspect deployed conversations, transcripts, and recorded tool calls.
   </Card>
 </Columns>
 

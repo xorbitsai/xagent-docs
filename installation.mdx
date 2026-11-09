@@ -1,67 +1,36 @@
 ---
 title: "Installation"
-description: "Detailed installation options for Xagent"
+description: "Install Xagent for local evaluation, self-host with Docker Compose, or develop from source."
 icon: "download"
 ---
 
-# Installation
+## Local evaluation
 
-Xagent supports multiple deployment options depending on your needs.
-
-## pip / uv (single machine)
-
-The lightest way to run Xagent on your own machine — **no Docker, no Node, no external services**. The published package bundles the web UI and defaults to SQLite, so a single command starts the whole thing.
-
-<Note>Requires Python 3.11+.</Note>
-
-Install:
+Use Python 3.11 or later. The published package includes the web UI and uses SQLite by default.
 
 <CodeGroup>
 
 ```bash uv
 uv tool install xagent-ai
+xagent
 ```
 
 ```bash pip
-python -m venv .venv && source .venv/bin/activate
-pip install xagent-ai
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install xagent-ai
+xagent
+```
+
+```bash uvx
+uvx --from xagent-ai xagent
 ```
 
 </CodeGroup>
 
-<Note>
-`uv tool install` puts Xagent in its own isolated environment. With `pip`, install into a virtual environment as shown — a global `pip install` fails with an `externally-managed-environment` error on Python 3.11+ (PEP 668).
-</Note>
+Open `http://127.0.0.1:8000`, create the first administrator at `/setup`, and configure a model. Xagent stores local data under `~/.xagent` by default. Use `XAGENT_STORAGE_ROOT` to choose another location.
 
-Start the server:
-
-```bash
-xagent                              # http://127.0.0.1:8000
-xagent --host 0.0.0.0 --port 8080   # custom host/port
-```
-
-Or run it without installing, using `uvx`:
-
-```bash
-uvx --from xagent-ai xagent
-```
-
-Then open `http://127.0.0.1:8000`, create your admin account at `/setup`, and configure an LLM provider.
-
-To use a provider without the UI, put a key in a `.env` file in the working directory (or export it):
-
-```bash
-OPENAI_API_KEY="sk-..."
-# or DEEPSEEK_API_KEY / GOOGLE_API_KEY / ANTHROPIC_API_KEY ...
-```
-
-<Info>
-Data is stored under `~/.xagent` (SQLite) — no PostgreSQL or Redis needed for single-machine use. Override the location with `XAGENT_STORAGE_ROOT`. For multi-user / team deployments, use Docker Compose below.
-</Info>
-
-## Docker Compose (Recommended)
-
-The fastest way to get started.
+## Self-host with Docker Compose
 
 ```bash
 git clone https://github.com/xorbitsai/xagent.git
@@ -70,69 +39,21 @@ cp example.env .env
 docker compose up -d
 ```
 
-**Access:** `http://localhost:80`
+Open `http://localhost` for local setup. Before exposing the service to other users, review the [configuration guide](/deployment/configuration) and the [self-hosting guide](/deployment/self-hosted). Production browser access requires HTTPS and a browser that supports Web Locks.
 
-## Manual Installation
+## Develop from source
 
-For more control over your deployment.
-
-### Requirements
-
-- Python 3.10+
-- PostgreSQL 14+
-- Redis 6+
-
-### Backend Setup
+Use an editable install for backend development. From the root of the Xagent source repository, run these commands in a virtual environment.
 
 ```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Configure environment
-cp example.env .env
-# Edit .env with your settings
-
-# Run database migrations
-alembic upgrade head
-
-# Start backend server
-python -m uvicorn main:app --reload
+python -m pip install -e .
+python -m xagent.web.__main__
 ```
 
-### Frontend Setup
+The frontend runs separately in development. Follow the [frontend development instructions](https://github.com/xorbitsai/xagent/blob/main/frontend/README.md) for Node dependencies and the API and WebSocket settings. Source builds need access to the npm registry and the SheetJS CDN.
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+## Next steps
 
-## Configuration
-
-See [Configuration](/deployment/configuration) for detailed setup options.
-
-## Production Deployment
-
-For production deployments, see:
-- [Self-hosted deployment](/deployment/self-hosted)
-- [Environment variables](/deployment/environment)
-
-## System Requirements
-
-### Minimum
-
-- CPU: 4 cores
-- RAM: 8 GB
-- Disk: 20 GB
-
-### Recommended
-
-- CPU: 8+ cores
-- RAM: 16+ GB
-- Disk: 50+ GB SSD
-
-## Next Steps
-
-- [Configure your environment](/deployment/configuration)
-- [Set up LLM providers](/deployment/configuration#models)
-- [Build your first agent](/guides/quick-win)
+- [Run your first task](/quickstart#run-your-first-task)
+- [Build a teammate](/agents/building)
+- [Configure models](/models/llm)

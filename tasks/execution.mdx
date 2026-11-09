@@ -1,255 +1,48 @@
 ---
-title: "Task Execution"
-description: "Understanding how Xagent executes tasks"
+title: "Task execution"
+description: "Choose an execution mode and follow task progress, tool calls, and results."
 icon: "play-circle"
 ---
 
-# Task Execution
+Choose an execution mode in the workspace when you start a task. If you select a teammate, Xagent uses its configured execution mode.
 
-Learn how Xagent plans, executes, and manages your tasks from start to finish.
+## Execution modes
 
-## Execution Phases
+| Workspace mode | What Xagent does |
+| --- | --- |
+| **Auto** | Chooses whether to answer directly, use tools, or create and execute a plan |
+| **Flash** | Uses a single model call for simple requests |
+| **Balanced** | Uses a reasoning and tool-use loop to work through the request |
+| **Think** | Builds a plan and runs its steps in dependency order |
 
-### 1. Planning Phase
+**Default** uses your deployment's configured mode, which is normally **Auto** for a standalone task. Choose **Think** when you want a multi-step plan.
 
-When you submit a task, Xagent first analyzes your request and creates an execution plan.
+## Follow a run
 
-**What happens:**
-- Xagent understands your goal
-- Breaks down the task into steps
-- Identifies required tools
-- Generates a DAG (Directed Acyclic Graph)
+The task conversation shows your request and the output. The execution details depend on the mode and the work the model performs.
 
-**The DAG (Execution Plan)**
+- **Direct answer.** Read the answer in the conversation.
+- **Tool use.** Expand the recorded execution details to inspect tool calls and results when available.
+- **Planned execution.** Open **Progress** to inspect the planned steps and their status. Steps with no unmet dependencies can run concurrently.
 
-The DAG is a visual representation of your task workflow:
+In a plan, nodes represent steps and edges represent dependencies between them.
 
-![Execution Plan](/images/execution-plan.png)
+![An example execution plan with steps and dependencies](/images/execution-plan.png)
 
-**Understanding the DAG:**
-- **Nodes** (circles/boxes) - Individual execution steps
-- **Edges** (arrows) - Dependencies between steps
-- **Flow** - Execution order from start to finish
+## Continue or revisit a task
 
-### 2. Execution Phase
+Send a follow-up to refine the result or provide more context. You can attach files to a request when the composer allows attachments. Use the available task controls to stop, pause, or resume a run when applicable.
 
-Once the plan is ready, Xagent begins executing each step.
-
-**What happens:**
-- Steps execute in dependency order
-- Tools are called automatically
-- Results are passed between steps
-- Progress updates in real-time
-
-**Execution features:**
-- Real-time progress tracking
-- Step-by-step logging
-- Error handling and retry
-- Dynamic adaptation
-
-### 3. Completion Phase
-
-After all steps complete, Xagent compiles the final result.
-
-**What happens:**
-- Results from all steps are aggregated
-- Final output is generated
-- Execution summary is displayed
-- Task is saved for reference
-
-## The Execution Interface
-
-When your task runs, you'll see the **Agent Interface** with a vertical step layout:
-
-![Task Execution Interface](/images/task-execution.png)
-
-### Chat Area (Top)
-- Your original request
-- Real-time status updates
-- Final results
-- Follow-up conversation
-- File attachments
-
-### Execution Steps (Main Area)
-- Vertical flow of execution steps
-- Each step displays:
-  - Step number and title
-  - Agent reasoning and output
-  - **Tool calls** (shown inline with step content)
-  - Tool responses and results
-  - Execution status indicators
-- Expandable for detailed view
-
-### Understanding Tool Calls
-
-When a step uses tools, you'll see:
-
-```
-Step 1: Planning
-[Agent reasoning about the task...]
-
-🔧 web_search
-  Query: "AI developments 2024"
-  Results: [search results...]
-
-🔧 browse_results
-  URL: [specific page]
-  Content: [page content...]
-```
-
-**Common tools you'll see**:
-- `web_search` - Search the web for information
-- `browse_results` - Read specific web pages
-- `file_read` - Read uploaded files
-- `code_execution` - Run code snippets
-- Various API integrations
-
-## Monitoring Execution
-
-### Step Status Indicators
-
-- 🔵 **Pending** - Step waiting to run
-- 🟡 **Running** - Step currently executing
-- 🟢 **Completed** - Step finished successfully
-- 🔴 **Failed** - Step encountered an error
-
-### Real-Time Updates
-
-Watch your task execute:
-- Steps change color as they progress
-- New steps appear as dependencies resolve
-- Results populate in real-time
-- Tokens and time tracked
-
-## Interacting During Execution
-
-### Send Follow-up Messages
-
-Add context or modify the task:
-- "Focus on the European market"
-- "Add more visual elements"
-- "Include competitor analysis"
-
-### Upload Files
-
-Add more resources mid-execution:
-- Click attachment icon
-- Select files to upload
-- Reference them in follow-up
-
-### Cancel Execution
-
-Stop the task if needed:
-- Click cancel/stop button
-- Current step completes
-- Partial results saved
-
-## Post-Execution Actions
-
-### View Full Execution
-
-After completion:
-- Review all steps
-- Check tool usage
-- Analyze performance
-- Export execution log
-
-### Start New Task
-
-Create additional tasks:
-- Return to Task page
-- Submit a new request
-- Build on previous results
-- Refine with follow-ups
-
-## Performance Metrics
-
-Each execution shows:
-
-**Token Usage**
-- Input tokens consumed
-- Output tokens generated
-- Total across all steps
-- Cost estimate
-
-**Execution Time**
-- Start and end timestamps
-- Duration per step
-- Total execution time
-
-**Resource Usage**
-- Tools called
-- Files accessed
-- APIs used
-- Memory consumed
+Open a past task from task history to review the conversation and retained execution details. For end-user requests made through a deployed teammate, use [Conversation Logs](/deployment/conversation-logs).
 
 ## Troubleshooting
 
-### Task Not Starting
+- **The task does not start.** Check the selected model, provider credentials, and available quota.
+- **A tool fails.** Inspect the recorded error and check the tool's settings or authorization.
+- **The task has no plan view.** Check the selected mode. Direct answers and tool-use loops can complete without generating a plan.
 
-**Check:**
-- LLM provider configured
-- API key valid
-- Request is clear and specific
+## Next steps
 
-### Execution Stuck
-
-**Solutions:**
-- Wait longer (complex tasks take time)
-- Check for infinite loops
-- Cancel and retry
-- Simplify the request
-
-### Step Failed
-
-**What to do:**
-1. Check error message in right panel
-2. Verify tool availability
-3. Review input data
-4. Request retry or modify approach
-
-### DAG Not Loading
-
-**Try:**
-- Refresh the page
-- Check browser console
-- Clear cache
-- Try different browser
-
-## Best Practices
-
-### 1. Be Specific
-
-Clear requests lead to better plans:
-- "Analyze Q4 sales by region and create charts"
-- Not: "Analyze sales"
-
-### 2. Break Down Complex Tasks
-
-For very complex goals:
-- Start with a high-level request
-- Let Xagent create the plan
-- Review the DAG
-- Send follow-ups to refine
-
-### 3. Provide Context
-
-Give Xagent what it needs:
-- Upload relevant files
-- Reference specific data sources
-- Set constraints and preferences
-- Define output format
-
-### 4. Monitor Progress
-
-Watch the execution:
-- Check DAG for bottlenecks
-- Review step results
-- Catch errors early
-- Adjust as needed
-
-## Next Steps
-
-- [Agent Interface](/agents/agent-interface) - Deep dive into the execution UI
-- [Building Agents](/agents/building) - Convert tasks to agents
-- [DAG Visualization](/concepts/execution-flow) - Understanding workflows
+- [Run your first task](/quickstart#run-your-first-task)
+- [Build a teammate](/agents/building)
+- [Inspect deployed runs](/deployment/conversation-logs)

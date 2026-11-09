@@ -1,11 +1,9 @@
 ---
-title: "Quick Win: Your First Agent"
-description: "Build a working agent in 5 minutes"
+title: "Your first research teammate"
+description: "Build and test a teammate that can search the web and summarize findings."
 ---
 
-# Quick Win: Your First Agent
-
-Create your first agent in just a few minutes — no coding required.
+Use the Builder to create a teammate for research tasks.
 
 ## What We'll Build
 
@@ -17,16 +15,16 @@ A simple assistant that can:
 ## Prerequisites
 
 - Xagent running (see [Quick Start](/quickstart))
-- Basic understanding of prompts
+- A configured model and a [web search tool](/tools/built-in)
 
 ## Step 1: Create the Agent
 
-1. Navigate to **Agents** in the sidebar
-2. Click **New Agent**
-3. Give it a name: "Research Assistant"
-4. Add a description:
+1. Select **+** in the workspace sidebar, then **Add a teammate**.
+2. Select **Build** under **Build your own teammate**.
+3. Name the teammate **Research Assistant**.
+4. Add a description.
 
-```
+```text
 A helpful assistant that can search the web, research topics, and summarize information clearly and concisely.
 ```
 
@@ -34,43 +32,27 @@ A helpful assistant that can search the web, research topics, and summarize info
 
 Enable **Web Search** to give your agent access to current information.
 
-1. In the agent configuration, go to **Tools**
-2. Enable **Web Search**
-3. Save your changes
+In the Builder, select a model and enable **Web Search** under **Tools**.
 
 ## Step 3: Test Your Agent
 
-That's it! Your agent is ready to use.
+Try these prompts in **Preview**.
 
-Try these prompts:
-
-```
+```text
 "What are the latest developments in AI agents?"
 "Summarize the key features of Python 3.12"
 "Find information about renewable energy trends in 2024"
 ```
 
-## What Just Happened
-
-You created an agent without:
-- Writing any code
-- Designing workflows
-- Configuring complex integrations
-
-You simply:
-1. Described what the agent should do
-2. Enabled the tools it needs
-3. Started using it
-
-Xagent handled the rest.
+When the teammate behaves as expected, select **Create**, then **Publish**. Open **Start chat** to use it from the workspace.
 
 ## Next Steps
 
 <Columns cols={2}>
   <Card
-    title="Customize Your Agent"
+    title="Customize your teammate"
     icon="sliders"
-    href="/guides/creating-agents"
+    href="/agents/building"
   >
     Learn how to create more sophisticated agents
   </Card>
