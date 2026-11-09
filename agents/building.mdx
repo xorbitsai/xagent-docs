@@ -13,7 +13,9 @@ Use the Builder to configure a teammate for a specific job. This walkthrough use
 
 ## Choose a starting point
 
-Select **+** in the workspace sidebar, then **Add a teammate**. Select **Build** under **Build your own teammate**.
+Select **+** in the workspace sidebar, then **Add a teammate**. Select **Build** under **Build your own teammate**. In the creation dialog, select **Go to Builder** under **Manually**.
+
+To have Xagent prefill the configuration, enter a description under **By Describing It** and select **Start Task**.
 
 To customize a [preconfigured teammate](/templates/overview) you already added, select **Manage my team** in the sidebar and open **Edit** on its card in **My Team**. Review the prefilled configuration and connect any resources the job requires.
 
@@ -24,7 +26,7 @@ To customize a [preconfigured teammate](/templates/overview) you already added, 
 
    > Answer setup, account, and billing questions using the attached product documentation. Give clear steps and ask a follow-up when the request is ambiguous.
 
-3. Select a main model. Attach your product documentation knowledge base and enable the tools and skills needed for the job.
+3. Select a main model. Under **Tools**, enable the **Knowledge Base** tool category, then attach your product documentation knowledge base. Enable any other tools and skills the job requires.
 4. Add suggested prompts, such as “How do I reset my workspace password?” Use prompts that match the documentation you uploaded.
 
 You can also configure optional **Fast Model**, **Vision Model**, and **Long Context Model** settings. The main model is the default for the teammate's work.
@@ -33,7 +35,7 @@ You can also configure optional **Fast Model**, **Vision Model**, and **Long Con
 
 | Builder mode | Use it for |
 | --- | --- |
-| **Flash** | Simple requests that can run in a single model call |
+| **Flash** | Simple requests that can be answered directly or after a short tool pass |
 | **Balanced** | Requests where the teammate may need to use tools and reason through the results |
 | **Think** | Complex requests that benefit from an execution plan with multiple steps |
 

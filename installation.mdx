@@ -30,6 +30,12 @@ uvx --from xagent-ai xagent
 
 Open `http://127.0.0.1:8000`, create the first administrator at `/setup`, and configure a model. Xagent stores local data under `~/.xagent` by default. Use `XAGENT_STORAGE_ROOT` to choose another location.
 
+Use `--port` to listen on another port and `--host` to change the bind address. For example, this command listens on port 8080 on all IPv4 interfaces:
+
+```bash
+xagent --host 0.0.0.0 --port 8080
+```
+
 ## Self-host with Docker Compose
 
 ```bash

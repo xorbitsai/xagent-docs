@@ -42,6 +42,8 @@ agent_config:
 
 Use locale-keyed values for translated descriptions, tags, and sample prompts. When you provide `persona.intro` or `persona.kickoff_questions`, include an English entry. For an avatar, use an app-relative path to a bundled image.
 
+Use category IDs in `agent_config.tool_categories`. Common IDs are `basic_tools`, `web_tools`, `file`, `code_execution`, and `knowledge`. See the [built-in templates](https://github.com/xorbitsai/xagent/tree/main/src/xagent/templates/built_in) for working configurations.
+
 The execution modes are `flash`, `balanced`, `think`, and `auto`. If you omit `execution_mode`, the template loader uses `balanced`. See [Task execution](/tasks/execution).
 
 ## Test and contribute it
