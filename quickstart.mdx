@@ -1,157 +1,81 @@
 ---
-title: "Quick Start"
-description: "Create your first task in 5 minutes"
+title: "Quick start"
+description: "Run your first task, then build a teammate and try it as a visitor."
 icon: "zap"
 ---
 
-# Quick Start
+You can run a task as soon as you have a configured model. Continue through the teammate steps to give another person access to a published agent.
 
-Get Xagent running and create your first task in 5 minutes.
+## Install Xagent
 
-## Step 1: Install Xagent
+<Tabs>
+  <Tab title="Local evaluation">
+    Use Python 3.11 or later.
 
-<Info>
-If you haven't installed Xagent yet, follow the [Installation Guide](/installation).
-</Info>
+    ```bash
+    uv tool install xagent-ai
+    xagent
+    ```
 
-For a single machine (lightest — no Docker, needs Python 3.11+):
+    Open `http://127.0.0.1:8000`.
+  </Tab>
+  <Tab title="Docker Compose">
+    ```bash
+    git clone https://github.com/xorbitsai/xagent.git
+    cd xagent
+    cp example.env .env
+    docker compose up -d
+    ```
 
-```bash
-uv tool install xagent-ai   # isolated, no venv needed
-# or with pip in a virtual environment (PEP 668):
-# python -m venv .venv && source .venv/bin/activate && pip install xagent-ai
-xagent                      # starts on http://127.0.0.1:8000
-```
+    Open `http://localhost`. For shared or production deployments, follow the [self-hosting guide](/deployment/self-hosted).
+  </Tab>
+</Tabs>
 
-Open `http://127.0.0.1:8000` in your browser.
+See [Installation](/installation) for pip, uvx, and source development.
 
-For Docker (best for multi-user / team deployments):
+## Configure your workspace
 
-```bash
-git clone https://github.com/xorbitsai/xagent.git
-cd xagent
-cp example.env .env
-docker compose up -d
-```
+1. Create the first administrator account at `/setup` and sign in.
+2. Open your account menu, then expand **Builder** and select **Models**. Add a model provider and select a default model. Follow the [model configuration guide](/models/llm) if you need help connecting a provider.
 
-Open `http://localhost:80` in your browser.
+If someone has already set up your instance, sign in and confirm that you have a model available.
 
-## Step 2: Complete Initial Setup
+## Run your first task
 
-On first startup, Xagent redirects to `/setup`.
+1. In the workspace, select **New task** or use the task composer you see when you open Xagent.
+2. Enter the request below and send it.
 
-Create your initial admin account there, then log in with that account.
+   > Turn these release notes into a short customer update. CSV export launches next Tuesday. Users can enable it under Settings → Reports.
 
-## Step 3: Configure LLM
+3. Review the draft in the task conversation. Send a follow-up to refine it.
 
-Before creating tasks, you need to configure an LLM provider.
+Depending on the execution mode and request, Xagent may reply directly, use tools, or show a multi-step plan. See [Task execution](/tasks/execution) for details.
 
-1. Click **Models** in the left sidebar
-2. Add your API key (OpenAI, Anthropic, or others)
-3. Select a default model
+<Frame caption="An example workspace task and its result.">
+  <img src="/images/workspace-task.png" alt="The Xagent workspace composer and the resulting customer update" />
+</Frame>
 
-<Info>
-Xagent needs an LLM to plan and execute tasks. See [LLM Models](/models/llm) for details.
-</Info>
+## Build a teammate
 
-## Step 4: Create Your First Task
+1. Select **+** in the workspace sidebar, then **Add a teammate**. Select **Build** under **Build your own teammate**.
+2. In the creation dialog, select **Go to Builder** under **Manually**.
+3. Enter **Product Support** as the **Name**, select a main model, and enter “Explain that users can enable CSV export under Settings → Reports” in **Instructions**.
+4. Ask “How do I enable CSV export?” in **Preview** and review the answer.
+5. Select **Create** to save the draft, then **Publish**.
 
-1. Go to the **Task** page
-2. Type your request in the chat box
+See [Build a teammate](/agents/building) for the full walkthrough.
 
-Try one of these examples:
+To use a preconfigured specialist, select **See all teammates** from the **Add a teammate** dialog and [add one from the catalog](/templates/overview).
 
-```bash
-"Research the latest AI developments and write a summary"
-"Create a 10-slide presentation about renewable energy"
-"Design a promotional poster for a coffee shop"
-```
+## Try the share link
 
-3. Press Enter or click Send
-4. Watch Xagent execute the task in real-time
+1. Select **Manage my team** in the sidebar. In **My Team**, find the published teammate and open **Deploy**.
+2. Select **Shareable Link**, choose **Generate Link**, and copy the URL.
+3. Open the link in a private browser window. Send a question as a visitor.
+4. Back in the workspace, open your account menu, then expand **Builder** and select **Conversation Logs**. Select **Shareable Link** to find that conversation.
 
-## Step 5: View Execution
+See [Deploy for end users](/agents/sharing) for distribution options and [Inspect deployed runs](/deployment/conversation-logs) for log access.
 
-Xagent will:
-1. Plan the task automatically
-2. Show the DAG (workflow) visualization
-3. Execute each step
-4. Display results
-
-You can:
-- Click nodes in the DAG to see details
-- Send follow-up messages
-- Upload additional files
-- Review execution history
-
-## What's Next?
-
-<Columns cols={2}>
-  <Card
-    title="Learn More About Tasks"
-    icon="play"
-    href="/tasks/overview"
-    buttonText="Explore Tasks"
-    primary
-  >
-    Understand how tasks work and how to get the most out of them
-  </Card>
-  <Card
-    title="Build an Agent"
-    icon="robot"
-    href="/agents/building"
-    buttonText="Create Agent"
-  >
-    Convert your tasks into reusable agents
-  </Card>
-  <Card
-    title="Build a Workforce"
-    icon="users"
-    href="/workforces/overview"
-  >
-    Coordinate multiple specialized agents under one manager
-  </Card>
-  <Card
-    title="Explore Templates"
-    icon="file"
-    href="/templates/overview"
-  >
-    Use pre-built templates for common workflows
-  </Card>
-  <Card
-    title="Add Knowledge Base"
-    icon="database"
-    href="/knowledge/overview"
-  >
-    Give your agents domain-specific knowledge
-  </Card>
-</Columns>
-
-## Troubleshooting
-
-### Task not starting
-
-Check that:
-- LLM API key is configured correctly
-- Model is selected in Models settings
-- Your request is clear and specific
-
-### Execution stuck
-
-- Wait longer (some tasks take time)
-- Check the DAG for stuck steps
-- Click cancel and try again
-
-### API errors
-
-- Verify your API key is valid
-- Check API rate limits
-- Try a different model
-
-## Next Steps
-
-- [Learn more about tasks](/tasks/overview)
-- [Build your first agent](/agents/building)
-- [Understand workforces](/workforces/overview)
-- [Use templates](/templates/overview)
-- [Configure LLM models](/models/llm)
+<Note>
+  Moving from OpenClaw or Hermes? Run `xagent migrate --dry-run` to preview the agent configuration, skills, and supported schedules you can import with `xagent migrate`.
+</Note>

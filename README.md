@@ -1,16 +1,18 @@
 # Xagent Documentation
 
-Official documentation for Xagent - The Agent Operating System.
+Official documentation for Xagent, an enterprise platform for building, deploying, and operating AI teammates.
 
 ## Overview
 
-Xagent is an AI agent platform that enables you to describe goals and let agents figure out how to accomplish them. No workflow engineering required.
+Run a task directly from the workspace or build a reusable teammate for a specific job. Publish the teammate so end users can reach it through a shareable link, widget, or API.
 
 ## Documentation
 
-- [Quick Start](/quickstart) - Get started in minutes
-- [Installation](/installation) - Deployment and setup guide
-- [API Reference](/api-reference/introduction) - Complete API documentation
+- [Quick start](https://docs.xagent.co/quickstart)
+- [Installation](https://docs.xagent.co/installation)
+- [Build a teammate](https://docs.xagent.co/agents/building)
+- [Deploy for end users](https://docs.xagent.co/agents/sharing)
+- [API reference](https://docs.xagent.co/api-reference/introduction)
 
 ## Development
 

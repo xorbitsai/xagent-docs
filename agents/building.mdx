@@ -1,347 +1,60 @@
 ---
-title: "Building Agents"
-description: "Creating and configuring custom agents"
+title: "Build a teammate"
+description: "Create or customize a teammate, connect its resources, and test it before publishing."
 icon: "wrench"
 ---
 
-# Building Agents
+Use the Builder to configure a teammate for a specific job. This walkthrough uses a **Product Support** teammate that answers setup, account, and billing questions.
 
-Learn how to create, configure, and publish custom agents for your specific needs.
+## Before you start
 
-## Getting Started
+- Configure at least one [language model](/models/llm) that supports the tools the teammate will use.
+- To add documentation retrieval, configure an [embedding model](/models/embedding) and [upload documents to a knowledge base](/knowledge/uploading). Use sample product documentation if you plan to test guest access.
 
-### Prerequisites
+## Choose a starting point
 
-Before building an agent, ensure you have:
-- **At least one LLM configured** - Required for agent to function
-- **Optional**: Knowledge bases, skills, or custom tools
-- **Optional**: Image generation models for visual tasks
+Select **+** in the workspace sidebar, then **Add a teammate**. Select **Build** under **Build your own teammate**. In the creation dialog, select **Go to Builder** under **Manually**.
 
-## Creating an Agent
+To have Xagent prefill the configuration, enter a description under **By Describing It** and select **Start Task**.
 
-### Step 1: Navigate to Build Page
+To customize a [preconfigured teammate](/templates/overview) you already added, select **Manage my team** in the sidebar and open **Edit** on its card in **My Team**. Review the prefilled configuration and connect any resources the job requires.
 
-Go to **Build** in the left sidebar to access the agent management interface.
+## Configure the teammate
 
-### Step 2: Create New Agent
+1. Name it **Product Support** and give it a short description.
+2. Write instructions that define its role. For example:
 
-Click **New Agent** to open the agent configuration editor.
+   > Answer setup, account, and billing questions using the attached product documentation. Give clear steps and ask a follow-up when the request is ambiguous.
 
-![Build Agent](/images/build-agent.png)
+3. Select a main model. Under **Tools**, enable the **Knowledge Base** tool category, then attach your product documentation knowledge base. Enable any other tools and skills the job requires.
+4. Add suggested prompts, such as “How do I reset my workspace password?” Use prompts that match the documentation you uploaded.
 
-The editor has a two-column layout:
-- **Left panel**: Configuration options
-- **Right panel**: Live preview chat interface
+You can also configure optional **Fast Model**, **Vision Model**, and **Long Context Model** settings. The main model is the default for the teammate's work.
 
-## Agent Configuration
+### Choose an execution mode
 
-### Basic Information
+| Builder mode | Use it for |
+| --- | --- |
+| **Flash** | Simple requests that can be answered directly or after a short tool pass |
+| **Balanced** | Requests where the teammate may need to use tools and reason through the results |
+| **Think** | Complex requests that benefit from an execution plan with multiple steps |
 
-**Name** (Required)
-- Maximum 200 characters
-- Must be unique within your account
-- Choose a descriptive name for your agent
+See [Task execution](/tasks/execution) for how these modes appear when a task runs.
 
-**Description** (Optional)
-- Brief explanation of what the agent does
-- Helps users understand the agent's purpose
+## Test in Preview
 
-**Logo** (Optional)
-- Upload an image to represent your agent
-- Displayed in agent listings and chat interface
+Ask a question that the product documentation answers. Review the reply and any recorded tool calls. Test an out-of-scope question as well, then adjust the instructions or resources as needed.
 
-**Distribution Controls** (Optional)
-- Configure whether the agent can be shared publicly
-- Enable widget access for embedded use cases
-- Restrict widget access to approved domains
+## Save and publish
 
-### Execution Mode
+1. Select **Create** to save a new draft, or **Update** to save changes to an existing teammate.
+2. Select **Publish** when it is ready. Use **Start chat** to test the published teammate from your workspace.
+3. To give other people access, open **Deploy** on the teammate's card in **My Team** and [choose a distribution method](/agents/sharing).
 
-Choose how your agent processes tasks:
-
-**React Mode** (Default)
-- ReAct loop: Reasoning → Acting cycle
-- Best for: Most general-purpose tasks
-- Agent thinks, takes action, observes results, repeats
-
-**Graph Mode**
-- DAG planning-execution
-- Best for: Complex, multi-step workflows
-- Agent plans all steps first, then executes
-
-<Info>
-Use React mode for most tasks. Switch to Graph mode for complex workflows that require careful planning.
-</Info>
-
-### AI Models
-
-Configure models for different purposes:
-
-**General Model** (Required)
-- The main LLM for all task execution
-- Handles planning, reasoning, and decision making
-- Example: Claude 4.6 Sonnet, GPT 5.2
-
-**Fast Model** (Optional)
-- Lightweight model for simple operations
-- Reduces cost and improves speed
-- Automatically used for simple steps identified during planning
-
-**Visual Model** (Optional)
-- Multimodal LLM for image understanding
-- Required for image-related tasks
-- Enables tools like `understand_images`, `describe_images`
-
-**Compact Model** (Optional)
-- Specialized model for compressing long conversations
-- Maintains context across extended sessions
-- Triggered when conversation exceeds token threshold
-
-### Capabilities
-
-**Knowledge Bases** (Optional)
-- Add domain-specific knowledge to your agent
-- Agent can search and retrieve relevant information
-- Upload documents or select existing knowledge bases
-
-**Skills** (Optional)
-- Pre-built capabilities for specific tasks
-- Enhance agent with specialized functionality
-- Examples: Web search, database operations
-
-**Tools** (Optional)
-- Select tool categories to enable:
-  - **basic**: Basic tools (web search, calculator, etc.)
-  - **file**: File upload and management
-  - **vision**: Image understanding
-  - **image**: Image generation and editing
-  - **knowledge**: Knowledge base operations
-  - **mcp**: MCP protocol tools
-  - **browser**: Browser automation
-  - **ppt**: PowerPoint processing
-  - **office**: Office document processing
-
-<Info>
-Tools are automatically enabled based on selected categories. Agent will only have access to tools in chosen categories.
-</Info>
-
-### Suggested Prompts
-
-Provide example prompts to help users get started:
-- "Analyze this sales data and create a report"
-- "Generate a marketing plan for our new product"
-- "Review these documents and summarize key points"
-
-These prompts appear as suggestions when users chat with your agent.
-
-## Testing Your Agent
-
-### Live Preview
-
-Use the preview panel on the right to test your agent in real-time:
-
-1. **Type a message** in the chat input
-2. **Send and observe** how your agent responds
-3. **Upload files** to test file handling
-4. **Iterate** on configuration based on results
-
-The preview uses your current configuration without saving:
-- Test different settings before committing
-- See immediate results
-- Verify tool access and knowledge retrieval
-
-<Info>
-Preview mode creates a temporary execution environment. Changes are only saved when you click Save.
-</Info>
-
-### What to Test
-
-- **Response quality**: Does the agent understand the task?
-- **Tool usage**: Are the right tools being used?
-- **Knowledge retrieval**: Does it find relevant information?
-- **Execution mode**: React vs Graph behavior
-- **Model selection**: Are the configured models working?
-
-## Saving Your Agent
-
-### Auto-Save
-
-Your configuration is automatically validated but not saved until you explicitly save.
-
-### Manual Save
-
-Click **Save** to persist your agent configuration:
-- Agent is saved with **draft** status
-- Only you can see and edit draft agents
-- Saved agents appear in your Build page list
-
-### Editing Existing Agents
-
-1. Go to **Build** page
-2. Click **Edit** on the agent card
-3. Make changes to configuration
-4. Click **Save** to update
-
-## Publishing Your Agent
-
-### When to Publish
-
-Publish your agent when:
-- Configuration is complete and tested
-- Ready to share with others
-- Production-ready workflows
-
-### Publishing Process
-
-1. **Save** your agent first
-2. Click **Publish** button
-3. Agent status changes from **draft** to **published**
-4. Publication timestamp is recorded
-5. Agent becomes visible to authorized users
-
-After publishing, you can decide how the agent is consumed:
-- Keep it internal for signed-in users
-- Generate a share link for guest access
-- Enable widget access for selected domains
-- Create a runtime API key for SDK or server-side integration
-
-### Unpublishing
-
-To unpublish an agent:
-1. Go to **Build** page
-2. Click **Unpublish** on the published agent
-3. Agent status returns to **draft**
-4. Agent is no longer accessible to users
-
-<Info>
-Unpublishing doesn't delete the agent. You can republish it later.
-</Info>
-
-## Chatting with Your Agent
-
-### Starting a Conversation
-
-Once published, users can chat with your agent:
-
-1. **Find the agent** in the agents list
-2. **Click on the agent** to open its detail page
-3. **Type a message** or use a suggested prompt
-4. **Agent responds** using its configuration
-
-### Agent Execution
-
-When chatting, the agent:
-- Uses its **configured models** for reasoning
-- Follows its **execution mode** (React or Graph)
-- Accesses **enabled tools** based on tool categories
-- Retrieves information from **knowledge bases**
-- Applies its **instructions** and **skills**
-
-The same published configuration is also reused when the agent is launched from a share link, from an embedded widget, or from a workforce run.
-
-### Task Creation
-
-Each conversation creates a task:
-- Task is linked to the agent
-- Execution uses agent's configuration
-- Results are saved in task history
-- Can view full execution trace
-
-## Agent Templates
-
-### Using Templates
-
-Jump-start agent creation with pre-built templates:
-1. Go to **Build** page
-2. Click **New Agent**
-3. Select a template
-4. Template populates configuration
-5. Customize as needed
-
-### Available Templates
-
-Common agent templates include:
-- **Customer Support**: FAQ handling, documentation search
-- **Data Analyst**: Data processing, visualization, reporting
-- **Research Assistant**: Information gathering, synthesis
-- **Content Creator**: Writing, editing, image generation
-
-<Info>
-Templates provide starting points. Always test and customize for your specific use case.
-</Info>
-
-## Best Practices
-
-### Start Simple
-
-- Begin with React mode for most use cases
-- Enable only necessary tool categories
-- Add knowledge bases after testing basic functionality
-- Use preview to iterate quickly
-
-### Define Clear Purpose
-
-- Specific name and description
-- Focused skill set
-- Relevant suggested prompts
-- Appropriate tool access
-- A clear decision about internal-only, share-link, widget, or API use
-
-### Test Thoroughly
-
-- Use preview before publishing
-- Test with various inputs
-- Verify tool access is appropriate
-- Check knowledge retrieval accuracy
-- If using share links or widgets, test the guest entry flow separately
-
-### Iterate and Improve
-
-- Monitor agent performance
-- Gather user feedback
-- Update configuration as needed
-- Republish after changes
+You can unpublish a teammate from the Builder and publish it again later.
 
 ## Troubleshooting
 
-### Agent Not Responding
-
-**Check:**
-- General model is configured
-- Model has available API quota
-- Network connectivity is working
-
-### Tools Not Available
-
-**Verify:**
-- Tool categories are selected
-- Models for specific tools are configured (e.g., Visual model for vision tools)
-- Tool permissions are properly set
-
-### Knowledge Not Retrieved
-
-**Check:**
-- Knowledge bases are attached
-- Documents are indexed
-- Embedding model is configured
-- Search queries are specific
-
-### Preview Not Working
-
-**Try:**
-- Refreshing the page
-- Re-opening the editor
-- Checking browser console for errors
-- Verifying model configuration
-
-## Next Steps
-
-- [Templates](/templates/overview) - Explore pre-built agent templates
-- [Sharing Agents](/agents/sharing) - Configure public share links
-- [Embed Widget](/agents/widget-embed) - Enable embedded agent access
-- [SDK Guide](/guides/sdk) - Call published agents through `/v1`
-- [Workforces](/workforces/overview) - Reuse agents in multi-agent orchestration
-- [Knowledge Base](/knowledge/overview) - Add domain knowledge to your agent
-- [Tools](/tools/overview) - Understand available tools
-- [Models](/models/overview) - Configure AI models for your agent
-- [Tasks](/tasks/overview) - Learn about task execution
+- **Preview does not start.** Check the main model, credentials, and provider quota.
+- **A tool is missing.** Check the selected tools and connector setup. Some capabilities require an additional model or authorization.
+- **The teammate misses a document.** Confirm the knowledge base is attached and its documents have finished indexing. Try the query in [retrieval testing](/knowledge/retrieval).

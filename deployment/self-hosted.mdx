@@ -7,34 +7,9 @@ description: "Deploy Xagent on your own infrastructure"
 
 Run Xagent on your own infrastructure for full control, data privacy, and customization.
 
-## Why Self-Host?
+## What you control
 
-<Columns cols={2}>
-  <Card
-    title="Data Privacy"
-    icon="shield"
-  >
-    Keep all data on your infrastructure
-  </Card>
-  <Card
-    title="Customization"
-    icon="sliders"
-  >
-    Modify and extend as needed
-  </Card>
-  <Card
-    title="Compliance"
-    icon="check-square"
-  >
-    Meet regulatory requirements
-  </Card>
-  <Card
-    title="Cost Control"
-    icon="dollar-sign"
-  >
-    Predictable infrastructure costs
-  </Card>
-</Columns>
+With a self-hosted deployment, you choose where the Xagent application, database, and file storage run. Cloud models and external tools can process the data you send to them. Choose [self-hosted models](/models/llm) and review each connector when deciding where your data can be processed.
 
 ## Deployment Options
 
@@ -67,11 +42,13 @@ docker compose up -d
 
 ### Manual Deployment
 
-Best for: Custom setups, specific requirements
-
-See [Installation](/installation) for step-by-step instructions.
+For a customized self-hosted setup, follow the [Docker deployment guide](https://github.com/xorbitsai/xagent/blob/main/docker/README.md). To run the backend and frontend separately for local development, see [Develop from source](/installation#develop-from-source).
 
 ## Production Checklist
+
+Use HTTPS for browser access outside loopback addresses and use browsers that support Web Locks. Check the [deployment notes](https://github.com/xorbitsai/xagent/blob/main/docs/deployment.md) for release-specific changes.
+
+To isolate eligible tool calls, enable and configure an execution sandbox. See the [sandbox guide](https://github.com/xorbitsai/xagent/blob/main/docker/README.sandbox.md) for the supported backends and their network policies.
 
 ### Security
 
@@ -108,6 +85,8 @@ See [Installation](/installation) for step-by-step instructions.
 </Accordion>
 
 ### Observability
+
+Use [Conversation Logs](/deployment/conversation-logs) to inspect end-user runs from published teammates.
 
 <Accordion>
   <AccordionItem title="Application Monitoring">
@@ -282,5 +261,5 @@ tar -czf memory-backup.tar.gz memory_store/
 ## Next Steps
 
 - [Configuration guide](/deployment/configuration)
-- [Environment variables reference](/deployment/environment)
-- [Build your first agent](/guides/quick-win)
+- [Build a teammate](/agents/building)
+- [Inspect deployed runs](/deployment/conversation-logs)

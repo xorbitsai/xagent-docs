@@ -6,11 +6,11 @@ icon: "play"
 
 # Tasks Overview
 
-Tasks are the fundamental unit of work in Xagent. Simply describe what you want to accomplish, and Xagent will plan, execute, and deliver results automatically.
+A task is a request you run in the Xagent workspace. Start with **New task**, enter your request, and send it. You can also select a teammate to use its saved configuration.
 
 ## What is a Task?
 
-A task is a natural language description of a goal you want to achieve. Unlike traditional automation systems that require predefined workflows, Xagent interprets your intent and breaks it down into executable steps.
+Describe the outcome you want and add files if they provide context. Xagent can answer directly, use tools, or plan multiple steps depending on the request and the execution mode.
 
 ### Task Examples
 
@@ -47,7 +47,7 @@ Choose the appropriate model for your task:
 
 **Other Model Types**:
 - [Long Context Models](/models/llm) - For compressing large context windows
-- [Vision Models](/models/image) - Required to use image analysis tools
+- [Vision models](/models/llm) - For image understanding
 
 **Model Settings**:
 - Select from configured providers
@@ -96,12 +96,12 @@ Get results as they're generated, not just at the end. Perfect for long-running 
     Select main model and fast model for the task
   </Step>
   <Step>
-    Planning phase
-    Xagent analyzes your request and breaks it down into steps
+    Run the task
+    Xagent runs the request using the selected execution mode.
   </Step>
   <Step>
-    Execution phase
-    Each step is executed sequentially, with tool calls displayed inline
+    Follow the run
+    When Xagent uses tools or creates a plan, open the available execution details to follow its progress.
   </Step>
   <Step>
     Results delivered
@@ -122,5 +122,5 @@ The task interface provides:
 ## Next Steps
 
 - [Learn about task execution](/tasks/execution) - See how tasks execute step-by-step
-- [Building agents](/agents/building) - Convert tasks to reusable agents
+- [Build a teammate](/agents/building) - Configure a specialist for recurring work
 - [LLM Models](/models/llm) - Set up and configure language models
